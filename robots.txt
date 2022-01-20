@@ -1,0 +1,3 @@
+User-agent: *
+
+Sitemap: https://justinsmithecon.github.io/sitemap.xml
