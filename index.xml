@@ -264,7 +264,7 @@ Figure 1: A fancy pie chart.
     </item>
     
     <item>
-      <title>Big Fish, Small Pond</title>
+      <title>Big Fish, Small Pond: The Effect of Rank at Entry on Postsecondary Outcomes</title>
       <link>https://justinsmithecon.github.io/publication/journal-article/</link>
       <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
       <guid>https://justinsmithecon.github.io/publication/journal-article/</guid>
@@ -299,7 +299,7 @@ data.head()
 &lt;p&gt;Demo:&lt;/p&gt;
 
 
-&lt;div id=&#34;chart-628374159&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
+&lt;div id=&#34;chart-435786192&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
 &lt;script&gt;
   (function() {
     let a = setInterval( function() {
@@ -309,7 +309,7 @@ data.head()
       clearInterval( a );
 
       Plotly.d3.json(&#34;./line-chart.json&#34;, function(chart) {
-        Plotly.plot(&#39;chart-628374159&#39;, chart.data, chart.layout, {responsive: true});
+        Plotly.plot(&#39;chart-435786192&#39;, chart.data, chart.layout, {responsive: true});
       });
     }, 500 );
   })();
