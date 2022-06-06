@@ -696,7 +696,7 @@ collections:
     widget: datetime
   filter:
     field: cms_exclude
-  folder: content/publication
+  folder: content/research
   label: Publications
   label_singular: Publication
   name: publications
