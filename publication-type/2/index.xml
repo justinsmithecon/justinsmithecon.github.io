@@ -1,24 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Research | Justin Smith</title>
-    <link>https://justinsmithecon.github.io/publication/</link>
-      <atom:link href="https://justinsmithecon.github.io/publication/index.xml" rel="self" type="application/rss+xml" />
-    <description>Research</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© 2022 Justin Smith</copyright><lastBuildDate>Tue, 07 Dec 2021 00:00:00 +0000</lastBuildDate>
+    <title>2 | Justin Smith</title>
+    <link>https://justinsmithecon.github.io/publication-type/2/</link>
+      <atom:link href="https://justinsmithecon.github.io/publication-type/2/index.xml" rel="self" type="application/rss+xml" />
+    <description>2</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© 2022 Justin Smith</copyright><lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://justinsmithecon.github.io/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
-      <title>Research</title>
-      <link>https://justinsmithecon.github.io/publication/</link>
+      <title>2</title>
+      <link>https://justinsmithecon.github.io/publication-type/2/</link>
     </image>
-    
-    <item>
-      <title>The Effect of Tax Price on Donations: Evidence from Canada</title>
-      <link>https://justinsmithecon.github.io/publication/taxprice2021/</link>
-      <pubDate>Tue, 07 Dec 2021 00:00:00 +0000</pubDate>
-      <guid>https://justinsmithecon.github.io/publication/taxprice2021/</guid>
-      <description></description>
-    </item>
     
     <item>
       <title>Big Fish, Small Pond: The Effect of Rank at Entry on Postsecondary Outcomes</title>
@@ -58,25 +50,6 @@
       <pubDate>Wed, 30 Jul 2014 00:00:00 +0000</pubDate>
       <guid>https://justinsmithecon.github.io/publication/schoolprin2014/</guid>
       <description></description>
-    </item>
-    
-    <item>
-      <title>An example conference paper</title>
-      <link>https://justinsmithecon.github.io/publication/example/</link>
-      <pubDate>Mon, 01 Jul 2013 00:00:00 +0000</pubDate>
-      <guid>https://justinsmithecon.github.io/publication/example/</guid>
-      <description>&lt;div class=&#34;alert alert-note&#34;&gt;
-  &lt;div&gt;
-    Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
-  &lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&#34;alert alert-note&#34;&gt;
-  &lt;div&gt;
-    Create your slides in Markdown - click the &lt;em&gt;Slides&lt;/em&gt; button to check out the example.
-  &lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;Supplementary notes can be added here, including &lt;a href=&#34;https://wowchemy.com/docs/writing-markdown-latex/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;code, math, and images&lt;/a&gt;.&lt;/p&gt;
-</description>
     </item>
     
   </channel>
