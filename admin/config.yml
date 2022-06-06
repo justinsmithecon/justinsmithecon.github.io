@@ -1,5 +1,5 @@
 backend:
-  branch: master
+  branch: main
   name: git-gateway
   squash_merges: true
 collections:
@@ -696,7 +696,7 @@ collections:
     widget: datetime
   filter:
     field: cms_exclude
-  folder: content/research
+  folder: content/publication
   label: Publications
   label_singular: Publication
   name: publications
