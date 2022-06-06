@@ -4,12 +4,6 @@
   
   
   <url>
-    <loc>https://justinsmithecon.github.io/courses/example/python/</loc><lastmod>2021-01-01T00:00:00+00:00</lastmod></url>
-  <url>
-    <loc>https://justinsmithecon.github.io/courses/example/visualization/</loc><lastmod>2021-01-01T00:00:00+00:00</lastmod></url>
-  <url>
-    <loc>https://justinsmithecon.github.io/courses/example/stats/</loc><lastmod>2021-01-01T00:00:00+00:00</lastmod></url>
-  <url>
     <loc>https://justinsmithecon.github.io/</loc><lastmod>2030-06-01T13:00:00+00:00</lastmod></url>
   <url>
     <loc>https://justinsmithecon.github.io/talk/example-talk/</loc><lastmod>2030-06-01T13:00:00+00:00</lastmod></url>
@@ -35,10 +29,6 @@
     <loc>https://justinsmithecon.github.io/author/ross-hickey/</loc><lastmod>2021-12-07T00:00:00+00:00</lastmod></url>
   <url>
     <loc>https://justinsmithecon.github.io/research/taxprice2021/</loc><lastmod>2021-12-07T00:00:00+00:00</lastmod></url>
-  <url>
-    <loc>https://justinsmithecon.github.io/courses/</loc><lastmod>2021-01-24T00:00:00+00:00</lastmod></url>
-  <url>
-    <loc>https://justinsmithecon.github.io/courses/example/</loc><lastmod>2021-01-24T00:00:00+00:00</lastmod></url>
   <url>
     <loc>https://justinsmithecon.github.io/tag/academic/</loc><lastmod>2020-12-13T00:00:00+00:00</lastmod></url>
   <url>
@@ -105,5 +95,7 @@
     <loc>https://justinsmithecon.github.io/research/schoolprin2014/</loc><lastmod>2014-07-30T00:00:00+00:00</lastmod></url>
   <url>
     <loc>https://justinsmithecon.github.io/admin/</loc></url>
+  <url>
+    <loc>https://justinsmithecon.github.io/courses/</loc></url>
   <url>
     <loc>https://justinsmithecon.github.io/cv/</loc></url></urlset>
