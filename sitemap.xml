@@ -10,6 +10,16 @@
   <url>
     <loc>https://justinsmithecon.github.io/event/</loc><lastmod>2030-06-01T13:00:00+00:00</lastmod><changefreq>weekly</changefreq></url>
   <url>
+    <loc>https://justinsmithecon.github.io/teaching/ec295/</loc><lastmod>2022-09-01T00:00:00+00:00</lastmod><changefreq>weekly</changefreq></url>
+  <url>
+    <loc>https://justinsmithecon.github.io/teaching/ec655/</loc><lastmod>2022-09-01T00:00:00+00:00</lastmod><changefreq>weekly</changefreq></url>
+  <url>
+    <loc>https://justinsmithecon.github.io/tag/fall-2022/</loc><lastmod>2022-09-01T00:00:00+00:00</lastmod><changefreq>weekly</changefreq></url>
+  <url>
+    <loc>https://justinsmithecon.github.io/tags/</loc><lastmod>2022-09-01T00:00:00+00:00</lastmod><changefreq>weekly</changefreq></url>
+  <url>
+    <loc>https://justinsmithecon.github.io/teaching/</loc><lastmod>2022-09-01T00:00:00+00:00</lastmod><changefreq>weekly</changefreq></url>
+  <url>
     <loc></loc><lastmod>2021-12-07T00:00:00+00:00</lastmod><changefreq>weekly</changefreq></url>
   <url>
     <loc>https://justinsmithecon.github.io/publication-type/3/</loc><lastmod>2021-12-07T00:00:00+00:00</lastmod><changefreq>weekly</changefreq></url>
@@ -37,8 +47,6 @@
     <loc>https://justinsmithecon.github.io/category/demo/</loc><lastmod>2020-12-13T00:00:00+00:00</lastmod><changefreq>weekly</changefreq></url>
   <url>
     <loc>https://justinsmithecon.github.io/post/</loc><lastmod>2020-12-13T00:00:00+00:00</lastmod><changefreq>weekly</changefreq></url>
-  <url>
-    <loc>https://justinsmithecon.github.io/tags/</loc><lastmod>2020-12-13T00:00:00+00:00</lastmod><changefreq>weekly</changefreq></url>
   <url>
     <loc>https://justinsmithecon.github.io/post/getting-started/</loc><lastmod>2020-12-13T00:00:00+00:00</lastmod><changefreq>weekly</changefreq></url>
   <url>
@@ -78,12 +86,4 @@
   <url>
     <loc></loc><lastmod>2013-06-15T00:00:00+00:00</lastmod><changefreq>weekly</changefreq></url>
   <url>
-    <loc>https://justinsmithecon.github.io/publication/longrun2013/</loc><lastmod>2013-06-15T00:00:00+00:00</lastmod><changefreq>weekly</changefreq></url>
-  <url>
-    <loc>https://justinsmithecon.github.io/teaching/ec295/</loc><changefreq>weekly</changefreq></url>
-  <url>
-    <loc>https://justinsmithecon.github.io/teaching/ec655/</loc><changefreq>weekly</changefreq></url>
-  <url>
-    <loc>https://justinsmithecon.github.io/tag/fall-2022/</loc><changefreq>weekly</changefreq></url>
-  <url>
-    <loc>https://justinsmithecon.github.io/teaching/</loc><changefreq>weekly</changefreq></url></urlset>
+    <loc>https://justinsmithecon.github.io/publication/longrun2013/</loc><lastmod>2013-06-15T00:00:00+00:00</lastmod><changefreq>weekly</changefreq></url></urlset>
