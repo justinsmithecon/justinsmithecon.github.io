@@ -1,0 +1,1049 @@
+---
+title: "The Rubin Causal Model"
+subtitle: "EC655"
+author: "Justin Smith"
+institute: "Wilfrid Laurier University"
+date: "Fall 2022"
+output:
+  xaringan::moon_reader:
+    css: ["default", "default-fonts", "hygge"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+---
+
+```{r , echo=FALSE, include=FALSE}
+
+library(sf)
+library(scales)
+library(ggplot2)
+library(ggpubr)
+library(tidyverse)
+library(hrbrthemes)
+library(kableExtra)
+library(viridis)
+library(DT)
+library(plotly)
+library(readxl)
+library(rgeos)
+library(maptools)
+library(directlabels)
+library(ggrepel)
+library(ggthemes)
+library(cancensus)
+library(bookdown)
+library(geomtextpath)
+library(egg)
+library(ggtext)
+library(ragg)
+library(scico)
+library(haven)
+library(here)
+library(knitr)
+library(jpeg)
+library(imager)
+library(Statamarkdown)
+library(ggdag)
+library(dagitty)
+library(geomtextpath)
+library(gganimate)
+library(gifski)
+library(vtable)
+
+knitr::opts_chunk$set(
+ echo=FALSE, 
+ message = FALSE,
+ warning = FALSE,
+ fig.retina = 3, 
+ fig.align = "center"
+ )
+
+set.seed(9810078)
+```
+
+# Introduction
+
+-   The workhorse model in econometrics is linear regression
+
+-   Two key uses of this model
+
+    -   Prediction
+
+    -   Modelling (causal) effect of one variable on another
+
+-   In many empirical application the focus is causal effects
+
+    -   The independent effect of a particular variable on the outcome
+
+-   We will study linear regression with a focus on causality
+
+-   First, we attempt to understand the underlying concept of causality
+
+-   For this we use the .red[Rubin Causal Model]
+
+    -   Defines causality and under what conditions we can measure it
+    
+---
+
+# Potential Outcomes
+
+-   Start with a binary framework
+
+    -   There is a "treatment" or "no treatment"
+
+    -   An individual theoretically has an outcome with treatment and without
+
+-   Treatment is defined generally
+
+    -   Getting a drug
+
+    -   Going to university
+
+    -   Being in a large class
+
+-   Define the following .red[potential outcomes]
+
+    -   $y_{1}$ is the outcome **with treatment**
+
+    -   $y_{0}$ is the outcome **without treatment**
+
+    -   $w$ is a binary variable with 1 denoting treatment, and 0 no
+        treatment
+        
+---
+
+# Treatment Effects
+
+-   We would like to know the treatment effect $y_{1} - y_{0}$ for an
+    individual
+
+    -   This is the .red[causal effect] of the treatment
+
+    -   Effect differs from person to person in the population
+
+-   .red[Fundamental problem of causal inference]: we never observe both
+    $y_{1}$ and $y_{0}$
+
+-   We only observe $(y, w)$, where
+
+    $$y = y_{0} + (y_{1} -y_{0})w$$
+
+    -   We observe treatment status, potential outcome given that
+        treatment status
+
+-   The .red[counterfactual] outcome with opposite treatment is never
+    observed
+
+---
+
+# Treatment Effects
+## Simple Differences in Average Outcomes
+
+-   What if we naïvely compute difference in average outcomes between treated and
+    control? $$E(y|w=1) - E(y|w=0)$$
+
+-   Using the definition of $y$ above,
+
+    $$E(y|w=1) - E(y|w=0)$$ $$=  E(y_{1}|w=1) - E(y_{0}|w=0)$$
+    $$= \left [ E(y_{1}|w=1) - E(y_{0}|w=1) \right ] + E(y_{0}|w=1) - E(y_{0}|w=0)$$
+
+-   The first term is called the .red[Average Treatment Effect on the Treated (ATT)]
+
+    -   Average effect of the treatment for those in the treatment group
+    
+    
+---
+
+# Treatment Effects
+
+-   The second term is .red[Selection Bias]
+
+    -   Baseline difference between treatment and control groups
+
+-   Simple average differences will not identify a treatment effect
+
+    -   It is partly a treatment effect, partly differences in who gets
+        treated
+
+-   Ex: Comparing average incomes of university grads to high school
+    grads
+
+    -   Will be partly average causal effect of university
+
+    -   Also difference in baseline earning ability without the degree
+
+-   Lesson is that simple differences in averages do not reveal causal
+    effects
+
+-   Under what conditions can we measure the causal effect of $w$ on
+    $y$?
+    
+---
+
+# Treatment Effects
+## Randomizing Treatment Status
+
+-   A common way to isolate treatment effects is to randomize $w$
+
+    -   Blindly put people into treatment or control group
+
+    -   Ensures that on average the two groups are similar at baseline
+
+-   Mathematically, potential outcomes are independent from treatment
+    $$(y_{0}, y_{1}) \perp w$$
+
+-   Independence means conditioning on $w$ has no effect on expectation
+
+    $$E(y_{0}|w=1) =E(y_{0}|w=0)$$ $$E(y_{0}|w) = E(y_{0})$$
+    $$E(y_{1}|w) = E(y_{1})$$
+    
+---
+
+# Treatment Effects
+
+-   With randomization, selection bias is zero
+
+    $$E(y_{0}|w=1) - E(y_{0}|w=0) = E(y_{0}|w=1) - E(y_{0}|w=1) = 0$$
+
+-   As a result the difference in mean $y$ is $$E(y|w=1) - E(y|w=0)$$
+    $$= E(y_{1}|w=1) - E(y_{0}|w=0)$$ $$= E(y_{1}) - E(y_{0})$$
+
+-   The first term is the ATT we saw before
+
+-   The second term is the .red[Average Treatment Effect (ATE)]
+
+    -   The treatment effect across the whole population
+    
+---
+
+# Treatment Effects
+
+-   When we randomize treatment we can measure causal effects
+
+-   Randomization is the standard way to measure the effects of medical
+    treatments
+
+-   It is becoming more popular in economics
+
+-   Ex: Bangladesh mask study (<a href="https://www.science.org/doi/10.1126/science.abi9069">Abaluck et. al., 2021</a>) 
+
+    -   Randomized promoting mask use in rural Bangladesh
+
+    -   Compare COVID rates between treatment and control
+
+    -   Find some positive effect of masks, especially for age 50+
+
+-   Next we will show how to model this in a regression framework
+
+---
+
+# Treatment Effects
+## Causal Effects in Experiments with Regression
+
+-   In randomized experiments, you can get causal effects with
+    difference in means
+
+-   Economists typically work with regression models
+
+-   Remember the outcome we observe $y$ is
+
+    $$y = (y_{1} - y_{0})w + y_{0}$$
+
+-   If we define the potential outcomes as $$y_{0} = \alpha + \eta$$
+    $$y_{1} = y_{0} + \rho$$
+    
+  
+---
+
+# Treatment Effects
+
+-   If we combine the three equations we get
+
+    $$y = \alpha + \rho w + \eta$$
+
+-   The difference in means for $y$ by treatment status is now
+
+    $$E(y|w=1) - E(y|w=0)$$ $$\rho  + E(\eta |w=1) - E(\eta |w=0)$$
+
+-   Treatment effect is the regression slope
+
+-   Selection bias is correlation between error term and treatment
+
+    $$E[y_{0}|w=1] -  E[y_{0}|w=0] = E[\eta|w=1] -  E[\eta|w=0]$$
+    
+---
+
+# Treatment Effects
+
+-   Randomization means no selection bias
+
+-   In a regression framework, this means the error is unrelated to
+    treatment
+
+    $$E[\eta|w=1] -  E[\eta|w=0] =0$$
+
+-   So a regression of $y$ on $w$ would measure the causal effect
+
+-   In reality, we cannot always randomize $w$
+
+    -   Economists deal mostly with observational data
+
+-   Next we look at causal effects when we cannot randomize
+
+---
+
+# Treatment Effects
+## Causal Effects without Randomization
+
+-   We cannot always randomize into treatment and control
+
+-   Can we uncover causal effects without experiments?
+
+-   The answer is yes, depending on assumptions
+
+-   One possible assumption is .red[Mean Independence]
+
+    $$E(y_{0}|w) = E(y_{0})$$ $$E(y_{1}|w) = E(y_{1})$$
+
+-   Says conditional means do not depend on treatment status
+
+    -   Weaker assumption than full statistical independence
+
+    -   Full independence means one event has no effect on probability
+        of another
+        
+---
+
+# Treatment Effects
+
+-   With mean independence, we get
+
+    $$E(y|w=1) - E(y|w=0)$$
+    $$= \left [ E(y_{1}|w=1) - E(y_{0}|w=1) \right ] + E(y_{0}|w=1) - E(y_{0}|w=0)$$
+    $$= \left [ E(y_{1}|w=1) - E(y_{0}|w=1) \right ]$$
+    $$=  E(y_{1}) - E(y_{0})$$
+
+-   This identifies ATT = ATE
+
+-   Is this assumption realistic?
+
+    -   Means both potential outcomes unrelated to treatment
+
+    -   On average, people in treatment and control have similar treated
+        and non-treated outcomes
+
+    -   Whether this is realistic depends on context
+    
+---
+
+# Treatment Effects
+
+-   A variation if this assumption is .red[mean independence of
+    $\mathbf{y_{0}}$]
+
+    $$E(y_{0}|w) = E(y_{0})$$
+
+-   With this assumption
+
+-   Meaning that $$E(y|w=1) - E(y|w=0)$$
+    $$= \left [ E(y_{1}|w=1) - E(y_{0}|w=1) \right ] + E(y_{0}|w=1) - E(y_{0}|w=0)$$
+    $$= \left [ E(y_{1}|w=1) - E(y_{0}|w=1) \right ]$$
+
+-   With this assumption, we only measure the ATT (Not ATE)
+
+-   Is this realistic?
+
+    -   Means untreated outcome is same between groups on average
+
+    -   Puts no restriction on differences in treated outcome
+
+    -   Intuitively, there are no baseline differences between groups
+    
+---
+
+# Treatment Effects
+
+-   We can also use other variables to help with our assumptions
+
+-   Suppose we observe a set of pre-treatment characteristics
+    $\mathbf{x}$
+
+    -   Ex: gender, parental education, school test scores, etc.
+
+    -   Key is they are determined before treatment
+
+-   With this information you could assume .red[Conditional Independence]
+
+    $$(y_{0}, y_{1}) \perp w |\mathbf{x}$$
+
+-   Conditional on $\mathbf{x}$, treatment is independent of outcomes
+
+-   Write this mathematically as
+    $$E(y_{0}|w=1, \mathbf{x}) =E(y_{0}|w=0, \mathbf{x})$$
+    $$E(y_{0}|w, \mathbf{x}) = E(y_{0}| \mathbf{x})$$
+    $$E(y_{1}|w, \mathbf{x}) = E(y_{1}|\mathbf{x})$$
+    
+    
+---
+
+# Treatment Effects
+
+-   This implies that we can get treatment effects at each $\mathbf{x}$
+    $$E(y|w=1,  \mathbf{x}) - E(y|w=0,  \mathbf{x})$$
+    $$= E(y_{1}|w=1,  \mathbf{x}) - E(y_{0}|w=1,  \mathbf{x})= E(y_{1} | \mathbf{x}) - E(y_{0}| \mathbf{x})$$
+    $$= ATT( \mathbf{x}) =ATE( \mathbf{x})$$
+
+-   These treatment effects are functions of $\mathbf{x}$
+
+    -   They will differ across values of $\mathbf{x}$
+
+    -   So there are multiple treatment effects
+
+-   Finally, a variation on this is .red[Conditional Mean Independence]
+
+    $$E(y_{0}|w, \mathbf{x}) = E(y_{0}| \mathbf{x})$$
+    $$E(y_{1}|w, \mathbf{x}) = E(y_{1}|\mathbf{x})$$
+
+-   Gives you the same $ATE( \mathbf{x}) = ATT( \mathbf{x})$ as above
+
+---
+
+# Treatment Effects
+## Causal Effects without Randomization with Regression
+
+-   We can also model this scenario with regression
+
+-   Remember again the following equations for $y$, $y_{0}$, and $y_{1}$
+
+    $$y = (y_{1} - y_{0})w + y_{0}$$ $$y_{0} = \alpha + \eta$$
+    $$y_{1} = y_{0} + \rho$$
+
+-   This time, the random term $\eta$ depends on $\mathbf{x}$
+
+    $$\eta = \mathbf{x}\boldsymbol{\gamma} + \epsilon$$
+    
+---
+
+# Treatment Effects
+
+-   Substitute this into the equation for $y_{0}$
+
+    $$y_{0} = \alpha + \mathbf{x}\boldsymbol{\gamma} + \epsilon$$
+
+-   Now if we combine the equations for $y$, $y_{0}$, and $y_{1}$
+
+    $$y = \alpha + \rho w + \mathbf{x}\boldsymbol{\gamma} + \epsilon$$
+
+-   The difference in means for $y$ at each $\mathbf{x}$ between groups
+    is now $$E(y| \mathbf{x}, w=1) - E(y| \mathbf{x}, w=0)$$
+    $$\rho  + E(\epsilon | \mathbf{x}, w=1)  - E(\epsilon | \mathbf{x}, w=0)$$
+    
+---
+
+# Treatment Effects
+
+-   Again, the difference in the mean conditional error term is
+    selection bias
+
+    $$E[y_{0}|\mathbf{x}, w=1] -  E[y_{0}|\mathbf{x}, w=0] = E[\epsilon|\mathbf{x},w=1] -  E[\epsilon|\mathbf{x},w=0]$$
+
+-   If we assume Conditional Independence (or Conditional Mean
+    Independence) then
+    $$E(y_{0}  | \mathbf{x}, w)  = E(y_{0}  | \mathbf{x})$$
+
+-   and as a result
+
+    $$E(y_{0}  | \mathbf{x}, w=1)  = E(y_{0}  | \mathbf{x}, w=0)$$
+
+-   and
+
+    $$E[\epsilon|\mathbf{x},w=1] -  E[\epsilon|\mathbf{x},w=0] =0$$
+    
+---
+
+# Treatment Effects
+
+-   Intuition is as follows
+
+    -   Participation in treatment and control might be related to
+        baseline factors
+
+    -   But, for those with the same baseline factors, treatment is as
+        good as random
+
+    -   Computing treatment effects for each $\mathbf{x}$ eliminates
+        selection bias
+
+-   In this model, adding "control variables" identifies the causal
+    effect of $w$
+
+-   Whether this is actually true depends on assumptions
+
+    -   Often we cannot prove those assumptions
+    
+---
+
+# Conclusions
+
+-   The Rubin model defines what is a causal effect
+
+-   Roughly speaking, it an Average Treatment Effect
+
+    -   They will differ across values of $\mathbf{x}$
+
+    -   Difference in potential outcomes, on average in population
+
+    -   Depending on context, it might be an Average Treatment Effect
+        for the Treated
+
+-   We can express the Rubin model in a regression framework
+
+-   The slope in a linear regression is the causal effect if we can
+    assume one of
+
+    -   Randomization of treatment
+
+    -   "As good as" randomization
+
+        -   Mean Independence, Conditional Independence, Conditional
+            Mean Indpendence
+            
+---
+
+# Conclusions
+
+-   When our regression model identifies an underlying causal effect, we
+    call it a .red[structural model]
+
+-   In many econometric applications, this is what we want
+
+-   Next, we discuss in more detail linear regression
+
+-   First we discuss the population model
+
+    -   We will define the parameters we are measuring
+
+    -   Some of this might be new
+
+-   Then we discuss estimation by OLS
+
+    -   Focus is on when OLS consistently estimates the parameters
+            
+---
+
+# Simulation
+
+.content-box-green[
+.pull-left[
+- To help understand the Rubin model we will demonstrate with simulated data
+
+- Code to the right creates potential outcomes
+
+- For simplicity the treatment effect is set to 5 for everyone
+
+- Outcomes $y_{0}$ and $y_{1}$ have a Normal distribution because of $\eta$
+]
+
+.pull-right[
+```{r, echo=TRUE}
+data <- data.frame(eta=rnorm(100000,0,1)) %>%
+  mutate(y0 = 2 + eta, y1 = y0 + 5, 
+         treat_eff = y1 - y0)
+
+sumtable(data, summ=c('notNA(x)','mean(x)','sd(x)'))
+```
+]
+]
+
+---
+
+# Simulation
+
+.content-box-green[
+.pull-left[
+- Next assign treatment $w$ using .red[randomization]
+
+- In the code, $w=1$ randomly with probability 0.5
+
+- Compute observed $y$ based on treatment status
+]
+
+.pull-right[
+```{r, echo=TRUE}
+data %<>% mutate(w = if_else(runif(100000) > .5,1,0), 
+                 y = y0 + (y1-y0)*w) %>% 
+  group_by(w)
+
+head(data)
+```
+]
+]
+
+---
+
+# Simulation
+
+.content-box-green[
+.pull-left[
+- With random assignment we know
+
+  - $y_{0}$ is independent of $w$
+  
+  - $y_{1}$ is independent of $w$
+  
+- So the distributions of $y_{0}$ and $y_{1}$ are the same when $w=0$ and when $w=1$
+
+- To the right we show the distribution of $y_{0}$
+]
+
+.pull-right[
+```{r, echo=TRUE, fig.height = 4.55}
+ggplot(data, aes(x=y0, color=as.factor(w))) +
+  geom_density(alpha = .4, size=2) +
+  theme_pander(nomargin=FALSE, boxes=TRUE) +
+  labs(title = "Distribution of Y0")
+```
+]
+]
+
+---
+
+# Simulation
+
+.content-box-green[
+.pull-left[
+- Randomization ensures difference in average $y$ between groups equals the .red[ATE and ATT]
+
+- On the right we show the difference in mean of $y$ equals 5
+
+  - (it's not exactly 5 due to sampling error)
+
+]
+
+.pull-right[
+```{r, echo=TRUE}
+summarize(data, mean(y))
+summarize(data,mean(y))$`mean(y)`[2] - 
+  summarize(data,mean(y))$`mean(y)`[1]
+```
+]
+]
+
+
+---
+
+# Simulation
+
+.content-box-green[
+.pull-left[
+- Can implement difference in means as a regression
+
+- Recall slope in OLS regression of $y$ on dummy variable is difference in means of $y$ 
+
+]
+
+.pull-right[
+```{r, echo=TRUE}
+lm(y ~ w, data)
+```
+]
+]
+
+
+---
+
+# Simulation
+
+.content-box-green[
+.pull-left[
+- Now simulate selection into treatment based on $y_{0}$
+
+  - Treatment now related to value of $y_{0}$
+  
+- We know $\eta$ determines value of $y_{0}$  
+
+  - If we make $w=$ with higher values of $\eta$ then $w$ is related to $y_{0}$
+
+]
+
+.pull-right[
+```{r, echo=TRUE, results=FALSE}
+data2 <- data %>% 
+  ungroup() %>% 
+  select(eta, y0,y1) %>%
+  mutate(w = if_else(eta + runif(100000,-1,1) > 0,1,0), 
+         y = y0 + (y1-y0)*w) %>%
+  group_by(w)
+
+sumtable(data2, 
+         summ=c('notNA(x)','mean(x)','sd(x)'), 
+         group="w",
+         group.long = TRUE)
+```
+]
+]
+
+---
+
+# Simulation
+
+.content-box-green[
+.pull-left[
+- The means of $y_{0}$ and $y_{1}$ are now different by group
+  
+- Because of selection bias
+
+  - Treated group has better non-treated outcomes
+
+]
+
+.pull-right[
+```{r, results=TRUE}
+sumtable(data2, 
+         summ=c('notNA(x)','mean(x)','sd(x)'), 
+         group="w",
+         group.long = TRUE)
+```
+]
+]
+
+---
+
+# Simulation
+
+.content-box-green[
+.pull-left[
+- The distribution of $y_{0}$ differs by $w$
+
+  - Treated group has better baseline outcomes
+  
+- This creates selection bias
+]
+
+.pull-right[
+```{r, echo=TRUE, fig.height = 4.55}
+ggplot(data2, aes(x=y0, color=as.factor(w))) +
+  geom_density(alpha = .4, size=2) +
+  theme_pander(nomargin=FALSE, boxes=TRUE) +
+  labs(title = "Distribution of Y0")
+```
+]
+]
+
+---
+
+# Simulation
+
+.content-box-green[
+.pull-left[
+- Selction bias shows up when you take difference in mean $y$
+
+  - We know the true treatment effect is 5
+  
+  - But difference in $y$ is larger
+  
+  - There is positive selection bias
+  
+  - Bias is about 1.4
+
+]
+
+.pull-right[
+```{r, echo=TRUE}
+summarize(data2, mean(y))
+summarize(data2,mean(y))$`mean(y)`[2] - 
+  summarize(data2,mean(y))$`mean(y)`[1]
+```
+]
+]
+
+---
+
+# Simulation
+
+.content-box-green[
+.pull-left[
+- You can implement this as a regression
+
+- OLS estimates biased treatment effect
+
+- Remember the intercept is mean of $y$ when $w=0$
+
+]
+
+.pull-right[
+```{r, echo=TRUE}
+lm(y ~ w, data2)
+```
+]
+]
+
+
+---
+
+# Simulation
+
+.content-box-green[
+.pull-left[
+- Randomization ensures entire distribution of $y_{0}$ is the same for treatment and control
+
+- We do not need this to estimate **average** treatment effects
+
+- If the **mean** of $y_{0}$ is the same between treatment and control we can estimate treatment effect with difference in means
+
+- Code makes mean of $y_{0}$ the same, but variance bigger for $w=1$
+]
+
+.pull-right[
+```{r, echo=TRUE, results=FALSE}
+data3 <- data %>% 
+  ungroup() %>% 
+  select(eta, y0,y1) %>%
+  mutate(w =  if_else(between(percent_rank(y0),.25,.75),0,1), 
+         y = y0 + (y1-y0)*w) %>%
+  group_by(w)
+
+sumtable(data3, 
+         summ=c('notNA(x)','mean(x)','sd(x)'), 
+         group="w",
+         group.long = TRUE)
+```
+]
+]
+
+---
+
+# Simulation
+
+.content-box-green[
+.pull-left[
+- Randomization ensures entire distribution of $y_{0}$ is the same for treatment and control
+
+- We do not need this to estimate **average** treatment effects
+
+- If the **mean** of $y_{0}$ is the same between treatment and control we can estimate treatment effect with difference in means
+
+- Code makes mean of $y_{0}$ the same, but variance bigger for $w=1$
+]
+
+.pull-right[
+```{r, results=TRUE}
+sumtable(data3, 
+         summ=c('notNA(x)','mean(x)','sd(x)'), 
+         group="w",
+         group.long = TRUE)
+```
+]
+]
+
+---
+
+# Simulation
+
+.content-box-green[
+.pull-left[
+- The distribution of $y_{0}$ is plotted on the right
+
+- The spread is larger for $w=1$
+
+- This does not affect estimate of the **average** treatment effect
+]
+
+.pull-right[
+```{r, echo=TRUE, fig.height = 4.55}
+ggplot(data3, aes(x=y0, color=as.factor(w))) +
+  geom_density(alpha = .4, size=2) +
+  theme_pander(nomargin=FALSE, boxes=TRUE) +
+  labs(title = "Distribution of Y0")
+```
+]
+]
+
+---
+
+# Simulation
+
+.content-box-green[
+.pull-left[
+- Take difference in mean $y$
+
+  - This equals the treatment effect
+  
+  - Difference in variance did not create bias
+
+]
+
+.pull-right[
+```{r, echo=TRUE}
+summarize(data2, mean(y))
+summarize(data2,mean(y))$`mean(y)`[2] - 
+  summarize(data2,mean(y))$`mean(y)`[1]
+```
+]
+]
+
+
+---
+
+# Simulation
+
+.content-box-green[
+.pull-left[
+- Running regression produces same result
+
+- The variance in $y_{1}$ affects the standard error
+  
+  - But we are not concerned with that right now
+
+]
+
+.pull-right[
+```{r, echo=TRUE}
+lm(y ~ w, data3)
+```
+]
+]
+
+---
+
+# Simulation
+
+.content-box-green[
+.pull-left[
+- Finally consider .red[conditional mean independence]
+
+- Treatment is related to $y_{0}$, but only through $x$
+
+  - For people with the same $x$, $y_{0}$ is unrelated to $w$
+  
+- Ex: Education and wages
+
+  - Smart people $(x = 1)$ earn higher wages regardless of schooling $(y_0)$
+  
+  - Smart people are more likely to go to university $(w = 1)$
+  
+  - People at university will have higher $y_0$
+
+]
+
+.pull-right[
+```{r, echo=TRUE, results=FALSE}
+data4 <- data %>% 
+  ungroup() %>% 
+  select(eta) %>%
+  mutate(x = if_else(runif(100000) > .5,1,0),
+         w = if_else(x + runif(100000, -1,1) > .5,1,0),
+         y0 = 2 + 3*x + eta,
+         y1 = y0 + 5,
+         y = y0 + (y1-y0)*w) %>%
+  group_by(w)
+
+sumtable(data4, 
+         summ=c('notNA(x)','mean(x)','sd(x)'), 
+         group="w",
+         group.long = TRUE)
+```
+]
+]
+
+
+---
+
+# Simulation
+
+.content-box-green[
+.pull-left[
+- Comparing treatment and control, $y_{0}$ is bigger when $w=1$
+
+- This is because
+
+  - $y_{0}$ is bigger when $x=1$
+  
+  - $w$ more likely to be $1$ when $x=1$
+
+]
+
+.pull-right[
+```{r, results=TRUE}
+sumtable(data4, 
+         summ=c('notNA(x)','mean(x)','sd(x)'), 
+         group="w",
+         group.long = TRUE)
+```
+]
+]
+
+
+---
+
+# Simulation
+
+.content-box-green[
+.pull-left[
+- What if we focus only on people with $x=1$?
+
+- No difference in $y_{0}$ between treated and control
+
+  - Because $x$ is only reason why they differed
+  
+  - This is holding $x$ fixed
+]
+
+.pull-right[
+```{r, results=TRUE, echo= TRUE}
+sumtable(filter(data4, x==1), 
+         summ=c('notNA(x)','mean(x)','sd(x)'), 
+         group="w")
+```
+]
+]
+
+---
+
+# Simulation
+
+.content-box-green[
+.pull-left[
+- Same result if we hold $x=0$?
+
+  - Again because $x$ is only reason why they differed
+  
+]
+
+.pull-right[
+```{r, results=TRUE, echo= TRUE}
+sumtable(filter(data4, x==0), 
+         summ=c('notNA(x)','mean(x)','sd(x)'), 
+         group="w")
+```
+]
+]
+
+
+---
+
+# Simulation
+
+.content-box-green[
+.pull-left[
+- Regression of $y$ on $w$ is biased
+
+  - Because $w$ is correlated with error
+  
+- But regression of $y$ on $w$ and $x$ generates actual treatment effect  
+
+- This is conditional mean independence
+
+  - Holding $x$ fixed, potential outcomes no longer related to treatment
+]
+
+.pull-right[
+```{r, echo=TRUE}
+lm(y ~ w, data4)
+lm(y ~ w + x, data4)
+```
+]
+]

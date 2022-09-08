@@ -22,12 +22,20 @@
     
     <item>
       <title>EC655 - Econometrics</title>
-      <link>https://justinsmithecon.github.io/teaching/ec655/</link>
+      <link></link>
       <pubDate>Thu, 01 Sep 2022 00:00:00 +0000</pubDate>
-      <guid>https://justinsmithecon.github.io/teaching/ec655/</guid>
+      <guid></guid>
       <description>&lt;h2 id=&#34;course-slides&#34;&gt;Course Slides&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;Intro to R: &lt;a href=&#34;https://justinsmithecon.github.io/teaching/ec655/intro&#34;&gt;Slides&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://justinsmithecon.github.io/teaching/ec655/intro/intro.html&#34;&gt;Intro to R&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://justinsmithecon.github.io/teaching/ec655/Matrix%20Review/matrix-review-slides.html&#34;&gt;Matrix Review&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://justinsmithecon.github.io/teaching/ec655/rubin/rubin.html&#34;&gt;Rubin Causal Model&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>
