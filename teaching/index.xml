@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Teaching | Justin Smith</title>
+    <link>https://justinsmithecon.github.io/teaching/</link>
+      <atom:link href="https://justinsmithecon.github.io/teaching/index.xml" rel="self" type="application/rss+xml" />
+    <description>Teaching</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© 2022 Justin Smith</copyright><lastBuildDate>Thu, 01 Sep 2022 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://justinsmithecon.github.io/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
+      <title>Teaching</title>
+      <link>https://justinsmithecon.github.io/teaching/</link>
+    </image>
+    
+    <item>
+      <title>EC295 - Introductory Econometrics</title>
+      <link>https://justinsmithecon.github.io/teaching/ec295/</link>
+      <pubDate>Thu, 01 Sep 2022 00:00:00 +0000</pubDate>
+      <guid>https://justinsmithecon.github.io/teaching/ec295/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>EC655 - Econometrics</title>
+      <link>https://justinsmithecon.github.io/teaching/ec655/</link>
+      <pubDate>Thu, 01 Sep 2022 00:00:00 +0000</pubDate>
+      <guid>https://justinsmithecon.github.io/teaching/ec655/</guid>
+      <description>&lt;h2 id=&#34;course-slides&#34;&gt;Course Slides&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Intro to R: &lt;a href=&#34;https://justinsmithecon.github.io/teaching/ec655/intro&#34;&gt;Slides&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
