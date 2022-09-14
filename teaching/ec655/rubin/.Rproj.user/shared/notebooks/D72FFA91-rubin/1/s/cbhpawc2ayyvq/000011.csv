@@ -1,0 +1,5 @@
+"0","summarize(data,mean(y))$`mean(y)`[2] - summarize(data,mean(y))$`mean(y)`[1]"
+"1","[1]"
+"1"," 4.998362"
+"1","
+"

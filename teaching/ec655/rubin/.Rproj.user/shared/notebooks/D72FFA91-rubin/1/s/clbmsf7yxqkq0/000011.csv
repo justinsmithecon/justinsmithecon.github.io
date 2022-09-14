@@ -1,0 +1,8 @@
+"0","data2 <- data %>% "
+"0","  ungroup() %>% "
+"0","  select(eta, y0,y1) %>%"
+"0","  mutate(w = if_else(eta + runif(100000,-1,1) > 0,1,0), "
+"0","         y = y0 + (y1-y0)*w) %>%"
+"0","  group_by(w)"
+"0",""
+"0","sumtable(data2, summ=c('notNA(x)','mean(x)','sd(x)'), group=""w"", group.long=TRUE)"

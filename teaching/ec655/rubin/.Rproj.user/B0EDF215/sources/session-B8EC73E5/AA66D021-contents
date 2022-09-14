@@ -1,0 +1,154 @@
+---
+title: "Course Introduction"
+subtitle: "EC655"
+author: "Justin Smith"
+institute: "Wilfrid Laurier University"
+date: "Fall 2022"
+output:
+  xaringan::moon_reader:
+    css: ["default", "default-fonts", "hygge"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+---
+
+```{r , echo=FALSE, include=FALSE}
+
+library(sf)
+library(scales)
+library(ggplot2)
+library(ggpubr)
+library(tidyverse)
+library(hrbrthemes)
+library(kableExtra)
+library(viridis)
+library(DT)
+library(plotly)
+library(readxl)
+library(rgeos)
+library(maptools)
+library(directlabels)
+library(ggrepel)
+library(ggthemes)
+library(cancensus)
+library(bookdown)
+library(geomtextpath)
+library(egg)
+library(ggtext)
+library(ragg)
+library(scico)
+library(haven)
+library(here)
+library(knitr)
+library(jpeg)
+library(imager)
+library(Statamarkdown)
+library(ggdag)
+library(dagitty)
+library(geomtextpath)
+library(gganimate)
+library(gifski)
+library(vtable)
+library(fontawesome)
+
+knitr::opts_chunk$set(
+ echo=FALSE, 
+ message = FALSE,
+ warning = FALSE,
+ fig.retina = 3, 
+ fig.align = "center"
+ )
+
+set.seed(9810078)
+```
+
+# Introduction
+
+-   Big part of this course is data analysis
+
+- For that we will use `r fa(name="r-project", fill = "steelblue")`
+
+- Pros
+
+  - Free and open source
+  
+  - Very flexible
+  
+  - Field is moving in this direction
+  
+- Cons
+
+  - More difficult that Stata
+  
+  - Help files can be unhelpful
+  
+  - Many ways of doing the same thing
+  
+---
+
+# Using `r fa(name="r-project", fill = "steelblue")`
+
+- Two main ways of using `r fa(name="r-project", fill = "steelblue")`
+
+1. `r fa(name="r-project", fill = "steelblue")` Console
+
+  - Good if you can program
+  
+2. R Studio
+
+  - User interface for `r fa(name="r-project", fill = "steelblue")`
+  
+  - Gathers many different `r fa(name="r-project", fill = "steelblue")` windows into easy display
+  
+- I strongly encourage you to use R Studio
+
+---
+
+# Downloading `r fa(name="r-project", fill = "steelblue")` and R Studio
+
+- Before installing R Studio, you must install `r fa(name="r-project", fill = "steelblue")`
+
+- Main download site is https://www.r-project.org 
+
+.center[
+```{r, out.width = "120%"}
+knitr::include_url("https://www.r-project.org ")
+```
+]
+
+---
+
+# Downloading `r fa(name="r-project", fill = "steelblue")` and R Studio
+
+- Once `r fa(name="r-project", fill = "steelblue")` is installed, download R Studio
+
+- Download site is https://www.rstudio.com/products/rstudio/download/
+
+.center[
+<figure>
+  <img src="rstudio.png"  width="70%">
+</figure>
+]
+
+---
+
+# Resources for Learning R
+
+- YouTube playlist from Economist Nick Huntington-Klein: https://youtu.be/dFSPmjSynCs
+
+  - Detailed videos explaining the basic, moderate, and advanced level programming
+  
+- R Studio cheat sheets: https://www.rstudio.com/resources/cheatsheets/
+  
+  - Listing of commands organized by theme or package
+  
+- Intro to R for Econometrics by profs at Sciences Po: https://scpoecon.github.io/ScPoEconometrics/
+
+  - Explanation of R focused on Economists
+  
+- Swirl package: https://swirlstats.com/students.html
+
+  - Package that teaches R within R
