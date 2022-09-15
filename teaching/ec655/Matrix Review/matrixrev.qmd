@@ -62,6 +62,7 @@ knitr::opts_chunk$set(
 
 set.seed(9810078)
 ```
+
 -   Undergrad metrics normally uses scalar notation
 
     -   More accessible for students without advanced math background
