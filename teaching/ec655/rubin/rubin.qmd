@@ -348,7 +348,6 @@ set.seed(9810078)
 
 -   Gives you the same $ATE( \mathbf{x}) = ATT( \mathbf{x})$ as above
 
-
 ## Link with Regression
 
 -   We can also model this scenario with regression
@@ -374,7 +373,6 @@ set.seed(9810078)
 -   The difference in means for $y$ at each $\mathbf{x}$ between groups is now $$E(y| \mathbf{x}, w=1) - E(y| \mathbf{x}, w=0)$$ $$\rho  + E(\epsilon | \mathbf{x}, w=1)  - E(\epsilon | \mathbf{x}, w=0)$$
 
 ## Link with Regression
-
 
 -   Again, the difference in the mean conditional error term is selection bias
 
@@ -406,7 +404,6 @@ set.seed(9810078)
 
     -   Often we cannot prove those assumptions
 
-
 # Summary of Rubin Model
 
 ## Summary of Rubin Model
@@ -433,7 +430,6 @@ set.seed(9810078)
 
 ## Summary of Rubin Model
 
-
 -   When our regression model identifies an underlying causal effect, we call it a [structural model]{.red}
 
 -   In many econometric applications, this is what we want
@@ -454,16 +450,15 @@ set.seed(9810078)
 
 ## Data Setup {background-color="#d9edc2"}
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="50%"}
-- To help understand the Rubin model we will demonstrate with simulated data
+-   To help understand the Rubin model we will demonstrate with simulated data
 
-- Code to the right creates potential outcomes
+-   Code to the right creates potential outcomes
 
-- For simplicity the treatment effect is set to 5 for everyone
+-   For simplicity the treatment effect is set to 5 for everyone
 
-- Outcomes $y_{0}$ and $y_{1}$ have a Normal distribution because of $\eta$
+-   Outcomes $y_{0}$ and $y_{1}$ have a Normal distribution because of $\eta$
 :::
 
 ::: {.column width="50%"}
@@ -475,19 +470,17 @@ data <- data.frame(eta=rnorm(100000,0,1)) %>%
 sumtable(data, summ=c('notNA(x)','mean(x)','sd(x)'))
 ```
 :::
-
-::::
+:::
 
 ## Random Assignment to Treatment {background-color="#d9edc2"}
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="50%"}
-- Next assign treatment $w$ using [randomization]{.red}
+-   Next assign treatment $w$ using [randomization]{.red}
 
-- In the code, $w=1$ randomly with probability 0.5
+-   In the code, $w=1$ randomly with probability 0.5
 
-- Compute observed $y$ based on treatment status
+-   Compute observed $y$ based on treatment status
 :::
 
 ::: {.column width="50%"}
@@ -499,23 +492,21 @@ data %<>% mutate(w = if_else(runif(100000) > .5,1,0),
 head(data)
 ```
 :::
-
-::::
+:::
 
 ## Random Assignment to Treatment {background-color="#d9edc2"}
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="50%"}
-- With random assignment we know
+-   With random assignment we know
 
-  - $y_{0}$ is independent of $w$
-  
-  - $y_{1}$ is independent of $w$
-  
-- So the distributions of $y_{0}$ and $y_{1}$ are the same when $w=0$ and when $w=1$
+    -   $y_{0}$ is independent of $w$
 
-- To the right we show the distribution of $y_{0}$
+    -   $y_{1}$ is independent of $w$
+
+-   So the distributions of $y_{0}$ and $y_{1}$ are the same when $w=0$ and when $w=1$
+
+-   To the right we show the distribution of $y_{0}$
 :::
 
 ::: {.column width="50%"}
@@ -526,19 +517,17 @@ ggplot(data, aes(x=y0, color=as.factor(w))) +
   labs(title = "Distribution of Y0")
 ```
 :::
-
-::::
+:::
 
 ## Random Assignment to Treatment {background-color="#d9edc2"}
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="50%"}
-- Randomization ensures difference in average $y$ between groups equals the [ATE and ATT]{.red}
+-   Randomization ensures difference in average $y$ between groups equals the [ATE and ATT]{.red}
 
-- On the right we show the difference in mean of $y$ equals 5
+-   On the right we show the difference in mean of $y$ equals 5
 
-  - (it's not exactly 5 due to sampling error)
+    -   (it's not exactly 5 due to sampling error)
 :::
 
 ::: {.column width="50%"}
@@ -548,17 +537,15 @@ summarize(data,mean(y))$`mean(y)`[2] -
   summarize(data,mean(y))$`mean(y)`[1]
 ```
 :::
-
-::::
+:::
 
 ## Random Assignment to Treatment {background-color="#d9edc2"}
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="50%"}
-- Can implement difference in means as a regression
+-   Can implement difference in means as a regression
 
-- Recall slope in OLS regression of $y$ on dummy variable is difference in means of $y$ 
+-   Recall slope in OLS regression of $y$ on dummy variable is difference in means of $y$
 :::
 
 ::: {.column width="50%"}
@@ -566,21 +553,19 @@ summarize(data,mean(y))$`mean(y)`[2] -
 lm(y ~ w, data)
 ```
 :::
-
-::::
+:::
 
 ## Selection into Treatment {background-color="#d9edc2"}
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="50%"}
-- Now simulate selection into treatment based on $y_{0}$
+-   Now simulate selection into treatment based on $y_{0}$
 
-  - Treatment now related to value of $y_{0}$
-  
-- We know $\eta$ determines value of $y_{0}$  
+    -   Treatment now related to value of $y_{0}$
 
-  - If we make $w=$ with higher values of $\eta$ then $w$ is related to $y_{0}$
+-   We know $\eta$ determines value of $y_{0}$
+
+    -   If we make $w=$ with higher values of $\eta$ then $w$ is related to $y_{0}$
 :::
 
 ::: {.column width="50%"}
@@ -598,19 +583,17 @@ sumtable(data2,
          group.long = TRUE)
 ```
 :::
-
-::::
+:::
 
 ## Selection into Treatment {background-color="#d9edc2"}
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="50%"}
-- The means of $y_{0}$ and $y_{1}$ are now different by group
-  
-- Because of selection bias
+-   The means of $y_{0}$ and $y_{1}$ are now different by group
 
-  - Treated group has better non-treated outcomes
+-   Because of selection bias
+
+    -   Treated group has better non-treated outcomes
 :::
 
 ::: {.column width="50%"}
@@ -621,19 +604,17 @@ sumtable(data2,
          group.long = TRUE)
 ```
 :::
-
-::::
+:::
 
 ## Selection into Treatment {background-color="#d9edc2"}
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="50%"}
-- The distribution of $y_{0}$ differs by $w$
+-   The distribution of $y_{0}$ differs by $w$
 
-  - Treated group has better baseline outcomes
-  
-- This creates selection bias
+    -   Treated group has better baseline outcomes
+
+-   This creates selection bias
 :::
 
 ::: {.column width="50%"}
@@ -644,23 +625,21 @@ ggplot(data2, aes(x=y0, color=as.factor(w))) +
   labs(title = "Distribution of Y0")
 ```
 :::
-
-::::
+:::
 
 ## Selection into Treatment {background-color="#d9edc2"}
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="50%"}
-- Selction bias shows up when you take difference in mean $y$
+-   Selction bias shows up when you take difference in mean $y$
 
-  - We know the true treatment effect is 5
-  
-  - But difference in $y$ is larger
-  
-  - There is positive selection bias
-  
-  - Bias is about 1.4
+    -   We know the true treatment effect is 5
+
+    -   But difference in $y$ is larger
+
+    -   There is positive selection bias
+
+    -   Bias is about 1.4
 :::
 
 ::: {.column width="50%"}
@@ -670,19 +649,17 @@ summarize(data2,mean(y))$`mean(y)`[2] -
   summarize(data2,mean(y))$`mean(y)`[1]
 ```
 :::
-
-::::
+:::
 
 ## Selection into Treatment {background-color="#d9edc2"}
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="50%"}
-- You can implement this as a regression
+-   You can implement this as a regression
 
-- OLS estimates biased treatment effect
+-   OLS estimates biased treatment effect
 
-- Remember the intercept is mean of $y$ when $w=0$
+-   Remember the intercept is mean of $y$ when $w=0$
 :::
 
 ::: {.column width="50%"}
@@ -690,21 +667,19 @@ summarize(data2,mean(y))$`mean(y)`[2] -
 lm(y ~ w, data2)
 ```
 :::
-
-::::
+:::
 
 ## Mean Independence of $y_{0}$ {background-color="#d9edc2"}
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="50%"}
-- Randomization ensures entire distribution of $y_{0}$ is the same for treatment and control
+-   Randomization ensures entire distribution of $y_{0}$ is the same for treatment and control
 
-- We do not need this to estimate **average** treatment effects
+-   We do not need this to estimate **average** treatment effects
 
-- If the **mean** of $y_{0}$ is the same between treatment and control we can estimate treatment effect with difference in means
+-   If the **mean** of $y_{0}$ is the same between treatment and control we can estimate treatment effect with difference in means
 
-- Code makes mean of $y_{0}$ the same, but variance bigger for $w=1$
+-   Code makes mean of $y_{0}$ the same, but variance bigger for $w=1$
 :::
 
 ::: {.column width="50%"}
@@ -722,21 +697,19 @@ sumtable(data3,
          group.long = TRUE)
 ```
 :::
-
-::::
+:::
 
 ## Mean Independence of $y_{0}$ {background-color="#d9edc2"}
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="50%"}
-- Randomization ensures entire distribution of $y_{0}$ is the same for treatment and control
+-   Randomization ensures entire distribution of $y_{0}$ is the same for treatment and control
 
-- We do not need this to estimate **average** treatment effects
+-   We do not need this to estimate **average** treatment effects
 
-- If the **mean** of $y_{0}$ is the same between treatment and control we can estimate treatment effect with difference in means
+-   If the **mean** of $y_{0}$ is the same between treatment and control we can estimate treatment effect with difference in means
 
-- Code makes mean of $y_{0}$ the same, but variance bigger for $w=1$
+-   Code makes mean of $y_{0}$ the same, but variance bigger for $w=1$
 :::
 
 ::: {.column width="50%"}
@@ -747,19 +720,17 @@ sumtable(data3,
          group.long = TRUE)
 ```
 :::
-
-::::
+:::
 
 ## Mean Independence of $y_{0}$ {background-color="#d9edc2"}
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="50%"}
-- The distribution of $y_{0}$ is plotted on the right
+-   The distribution of $y_{0}$ is plotted on the right
 
-- The spread is larger for $w=1$
+-   The spread is larger for $w=1$
 
-- This does not affect estimate of the **average** treatment effect
+-   This does not affect estimate of the **average** treatment effect
 :::
 
 ::: {.column width="50%"}
@@ -770,19 +741,17 @@ ggplot(data3, aes(x=y0, color=as.factor(w))) +
   labs(title = "Distribution of Y0")
 ```
 :::
-
-::::
+:::
 
 ## Mean Independence of $y_{0}$ {background-color="#d9edc2"}
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="50%"}
-- Take difference in mean $y$
+-   Take difference in mean $y$
 
-  - This equals the treatment effect
-  
-  - Difference in variance did not create bias
+    -   This equals the treatment effect
+
+    -   Difference in variance did not create bias
 :::
 
 ::: {.column width="50%"}
@@ -792,19 +761,17 @@ summarize(data2,mean(y))$`mean(y)`[2] -
   summarize(data2,mean(y))$`mean(y)`[1]
 ```
 :::
-
-::::
+:::
 
 ## Mean Independence of $y_{0}$ {background-color="#d9edc2"}
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="50%"}
-- Running regression produces same result
+-   Running regression produces same result
 
-- The variance in $y_{1}$ affects the standard error
-  
-  - But we are not concerned with that right now
+-   The variance in $y_{1}$ affects the standard error
+
+    -   But we are not concerned with that right now
 :::
 
 ::: {.column width="50%"}
@@ -812,27 +779,25 @@ summarize(data2,mean(y))$`mean(y)`[2] -
 lm(y ~ w, data3)
 ```
 :::
-
-::::
+:::
 
 ## Conditional Mean Independence {background-color="#d9edc2"}
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="50%"}
-- Finally consider [conditional mean independence]{.red}
+-   Finally consider [conditional mean independence]{.red}
 
-- Treatment is related to $y_{0}$, but only through $x$
+-   Treatment is related to $y_{0}$, but only through $x$
 
-  - For people with the same $x$, $y_{0}$ is unrelated to $w$
-  
-- Ex: Education and wages
+    -   For people with the same $x$, $y_{0}$ is unrelated to $w$
 
-  - Smart people $(x = 1)$ earn higher wages regardless of schooling $(y_0)$
-  
-  - Smart people are more likely to go to university $(w = 1)$
-  
-  - People at university will have higher $y_0$
+-   Ex: Education and wages
+
+    -   Smart people $(x = 1)$ earn higher wages regardless of schooling $(y_0)$
+
+    -   Smart people are more likely to go to university $(w = 1)$
+
+    -   People at university will have higher $y_0$
 :::
 
 ::: {.column width="50%"}
@@ -853,21 +818,19 @@ sumtable(data4,
          group.long = TRUE)
 ```
 :::
-
-::::
+:::
 
 ## Conditional Mean Independence {background-color="#d9edc2"}
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="50%"}
-- Comparing treatment and control, $y_{0}$ is bigger when $w=1$
+-   Comparing treatment and control, $y_{0}$ is bigger when $w=1$
 
-- This is because
+-   This is because
 
-  - $y_{0}$ is bigger when $x=1$
-  
-  - $w$ more likely to be $1$ when $x=1$
+    -   $y_{0}$ is bigger when $x=1$
+
+    -   $w$ more likely to be $1$ when $x=1$
 :::
 
 ::: {.column width="50%"}
@@ -878,21 +841,19 @@ sumtable(data4,
          group.long = TRUE)
 ```
 :::
-
-::::
+:::
 
 ## Conditional Mean Independence {background-color="#d9edc2"}
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="35%"}
-- What if we focus only on people with $x=1$?
+-   What if we focus only on people with $x=1$?
 
-- No difference in $y_{0}$ between treated and control
+-   No difference in $y_{0}$ between treated and control
 
-  - Because $x$ is only reason why they differed
-  
-  - This is holding $x$ fixed
+    -   Because $x$ is only reason why they differed
+
+    -   This is holding $x$ fixed
 :::
 
 ::: {.column width="65%"}
@@ -902,17 +863,15 @@ sumtable(filter(data4, x==1),
          group="w")
 ```
 :::
-
-::::
+:::
 
 ## Conditional Mean Independence {background-color="#d9edc2"}
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="35%"}
-- Same result if we hold $x=0$?
+-   Same result if we hold $x=0$?
 
-  - Again because $x$ is only reason why they differed
+    -   Again because $x$ is only reason why they differed
 :::
 
 ::: {.column width="65%"}
@@ -922,23 +881,21 @@ sumtable(filter(data4, x==0),
          group="w")
 ```
 :::
-
-::::
+:::
 
 ## Conditional Mean Independence {background-color="#d9edc2"}
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="50%"}
-- Regression of $y$ on $w$ is biased
+-   Regression of $y$ on $w$ is biased
 
-  - Because $w$ is correlated with error
-  
-- But regression of $y$ on $w$ and $x$ generates actual treatment effect  
+    -   Because $w$ is correlated with error
 
-- This is conditional mean independence
+-   But regression of $y$ on $w$ and $x$ generates actual treatment effect
 
-  - Holding $x$ fixed, potential outcomes no longer related to treatment
+-   This is conditional mean independence
+
+    -   Holding $x$ fixed, potential outcomes no longer related to treatment
 :::
 
 ::: {.column width="50%"}
@@ -947,5 +904,4 @@ lm(y ~ w, data4)
 lm(y ~ w + x, data4)
 ```
 :::
-
-::::
+:::
