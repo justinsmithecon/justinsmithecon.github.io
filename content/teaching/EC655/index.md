@@ -11,7 +11,7 @@ show_date: false
 
 - <a href="https://justinsmithecon.github.io/teaching/ec655/intro/intro.html">Intro to R</a>
 
-- <a href="https://justinsmithecon.github.io/teaching/ec655/Matrix%20Review/matrix-review-slides.html">Matrix Review</a> 
+- <a href="https://justinsmithecon.github.io/teaching/ec655/Matrix%20Review/matrixrev.html">Matrix Review</a> 
 
 - <a href="https://justinsmithecon.github.io/teaching/ec655/rubin/rubin.html">Rubin Causal Model</a> 
 
