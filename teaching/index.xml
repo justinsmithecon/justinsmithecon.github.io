@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Teaching | Justin Smith</title><link>https://justinsmithecon.github.io/teaching/</link><atom:link href="https://justinsmithecon.github.io/teaching/index.xml" rel="self" type="application/rss+xml"/><description>Teaching</description><generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© 2022 Justin Smith</copyright><lastBuildDate>Thu, 01 Sep 2022 00:00:00 +0000</lastBuildDate><image><url>https://justinsmithecon.github.io/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url><title>Teaching</title><link>https://justinsmithecon.github.io/teaching/</link></image><item><title>EC295 - Introductory Econometrics</title><link>https://justinsmithecon.github.io/teaching/ec295/</link><pubDate>Thu, 01 Sep 2022 00:00:00 +0000</pubDate><guid>https://justinsmithecon.github.io/teaching/ec295/</guid><description>&lt;h2 id="course-slides">Course Slides&lt;/h2>
 &lt;ul>
-&lt;li>&lt;a href="https://justinsmithecon.github.io/teaching/ec295/SLR/SLR.html">Linear Regression Model with One Regressor&lt;/a>&lt;/li>
+&lt;li>
+&lt;p>&lt;a href="https://justinsmithecon.github.io/teaching/ec295/SLR/SLR.html">Linear Regression Model with One Regressor&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a href="https://justinsmithecon.github.io/teaching/ec295/SLRhypo/SLRhypo.html">Linear Regression Model - Hypothesis Testing&lt;/a>&lt;/p>
+&lt;/li>
 &lt;/ul></description></item><item><title>EC655 - Econometrics</title><link>https://justinsmithecon.github.io/teaching/ec655/</link><pubDate>Thu, 01 Sep 2022 00:00:00 +0000</pubDate><guid>https://justinsmithecon.github.io/teaching/ec655/</guid><description>&lt;h2 id="course-slides">Course Slides&lt;/h2>
 &lt;ul>
 &lt;li>
@@ -11,5 +16,8 @@
 &lt;/li>
 &lt;li>
 &lt;p>&lt;a href="https://justinsmithecon.github.io/teaching/ec655/rubin/rubin.html">Rubin Causal Model&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a href="https://justinsmithecon.github.io/teaching/ec655/linearregress/linearregress.html">Linear Regression Model&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ul></description></item></channel></rss>

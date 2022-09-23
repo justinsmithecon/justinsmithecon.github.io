@@ -1,0 +1,901 @@
+---
+title: "Linear Regression Model - Hypothesis Testing"
+subtitle: "EC295"
+author: "Justin Smith"
+institute: "Wilfrid Laurier University"
+date: "Fall 2022"
+format: 
+  revealjs:
+    theme: [default, hygge.scss]
+    smaller: true
+    slide-number: true
+    chalkboard:
+      theme: whiteboard
+      src: drawings.json
+editor: visual
+title-slide-attributes:
+  data-background-color: "#43464B"
+---
+
+# Introduction
+
+```{r , echo=FALSE, include=FALSE}
+
+library(sf)
+library(scales)
+library(ggplot2)
+library(ggpubr)
+library(tidyverse)
+library(hrbrthemes)
+library(kableExtra)
+library(viridis)
+library(DT)
+library(plotly)
+library(readxl)
+library(rgeos)
+library(maptools)
+library(directlabels)
+library(ggrepel)
+library(ggthemes)
+library(cancensus)
+library(bookdown)
+library(geomtextpath)
+library(egg)
+library(ggtext)
+library(ragg)
+library(scico)
+library(haven)
+library(here)
+library(knitr)
+library(jpeg)
+library(imager)
+library(Statamarkdown)
+library(ggdag)
+library(dagitty)
+library(geomtextpath)
+library(gganimate)
+library(gifski)
+
+knitr::opts_chunk$set(
+ echo=FALSE, 
+ message = FALSE,
+ warning = FALSE,
+ fig.retina = 3, 
+ fig.align = "center"
+ )
+
+set.seed(9810078)
+```
+
+## Introduction
+
+-   We previously learned how to estimate regression parameters
+
+-   In this section, we learn how to test claims about those parameters
+
+-   Hypothesis testing follows the same steps we learned previously
+
+    -   Make a claim about the regression parameter (e.g. $\beta_{1} = 0$)
+
+    -   Use estimate $\hat{\beta}_{1}$ and its sampling distribution to evaluate probable truth of claim
+
+    -   If claim is unlikely to be true, reject it
+
+-   We also explore assumptions about the regression error term
+
+    -   Affects standard error of $\hat{\beta}_{1}$
+
+    -   This in turn affects the test statistic in hypothesis tests
+
+# Testing Hypotheses About One Regression Coefficient
+
+## Testing Two-Sided Hypotheses about $\beta_{1}$
+
+-   The population regression model was 
+
+$$Y_{i}= \beta_{0} + \beta_{1}X_{i} + u_{i}$$
+
+-   Imagine that you are interested in $\beta_{1}$
+
+-   This is an unknown parameter
+
+    -   A feature of the population
+
+    -   But we do not observe the population
+
+-   We estimate $\beta_{1}$ with the Ordinary Least Squares (OLS) estimator $\hat{\beta}_{1}$
+
+    -   Use this to test claims about $\beta_{1}$
+
+## Testing Two-Sided Hypotheses about $\beta_{1}$
+
+-   Follows a set of steps
+
+    1.  Formulate opposing hypotheses about $\beta_{1}$
+
+    2.  Choose a test statistic
+
+    3.  Formulate a decision rule
+
+    4.  Use sample data and apply decision rule
+
+
+-   [Step 1]{.red}: Opposing hypotheses in a two-sided test would be
+
+    -   $H_{0}: \beta_{1} = \beta_{1,0}$
+
+    -   $H_{1}: \beta_{1} \neq \beta_{1,0}$
+
+        -   $\beta_{1,0}$ is the value of the claim
+
+        -   In regression, claims are about relationship between $X$ and $Y$
+
+        -   e.g., if claim is that $X$ and $Y$ are unrelated, then $\beta_{1,0} = 0$
+
+## Testing Two-Sided Hypotheses about $\beta_{1}$
+
+-   [Step 2]{.red}: choose a test statistic
+
+    -   t-statistic Measures distance of estimate away from claim 
+    
+$$t = \frac{\hat{\beta}_{1} -\beta_{1,0}  }{SE(\hat{\beta}_{1})}$$
+
+    -   This is a random variable, because it varies across samples
+
+    -   t-statistic has a Standard Normal distribution in large samples
+
+        -   Result of the Central Limit Theorem
+
+    -   Main complication is computing $SE(\hat{\beta}_{1})$
+
+    -   Recall that the variance of $\hat{\beta}_{1}$ is
+
+$$\sigma^2_{\beta_{1}}=\frac{VAR\left( (X_{i} - \mu_{X})u_{i}\right) }{n(\sigma_{X}^2)^2}$$
+
+## Testing Two-Sided Hypotheses about $\beta_{1}$
+
+-   [Step 2]{.red} continued
+
+    -   $\sigma^2_{\beta_{1}}$ depends on unknown population variances
+
+        -   $VAR\left( (X_{i} - \mu_{X})u_{i}\right)$
+
+        -   $\sigma_{X}^2$
+
+    -   Replace each with estimators
+
+        $$\hat{VAR}\left( (X_{i} - \mu_{X})u_{i}\right) = \frac{1}{n-2} \sum_{i=1}^{n} (X_{i} - \bar{X})^2\hat{u}_{i}^2$$ $$\hat{\sigma}_{X}^2 = \frac{1}{n} \sum_{i=1}^{n} (X_{i} - \bar{X})^2$$
+
+
+
+## Testing Two-Sided Hypotheses about $\beta_{1}$
+
+-   [Step 2]{.red} continued
+
+    -   With this, we get the the estimator of the variance of $\sigma^2_{\beta_{1}}$ $$\hat{\sigma}^2_{\beta_{1}}=\frac{1}{n}\frac{\frac{1}{n-2} \sum_{i=1}^{n} (X_{i} - \bar{X})^2\hat{u}_{i}^2}{\left[ \frac{1}{n} \sum_{i=1}^{n} (X_{i} - \bar{X})^2 \right ]^2}$$
+
+    -   $SE(\hat{\beta}_{1})$ is the square root of $\hat{\sigma}^2_{\beta_{1}}$
+
+        $$SE(\hat{\beta}_{1}) = \sqrt{\hat{\sigma}^2_{\beta_{1}}}$$
+
+    -   Function is routinely produced in programs like Stata
+
+-   [Step 3]{.red}: Form a decision rule
+
+    -   Typically, set $\alpha = 0.05$, with corresponding critical value $t^c = 1.96$
+
+
+
+## Testing Two-Sided Hypotheses about $\beta_{1}$
+
+-   [Step 4]{.red}: Compute t-statistic and apply decision rule
+
+    -   If $\hat{\beta}_{1}$ is too far from $\beta_{1,0}$ given decision rule, reject $H_{0}$
+
+-   Alternatively, use p-value approach
+
+    -   [$p$-value]{.red} is likelihood of getting $\hat{\beta}_{1}$ further away from $\beta_{1,0}$ than observed value
+
+    -   for a two-tailed test
+
+        $$p-value = 2 \times Pr[|t| > |t^{act}|] = 2 \times Pr \left[ \left | \frac{\hat{\beta}_{1} -\beta_{1,0}  }{SE(\hat{\beta}_{1})} \right | > \left | \frac{\hat{\beta}_{1}^{act} -\beta_{1,0}  }{SE(\hat{\beta}_{1})} \right | \right ]$$
+
+    -   Reject for any $\alpha >$ $p$-value
+
+-   As we have mentioned, the most popular two-sided test involves $H_{0}:\beta_{1,0} = 0$
+
+    -   The p-value for this test is automatically reported in Stata regression output
+
+    -   Standard error also reported for testing other hypotheses
+
+## Testing One-Sided Hypotheses about $\beta_{1}$
+
+-   One sided hypotheses involve inequality constraints
+
+    -   For upper-tailed tests, $H_{0}: \beta_{1} \le \beta_{1,0}, H_{1}: \beta_{1} > \beta_{1,0}$
+
+    -   For lower-tailed tests, $H_{0}: \beta_{1} \ge \beta_{1,0}, H_{1}: \beta_{1} < \beta_{1,0}$
+
+-   t-statistic is computed in the same way 
+
+$$t = \frac{\hat{\beta}_{1} -\beta_{1,0}  }{SE(\hat{\beta}_{1})}$$
+
+-   Interpretation of t-statistic is different
+
+    -   For upper-tailed tests, reject only if t-statistic is large positive
+
+    -   For lower-tailed tests, reject only if t-statistic is large negative
+
+    -   As such, critical values are computed only in one tail
+
+## Testing One-Sided Hypotheses about $\beta_{1}$
+
+-   $p$-value formula slightly different
+
+    -   For upper-tailed tests, $p$-value = $Pr[t > t^{act}]$
+
+    -   For lower-tailed tests, $p$-value = $Pr[t < t^{act}]$
+
+-   One-sided hypothesis tests are rare
+
+    -   Use only when there is an obvious reason
+
+    -   In regression, generally we are interested in testing "significance" of a variable
+
+        -   Whether it has an effect at all, positive or negative
+
+-   Note we can also test claims about $\beta_{0}$
+
+    -   Follows same procedure, with different standard error
+
+    -   We will not cover this in lecture
+
+# Confidence Intervals for Regression
+
+## Confidence Interval for $\beta_{1}$
+
+-   We discussed previously that point estimates lack information about sampling uncertainty
+
+-   Confidence intervals directly incorporate that information into the estimator
+
+-   We can construct confidence intervals for $\beta_{1}$
+
+-   Remember that confidence intervals are constructed by adding and subtracting a "margin of error" from the point estimate
+
+$$\mbox{CI } = \mbox{Point Estimate } \pm \mbox{ Margin of Error}$$
+
+-   In the case of regression
+
+    -   The [point estimate]{.red} $= \hat{\beta}_{1}$
+
+    -   The [margin of error]{.red} $= t^c \times SE(\hat{\beta}_{1})$
+
+## Confidence Interval for $\beta_{1}$
+
+-   So a confidence interval for would $\beta_{1}$ be $$\hat{\beta}_{1} \pm t^c \times  SE(\hat{\beta}_{1})$$
+
+-   The interval depends on three things
+
+    -   $\hat{\beta}_{1}$, which we know from our regression
+
+    -   $SE(\hat{\beta}_{1})$, which we also know
+
+    -   A critical value $t^c$
+
+        -   Same critical value from a two-sided hypothesis test at significance level $\alpha$
+
+        -   $t^c$ increases when $(1-\alpha)\%$ increases
+
+        -   We call $(1-\alpha)\%$ the confidence level
+
+-   The width of the interval therefore depends on $t^c$ and $se(\hat{\beta}_{1})$
+
+    -   Larger standard error makes the interval wider
+
+    -   A higher confidence level, which increases $t^c$, makes the interval wider
+
+## Confidence Interval for $\beta_{1}$
+
+-   Recall direct relationship between confidence intervals and hypothesis testing
+
+    -   Suppose confidence level is $(1-\alpha) \%$
+
+    -   Any $H_{0}$ in the interval is not rejected at $\alpha \%$ level
+
+    -   Any $H_{0}$ outside the interval is rejected at $\alpha \%$ level
+
+-   Intuition for 95% confidence interval
+
+    -   In hypothesis test, accept $H_{0}$ if $\hat{\beta}_{1}$ is less than 1.96 standard deviations away from claim
+
+    -   With confidence interval, we find values 1.96 standard deviations away from $\hat{\beta}_{1}$
+
+    -   Then, if we set $H_{0}$ in that range, then $\hat{\beta}_{1}$ is less than 1.96 standard deviations away
+
+    -   If we set $H_{0}$ outside the range, is more than 1.96 standard deviations away
+
+## Confidence Interval for $\beta_{1}$
+
+-   Can compute confidence interval for any $\alpha$
+
+    -   If $\alpha = 0.01$, this is a 99% confidence interval
+
+    -   If $\alpha = 0.10$, this is a 90% confidence interval
+
+    -   $(1-\alpha) \%$ confidence interval is related to hypothesis test at $\alpha \%$ level
+
+-   Recall that $\beta_{1}$ is effect of one-unit change in $X$ on $Y$
+
+-   Can construct more confidence interval for general in $X$
+
+-   If $\beta_{1}$ is effect of one-unit change, $\Delta x \beta_{1}$ of a change $\Delta x$
+
+    -   e.g., Effect of 2-unit change in $X$ is $2\beta_{1}$
+
+## Confidence Interval for $\beta_{1}$
+
+-   A confidence interval for $\Delta x \beta_{1}$ is $$\Delta x\hat{\beta}_{1} \pm t^c \times  SE(\hat{\beta}_{1}) \Delta x$$
+
+-   or equivalently
+
+    $$\{ (\hat{\beta}_{1} - t^c \times  SE(\hat{\beta}_{1})) \Delta x, (\hat{\beta}_{1} + t^c \times  SE(\hat{\beta}_{1})) \Delta x \}$$
+
+-   Effectively, the interval is scaled by $\Delta x$
+
+-   Notice that if you set $\Delta x = 1$, you get the original formula
+
+## Example with Stata {background-color="#d9edc2"}
+
+-   Recall the research question: [Are class size and student achievement related]{.red}?
+
+-   The underlying population regression function is
+
+$$TestScore_{i}= \beta_{0} + \beta_{1}STR_{i} + u_{i}$$
+
+-   $\beta_{1}$ is ceteris paribus effect of one more student per teacher
+
+-   We estimated $\beta_{1}$ and $\beta_{0}$ using OLS on simulated data
+
+## Example with Stata {background-color="#d9edc2"}
+
+-   Command for OLS estimates is "regress"
+
+-   The output from that command is summarized below
+
+```{stata, echo=TRUE, collectcode=TRUE}
+clear
+set obs 420
+set seed 12345
+
+gen str = rnormal(20,2)
+gen u = rnormal(0,20)
+
+gen testscr = 700 -2 * str + u
+	
+regress testscr str
+```
+
+## Example with Stata {background-color="#d9edc2"}
+
+-   Important results for hypothesis testing is in bottom of table
+
+-   The "std. err." column reports the standard errors for the estimates
+
+    -   $SE(\hat{\beta}_{1}) = .472$
+
+-   The "t" column shows the t-statistic for $H_{0}: \beta_{1,0} =0$
+
+    -   $t^{act} = -3.93$
+
+    -   Observed $\hat{\beta}_{1}$ is 3.93 standard deviations below zero
+
+-   The "P $> |t|$" column shows the 2-sided p-value for $H_{0}: \beta_{1,0} =0$
+
+    -   p-value is 0.000
+
+    -   0.000% of values are more extreme than the one we observe
+
+    -   We reject $H_{0}$ at most significance levels
+
+## Example with Stata {background-color="#d9edc2"}
+
+-   The Stata output also reports a 95% confidence interval
+
+    -   Interval is $\{ -2.78, -0.93\}$
+
+    -   Any $H_{0}$ between these numbers is accepted at 5% level
+
+    -   All others are rejected
+
+-   Suppose you want to test other hypotheses
+
+    -   e.g., what if we want to test $H_{0}: \beta_{1,0} =2$?
+
+-   For this, we need to use additional commands
+
+-   The easiest way to do two-sided tests is the "test" command
+
+    -   [NOT the "ttest" command]{.red}, which tests hypotheses about population means
+
+## Example with Stata {background-color="#d9edc2"}
+
+-   Now test whether the coefficient on $str$ equals 2
+
+-   Notice it reports F(1,418)
+
+    -   This is the F-statistic that we will learn later
+
+    -   Conclusion based on this test is the same as a t-test
+
+    -   In fact, $F = t^2$
+
+    -   So, can do test with p-value
+
+```{stata, echo=TRUE, collectcode=TRUE}
+test str = -2
+```
+
+-   You need to use the test command immediately after the regression
+
+# Regression when $X$ is a Binary Variable
+
+## Introduction
+
+-   Up to now we have examined only *quantitative* variables
+
+    -   Test scores
+
+    -   Income
+
+    -   Schooling
+
+-   In many applications, we are interested in *qualitative* factors
+
+    -   Gender
+
+    -   Race
+
+    -   Location
+
+-   In this section we discuss how to incorporate qualitative information into a regression
+
+## Categorical Variables
+
+-   Qualitative factors are typically categorical in nature
+
+    -   Gender: {male, female}
+
+    -   Marital Status: {married, single}
+
+    -   City: {Toronto, Montreal, Waterloo, \...}
+
+-   These variables separate data into distinct groups
+
+-   In many cases, the values the variable can take are not numeric
+
+-   For variables with 2 categories, we often code them numerically as dummy variables
+
+    -   [Dummy Variable]{.red}: A binary, 0-1 variable that describes the values of a qualitative variable with two categories
+
+## Dummy Variables
+
+-   Examples
+
+    -   Code *gender* into a dummy variable called *female*
+
+        -   Gender: {male, female} $\rightarrow$ female = {0,1}
+
+        -   The variable female = 0 if male, and 1 if female
+
+    -   Code *marital status* into a dummy variable called *married*
+
+        -   Gender: {married, single} $\rightarrow$ married = {0,1}
+
+        -   The variable married = 0 if single, and 1 if married
+
+    -   In both cases, we could reverse the coding
+
+        -   Could instead define *male* = 0 if female, and 1 if male
+
+        -   and *single* = 0 if married, and 1 if single
+
+    -   Key is the variable name usually indicates event with value 1
+
+## Dummy Variables
+
+-   Point of using 0,1 is that it leads to useful interpretations in data analysis and regression models
+
+    -   Sample mean of 0,1 variable is fraction of values that equal 1
+
+        -   If *female* = {0,1}, $\frac{1}{N}\sum_{i=1}^{N} female_{i}$ = fraction female
+
+        -   If *married* = {0,1}, $\frac{1}{N}\sum_{i=1}^{N} married_{i}$ = fraction married
+
+    -   In regression models, parameters on dummy variables also have useful interpretations
+
+        -   We will learn these details later in this section
+
+-   We will focus only on variables with two categories
+
+    -   Later in the course we may discuss variables with more than two categories
+
+## Interpretation of Regression Coefficients
+
+-   The mechanics of OLS are the same with binary $X$ variables
+
+    -   Still minimize the sum of squared residuals
+
+-   It is only the interpretation of $\beta_{1}$ and $\beta_{0}$ that change
+
+-   Imagine we want to measure the effect of class size on test scores
+
+-   We only have access to a binary variable on class size
+
+    $$D_{i} = 1\{str_{i} \ge 20 \}$$
+
+    -   $D_{i}$ equals 0 if student teacher ratio is $<20$
+
+    -   $D_{i}$ equals 1 if student teacher ratio is $\ge 20$
+
+## Interpretation of Regression Coefficients
+
+-   The regression model in this context is $$Y_{i} = \beta_{0} + \beta_{1}D_{i} + u_{i}$$
+
+-   The population regression function is $$E[Y_{i}|D_{i}] = \beta_{0} + \beta_{1}D_{i}$$
+
+-   How do we interpret $\beta_{1}$ in this regression?
+
+-   To see this, compute the conditional expectation for each value of $D_{i}$ $$E[Y_{i}|D_{i}=1] = \beta_{0} + \beta_{1}$$ $$E[Y_{i}|D_{i}=0] = \beta_{0}$$
+
+-   Then take the difference between the two $$E[Y_{i}|D_{i}=1]  - E[Y_{i}|D_{i}=0] = \beta_{1}$$
+
+## Interpretation of Regression Coefficients
+
+-   From this, $\beta_{1}$ is the difference in the average value of $Y_{i}$ between the two groups
+
+    -   Average value of $Y_{i}$ for large classes minus average value of $Y_{i}$ for small classes
+
+-   The same is true for any dummy variable
+
+    -   $\beta_{1}$ is average value of $Y_{i}$ when dummy variable equals 1 minus average value of $Y_{i}$ when dummy variable equals zero
+
+-   Thus, the interpretation is not a "slope"
+
+    -   Instead it is a difference in means
+
+-   Also notice interpretation of $\beta_{0}$
+
+    -   Average value of $Y_{i}$ when dummy variable equals 0
+
+## Interpretation of Regression Coefficients
+
+-   The above interpretation is for the regression *parameter* $\beta_{1}$
+
+-   The OLS *estimator* $\hat{\beta}_{1}$ has an analogous interpretation
+
+    -   *Sample* average of $Y_{i}$ when dummy variable equals 1, minus *sample* average of $Y_{i}$ when dummy variable equals zero
+
+-   $\hat{\beta}_{0}$ is the sample mean when the dummy variable equals 0
+
+-   You can test hypotheses about $\beta_{1}$ using regular t tests
+
+    -   In this context, you are testing difference in sample means between groups
+
+-   Confidence intervals are also constructed in the same way
+
+## Example with Stata {background-color="#d9edc2"}
+
+-   In example below, we create a dummy variable for class size
+
+-   Then compare regression estimate to difference in means
+
+```{stata, echo=TRUE, collectcode=TRUE}
+gen d = 1 if str >=20
+replace d = 0 if str <20
+	
+regress testscr d
+```
+
+## Example with Stata {background-color="#d9edc2"}
+
+-   Compare regression coefficients to differences in means
+
+```{stata, echo=TRUE, collectcode=TRUE}
+sum testscr if d == 1
+sum testscr if d == 0
+```
+
+# Heteroskedasticity vs Homoskedasticity
+
+## Definitions
+
+-   For OLS estimators, we made assumptions about the average value of $u_{i}$ conditional on $X_{i}$
+
+    -   More specifically, we assumed $E[u_{i}|X_{i}] = 0$
+
+-   For hypothesis testing, we also need to make assumptions about the [variance]{.underline} of $u_{i}$ at each $X_{i}$
+
+-   [Homoskedasticity]{.red}: the variance of $u_{i}$ conditional on $X_{i}$ is constant
+
+    -   Mathematically, $VAR[u_{i}|X_{i}] = \sigma_{u}^2$
+
+-   [Heteroskedasticity]{.red}: the variance of $u_{i}$ conditional on $X_{i}$ varies across observations
+
+    -   Mathematically, $VAR[u_{i}|X_{i}] = \sigma_{ui}^2$
+
+    -   Difference is that $\sigma_{ui}^2$ varies across individuals
+
+## Graphical Representation
+
+::: columns
+::: {.column width="50%"}
+```{r, fig.height = 7, fig.width=7}
+set.seed(9810078)
+data <- data.frame(eta1=rnorm(420,0,20), str=rnorm(420,20,2))%>%
+  mutate(eta2=rnorm(420,0,.0005*str ^ 4), testscore1 = 700 -2*str + eta1, testscore2 = 700 -2*str + eta2 )
+  
+homosked <- data %>%
+  ggplot( aes(x=str, y=testscore1)) +
+  geom_point(size=3, alpha=0.8) +
+   labs(title = "Data with Homoskedastic Errors", y="Test Score", x="Student Teacher Ratio")+
+  scale_x_continuous(breaks = scales::pretty_breaks())+
+  theme_pander(nomargin=FALSE, boxes=TRUE) 
+
+homosked
+```
+:::
+
+::: {.column width="50%"}
+```{r, fig.height = 7, fig.width=7}
+
+  
+heterosked <- data %>%
+  ggplot( aes(x=str, y=testscore2)) +
+  geom_point(size=3, alpha=0.8) +
+   labs(title = "Data with Heteroskedastic Errors", y="Test Score", x="Student Teacher Ratio")+
+  scale_x_continuous(breaks = scales::pretty_breaks())+
+  theme_pander(nomargin=FALSE, boxes=TRUE) 
+
+heterosked
+```
+:::
+:::
+
+## Intuition
+
+-   Recall that errors $u_{i}$ are difference between average $E[Y_{i}|X_{i}]$ and actual $Y_{i}$
+
+-   Therefore
+
+    -   Homoskedasticity means $Y_{i}$ values have same spread around mean at each $X_{i}$
+
+    -   Heteroskedasticity means $Y_{i}$ values may be spread differently around mean at each $X_{i}$
+
+-   How the errors are spread out has several important implications that we discuss below
+
+## Implications
+
+-   Why does the spread of the errors at each $X_{i}$ matter?
+
+-   There are two key implications
+
+1.  Under homoskedasticity, OLS estimators are [Best Linear Unbiased Estimators (BLUE)]{.red}
+
+    -   Compared to all linear unbiased estimators, they have the lowest variance
+
+    -   Under heteroskedasticity, this is not true
+
+2.  Variance of OLS estimators is different
+
+    -   Under heteroskedasticity, estimated variance of $\hat{\beta}_{1}$ is the formula derived earlier
+
+$$\hat{\sigma}^2_{\beta_{1}}=\frac{1}{n}\frac{\frac{1}{n-2} \sum_{i=1}^{n} (X_{i} - \bar{X})^2\hat{u}_{i}^2}{\left[ \frac{1}{n} \sum_{i=1}^{n} (X_{i} - \bar{X})^2 \right ]^2}$$
+
+## Implications
+
+2.  Variance of OLS estimators continued\...
+
+    -   Under homoskedasticity, estimated variance of $\hat{\beta}_{1}$ simplifies to $$\tilde{\sigma}^2_{\beta_{1}}=\frac{\frac{1}{n-2} \sum_{i=1}^{n} \hat{u}_{i}^2}{ \sum_{i=1}^{n} (X_{i} - \bar{X})^2}$$
+
+    -   If you think errors are heteroskedastic you must use the first formula
+
+        -   Use of homoskedastic formula will lead to incorrect hypothesis testing
+
+        -   Because you will underestimate actual standard error estimator
+
+        -   Overestimates the size of the extreme part of distribution of t-statistic
+
+        -   The critical values will be too low
+
+        -   Leads to over-rejecting $H_{0}$
+
+        -   Confidence intervals based on incorrect standard error also wrong
+
+## Implications
+
+3.  OLS estimators are still unbiased with Normal distribution
+
+    -   The distribution of the errors has [no impact]{.underline} on expected value of $\hat{\beta}_{1}$
+
+        -   $\hat{\beta}_{1}$ is unbiased under homoskedasticity or heteroskedasticity
+
+        -   As long as other three assumptions hold true
+
+    -   Distribution of $\hat{\beta}_{1}$ also remains Normal in large samples
+
+    -   For this reason, heteroskedasticity is only a problem for inference
+
+## What to do in Practice?
+
+-   How do we know if errors are heteroskedastic or not?
+
+-   Answer is most of the time we do not
+
+-   For this reason, best to use heteroskedasticity standard errors as default
+
+    -   Only use homoskedasticity ones in special cases
+
+-   **Note**: as default, Stata produces the [homoskedasticity]{.underline} standard errors for regressions
+
+-   To get the ones consistent with heteroskedasticity, you must use the **robust** option in *regress*
+
+## Example with Stata {background-color="#d9edc2"}
+
+-   We will generate new data imposing heteroskedasticity on the error
+
+    -   Code below makes $u$ increasing with $str^4$
+
+    -   Higher values of $str$ will have more spread in $testscr$
+
+    -   This is one type of heteroskedasticity
+
+```{stata, echo=TRUE, eval=TRUE, collectcode=TRUE, results="hide"}
+clear
+set obs 420
+set seed 12345
+gen str = rnormal(20,2)
+gen u = rnormal(0,.0005*str^4)
+
+gen testscr = 700 -2 * str + u
+```
+
+## Example with Stata {background-color="#d9edc2"}
+
+```{stata, echo=1, eval=TRUE, collectcode=TRUE}
+twoway scatter testscr str, title("Data with Heteroskedastic Errors") scheme(s1mono)
+quietly graph export hetero.svg, replace
+```
+
+![](hetero.svg){fig-align="center"}
+
+## Example with Stata {background-color="#d9edc2"}
+
+- Code and results below show OLS with assumption of homoskedastic errors
+
+```{stata, echo=TRUE, eval=TRUE, collectcode=TRUE}
+regress testscr str
+```
+
+
+## Example with Stata {background-color="#d9edc2"}
+
+- Code and results below show OLS with assumption of heteroskedastic errors
+
+- The standard error has become larger
+
+```{stata, echo=TRUE, eval=TRUE, collectcode=TRUE}
+regress testscr str, robust
+```
+
+
+
+## Example with Stata {background-color="#d9edc2"}
+
+-   Below we simulate a t-test with heteroskedastic and homoskedastic errors
+
+-   Show what happens to t-distribution **when null hypothesis is true**
+
+    -   We use $\beta_{1} = 0$ as the null hypothesis
+
+## Example with Stata {background-color="#d9edc2"}
+
+
+```{stata, echo=TRUE, eval=TRUE, results="hide", collectcode=TRUE}
+clear
+set more off
+set obs 999
+set seed 12345
+
+gen t_he = .
+gen t_ho = .
+
+foreach iter of numlist 1/999 {
+
+preserve
+clear
+qui set obs 420
+
+gen str = rnormal(20,2)
+gen u = rnormal(0,.0005*str^4)
+
+gen testscr = 700  + u
+
+qui regress testscr str 
+    local t_ho = _b[str]/_se[str] 
+    
+qui regress testscr str, robust 
+    local t_he = _b[str]/_se[str]   
+
+restore
+
+replace t_ho = `t_ho' in `iter'
+replace t_he = `t_he' in `iter'
+
+}
+```
+
+
+
+## Example with Stata {background-color="#d9edc2"}
+
+```{stata, echo=1, eval=FALSE}
+twoway (kdensity t_ho) (kdensity t_he) (function tden(420-2,x), range(-5 5)), xtitle(t) title(t-distribution when Null Hypothesis is True) legend(order(1 "Homoskedastic Errors" 2 "Heteroskedastic Errors" 3 "Actual t-dist")) scheme(s1color)
+quietly graph export tdist.svg, replace
+```
+        
+![](tdist.svg){fig-align="center"}
+
+
+## Example with Stata {background-color="#d9edc2"}
+
+::: columns
+::: {.column width="50%"}
+-   Below is the fraction of t values we reject using the critical values from t-distribution
+
+-   We chose critical value so that $\alpha = 0.05$
+
+    -   So we should reject 5% of the time
+
+-   With homoskedasticity standard errors we reject 10% of the time
+
+    -   We "over-reject" when the null hypothesis is true
+
+-   With robust standard errors, it is closer to 5%
+
+-   The robust errors generate better hypothesis testing
+
+    -   You should use them all the time
+:::
+
+::: {.column width="50%"}
+```{stata, echo=TRUE, eval=TRUE}
+gen reject_ho = abs(t_ho) >=invttail(420-2,0.025)
+gen reject_he = abs(t_he) >=invttail(420-2,0.025)
+
+tab1 reject*
+```
+:::
+:::
+
+
+## The Gauss-Markov Theorem
+
+-   OLS estimators are the most widely-used to estimate regression paramters
+
+-   The reason is based on the Gauss-Markov theorem
+
+-   [Gauss-Markov Theorem]{.red}: Under the Gauss-Markov conditions, OLS is the Best Linear Unbiased Estimator for $\beta_{1}$
+
+    -   The Gauss-Markov conditions are the assumptions we discussed before
+
+        -   Zero conditional mean of the errors
+
+        -   $X_{i}, Y_{i}$ are iid
+
+        -   Large outliers are unlikely
+
+        -   Homoskedastic errors
+
+    -   If all these hold, OLS estimators have smallest variance among all linear unbiased estimators
+
+    -   This means, they have the lowest amount of sampling variation
