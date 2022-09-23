@@ -10,3 +10,5 @@ show_date: false
 ## Course Slides
 
 - <a href="https://justinsmithecon.github.io/teaching/ec295/SLR/SLR.html">Linear Regression Model with One Regressor</a>
+
+- <a href="https://justinsmithecon.github.io/teaching/ec295/SLRhypo/SLRhypo.html">Linear Regression Model - Hypothesis Testing</a>

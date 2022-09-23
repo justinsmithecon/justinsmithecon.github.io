@@ -15,5 +15,8 @@ show_date: false
 
 - <a href="https://justinsmithecon.github.io/teaching/ec655/rubin/rubin.html">Rubin Causal Model</a> 
 
+- <a href="https://justinsmithecon.github.io/teaching/ec655/linearregress/linearregress.html">Linear Regression Model</a> 
+
+
 
 

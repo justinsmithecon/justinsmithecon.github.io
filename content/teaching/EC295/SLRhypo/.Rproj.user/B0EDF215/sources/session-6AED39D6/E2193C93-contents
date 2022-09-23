@@ -1,0 +1,885 @@
+---
+title: "Matrix Review"
+subtitle: "EC655"
+author: "Justin Smith"
+institute: "Wilfrid Laurier University"
+date: "Fall 2022"
+format: 
+  revealjs:
+    theme: [default, hygge.scss]
+    smaller: true
+    slide-number: true
+    chalkboard:
+      theme: whiteboard
+      src: drawings.json
+editor: visual
+title-slide-attributes:
+  data-background-color: "#43464B"
+---
+
+# Introduction
+
+## Introduction
+
+```{r , echo=FALSE, include=FALSE}
+
+library(sf)
+library(scales)
+library(ggplot2)
+library(ggpubr)
+library(tidyverse)
+library(hrbrthemes)
+library(kableExtra)
+library(viridis)
+library(DT)
+library(plotly)
+library(readxl)
+library(rgeos)
+library(maptools)
+library(directlabels)
+library(ggrepel)
+library(ggthemes)
+library(cancensus)
+library(bookdown)
+library(geomtextpath)
+library(egg)
+library(ggtext)
+library(ragg)
+library(scico)
+library(haven)
+library(here)
+library(knitr)
+library(jpeg)
+library(imager)
+
+knitr::opts_chunk$set(
+ echo=FALSE, 
+ message = FALSE,
+ warning = FALSE,
+ fig.retina = 3, 
+ fig.align = "center"
+ )
+
+set.seed(9810078)
+```
+
+-   Undergrad metrics normally uses scalar notation
+
+    -   More accessible for students without advanced math background
+
+-   At the graduate level, it is often taught using matrix algebra
+
+-   Some advantages to matrix notation
+
+    -   More compact
+
+    -   Easier to express some estimators
+
+-   In this section, we review matrix algebra essentials for econometrics
+
+    -   Not a comprehensive review
+
+-   We will switch between scalar and matrix notation in the course
+
+    -   Depending on which is clearer in each context
+
+# Matrices and Vectors
+
+## Matrix
+
+-   A [matrix]{.red} is a rectangular array of numbers organized in rows and columns
+
+-   For example, matrix $\mathbf{A}$ with 2 rows and 3 columns could be
+
+$$\mathbf{A} = 
+\begin{bmatrix}
+1 & 2  & 3 \\
+4 &5 & 6 
+\end{bmatrix}$$
+
+-   More generally, matrix $\mathbf{A}$ with *m* rows and *n* columns is
+
+$$\mathbf{A}= 
+\begin{bmatrix}
+a_{11}& a_{12} &\cdots & a_{1n} \\
+a_{21}& a_{22} &\cdots & a_{2n} \\
+\vdots & \vdots &\ddots & \vdots \\
+a_{m1}& a_{m2} &\cdots & a_{mn} 
+\end{bmatrix}$$
+
+## Vectors
+
+-   A [vector]{.red} is a matrix with one column or one row
+
+-   A [row vector]{.red} $\mathbf{a}$ with *n* elements is
+
+$$\mathbf{a}= 
+\begin{bmatrix}
+a_{1}& a_{2} &\cdots & a_{n} 
+\end{bmatrix}$$
+
+-   A .red\[column vector\] $\mathbf{a}$ with *m* elements is
+
+$$\mathbf{a}= 
+\begin{bmatrix}
+a_{1}\\
+a_{2}\\
+\vdots \\
+a_{m}
+\end{bmatrix}$$
+
+## Special Matrices
+
+-   A [Square Matrix]{.red} has the same number of rows and columns
+
+$$\mathbf{A}= 
+\begin{bmatrix}
+a_{11}& a_{12} &\cdots & a_{1m} \\
+a_{21}& a_{22} &\cdots & a_{2m} \\
+\vdots & \vdots &\ddots & \vdots \\
+a_{m1}& a_{m2} &\cdots & a_{mm} 
+\end{bmatrix}$$
+
+-   A [Diagonal Matrix]{.red} is a square matrix with zeroes for all off-diagonal elements
+
+$$\mathbf{A}=
+\begin{bmatrix}
+a_{11}& 0&\cdots & 0 \\
+0& a_{22} &\cdots & 0 \\
+\vdots & \vdots &\ddots & \vdots \\
+0& 0&\cdots & a_{mm} 
+\end{bmatrix}$$
+
+## Special Matrices
+
+-   The [Identity Matrix]{.red} is a square matrix with ones on the diagonal and zeroes on the off-diagonals
+
+$$\mathbf{I}= 
+\begin{bmatrix}
+1& 0&\cdots & 0 \\
+0& 1 &\cdots & 0 \\
+\vdots & \vdots &\ddots & \vdots \\
+0& 0&\cdots & 1 
+\end{bmatrix}$$
+
+-   The [Zero Matrix]{.red} is a matrix with zeroes for all elements
+
+$$\mathbf{0}= 
+\begin{bmatrix}
+0& 0&\cdots & 0 \\
+0& 0 &\cdots & 0 \\
+\vdots & \vdots &\ddots & \vdots \\
+0& 0&\cdots & 0
+\end{bmatrix}$$
+
+## Matrix Addition
+
+-   You can add and subtract matrices with the same dimensions
+
+    -   Matrices with different dimensions are not conformable for addition or subtraction
+
+-   The sum of matrices $\mathbf{A}$ and $\mathbf{B}$ with dimension $m \times n$ is
+
+$$\mathbf{A} + \mathbf{B}= 
+\begin{bmatrix}
+a_{11}& a_{12} &\cdots & a_{1n} \\
+a_{21}& a_{22} &\cdots & a_{2n} \\
+\vdots & \vdots &\ddots & \vdots \\
+a_{m1}& a_{m2} &\cdots & a_{mn} 
+\end{bmatrix}
++
+\begin{bmatrix}
+b_{11}& b_{12} &\cdots & b_{1n} \\
+b_{21}& b_{22} &\cdots & b_{2n} \\
+\vdots & \vdots &\ddots & \vdots \\
+b_{m1}& b_{m2} &\cdots & b_{mn} 
+\end{bmatrix}$$
+
+$$= 
+\begin{bmatrix}
+a_{11} + b_{11}& a_{12} + b_{12} &\cdots & a_{1n}+ b_{1n} \\
+a_{21} + b_{21}& a_{22} + b_{22} &\cdots & a_{2n}+ b_{2n} \\
+\vdots & \vdots &\ddots & \vdots \\
+a_{m1} + b_{m1}& a_{m2} +b_{m2} &\cdots & a_{mn}+ b_{mn} \\
+\end{bmatrix}$$
+
+## Matrix Subtraction
+
+-   Similarly, the difference between matrices $\mathbf{A}$ and $\mathbf{B}$ is
+
+$$\mathbf{A} - \mathbf{B}= 
+\begin{bmatrix}
+a_{11}& a_{12} &\cdots & a_{1n} \\
+a_{21}& a_{22} &\cdots & a_{2n} \\
+\vdots & \vdots &\ddots & \vdots \\
+a_{m1}& a_{m2} &\cdots & a_{mn} 
+\end{bmatrix}
+-
+\begin{bmatrix}
+b_{11}& b_{12} &\cdots & b_{1n} \\
+b_{21}& b_{22} &\cdots & b_{2n} \\
+\vdots & \vdots &\ddots & \vdots \\
+b_{m1}& b_{m2} &\cdots & b_{mn} 
+\end{bmatrix}$$
+
+$$= 
+\begin{bmatrix}
+a_{11} - b_{11}& a_{12} - b_{12} &\cdots & a_{1n}- b_{1n} \\
+a_{21} - b_{21}& a_{22} - b_{22} &\cdots & a_{2n}- b_{2n} \\
+\vdots & \vdots &\ddots & \vdots \\
+a_{m1} - b_{m1}& a_{m2} -b_{m2} &\cdots & a_{mn}- b_{mn} \\
+\end{bmatrix}$$
+
+## Rules for Addition and Subtraction
+
+-   The following rules apply to matrix addition and subtraction
+
+    -   Commutativity $$\mathbf{A + B = B + A}$$
+
+    -   Associativity $$\mathbf{A + (B + C) = (A+B) + C}$$
+
+-   Effectively, both rules mean order does not matter
+
+    -   Similar to scalar math
+
+-   For subtraction, replace plus sign with minus sign and same rules apply
+
+## Matrix Multiplication
+
+-   To multiply matrix $\mathbf{A}$ and $\mathbf{B}$, the number of columns in $\mathbf{A}$ must equal the number of rows in $\mathbf{B}$
+
+-   Suppose matrix $\mathbf{A}$ is $m \times n$ and matrix $\mathbf{B}$ is $n \times p$
+
+-   Define product as $\mathbf{C}$= $\mathbf{AB}$
+
+    -   The $ij$ element of $\mathbf{C}$ is the sum of the product of the corresponding elements along the $i$th row of $\mathbf{A}$ and $j$th column of $\mathbf{B}$\
+        $$c_{ij} = \sum_{k} a_{ik}b_{kj}$$
+
+    -   The product matrix $\mathbf{C}$ will have dimension $m \times p$
+
+        -   The number of rows of $\textbf{A}$ and number of columns of $\textbf{B}$
+
+## Matrix Multiplication
+
+-   The product $\mathbf{AB}$ is
+
+$$\mathbf{AB}= 
+    \begin{bmatrix}
+    a_{11}& a_{12} &\cdots & a_{1n} \\
+    a_{21}& a_{22} &\cdots & a_{2n} \\
+    \vdots & \vdots &\ddots & \vdots \\
+    a_{m1}& a_{m2} &\cdots & a_{mn} 
+    \end{bmatrix}
+    \times
+    \begin{bmatrix}
+    b_{11}& b_{12} &\cdots & b_{1p} \\
+    b_{21}& b_{22} &\cdots & b_{2p} \\
+    \vdots & \vdots &\ddots & \vdots \\
+    b_{n1}& b_{n2} &\cdots & b_{np} 
+    \end{bmatrix}$$
+
+::: footnotesize
+$$= 
+\begin{bmatrix}
+a_{11} b_{11} + a_{12} b_{21}  + \cdots + a_{1n} b_{n1}  &a_{11} b_{12} + a_{12} b_{22}  + \cdots + a_{1n} b_{n2} &\cdots&a_{11} b_{1p} + a_{12} b_{2p}  + \cdots + a_{1n} b_{np}\\
+a_{21} b_{11} + a_{22} b_{21}  + \cdots + a_{2n} b_{n1}  &a_{21} b_{12} + a_{22} b_{22}  + \cdots + a_{2n} b_{n2} &\cdots&a_{21} b_{1p} + a_{22} b_{2p}  + \cdots + a_{2n} b_{np}\\
+\vdots &\ddots & \vdots \\
+a_{m1} b_{11} + a_{m2} b_{21}  + \cdots + a_{mn} b_{n1}  &a_{m1} b_{12} + a_{m2} b_{22}  + \cdots + a_{mn} b_{n2} &\cdots&a_{m1} b_{1p} + a_{m2} b_{2p}  + \cdots + a_{mn} b_{np}\\
+\end{bmatrix}$$
+:::
+
+## Matrix Multiplication
+
+-   As an illustration suppose we have the following matrices $$\mathbf{A}=
+    \begin{bmatrix}
+    1& 2\\
+    3& 4 \\
+    \end{bmatrix}
+    \mathbf{B}=
+    \begin{bmatrix}
+    5&6&7  \\
+    8&9 &10 
+    \end{bmatrix}$$
+
+-   We can multiply $\mathbf{AB}$ because $\mathbf{A}$ has 2 columns, and $\mathbf{B}$ has 2 rows
+
+-   The product $\mathbf{C}$ = $\mathbf{AB}$ is
+
+$$\mathbf{C}= 
+\begin{bmatrix}
+1& 2\\
+3& 4 \\
+\end{bmatrix}
+\times
+\begin{bmatrix}
+5&6&7  \\
+8&9 &10 
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 \times 5 + 2\times 8&1 \times 6 + 2 \times 9 & 1 \times 7 + 2 \times 10  \\
+3 \times 5 + 4\times 8&3 \times 6 + 4 \times 9 & 3 \times 7 + 4 \times 10  
+\end{bmatrix}$$
+
+$$=
+\begin{bmatrix}
+21& 24& 27 \\
+47&54&  61 
+\end{bmatrix}$$
+
+## Scalar Multiplication
+
+-   A [scalar]{.red} is a single real number
+
+-   You can also multiply a scalar by a matrix
+
+-   If $\gamma$ is a scalar, and $\mathbf{A}$ is a matrix, then
+
+$$\mathbf{\gamma A}= \gamma 
+\begin{bmatrix}
+a_{11}& a_{12} &\cdots & a_{1n} \\
+a_{21}& a_{22} &\cdots & a_{2n} \\
+\vdots & \vdots &\ddots & \vdots \\
+a_{m1}& a_{m2} &\cdots & a_{mn} 
+\end{bmatrix}
+=
+\begin{bmatrix}
+\gamma a_{11}&\gamma  a_{12} &\cdots & \gamma a_{1n} \\
+\gamma a_{21}& \gamma a_{22} &\cdots & \gamma a_{2n} \\
+\vdots & \vdots &\ddots & \vdots \\
+\gamma a_{m1}& \gamma a_{m2} &\cdots & \gamma a_{mn} 
+\end{bmatrix}$$
+
+-   You multiply the scalar by each element of the matrix
+
+## Transpose
+
+-   The [transpose]{.red} of a matrix is one where the rows and columns are switched
+
+-   Suppose matrix $\mathbf{A}$ is
+
+$$\mathbf{A}= 
+    \begin{bmatrix}
+    a_{11}& a_{12} &\cdots & a_{1n} \\
+    a_{21}& a_{22} &\cdots & a_{2n} \\
+    \vdots & \vdots &\ddots & \vdots \\
+    a_{m1}& a_{m2} &\cdots & a_{mn} 
+    \end{bmatrix}$$
+
+-   Then its transpose $\mathbf{A'}$ is
+
+$$\mathbf{A'}= 
+\begin{bmatrix}
+a_{11}& a_{21} &\cdots & a_{m1} \\
+a_{12}& a_{22} &\cdots & a_{m2} \\
+\vdots & \vdots &\ddots & \vdots \\
+a_{1n}& a_{2n} &\cdots & a_{mn} 
+\end{bmatrix}$$
+
+## Transpose {#transpose-1}
+
+-   The transpose has the following properties
+
+$$\mathbf{(A')' = A }$$ $$\mathbf{(\alpha A)' = \alpha A' }$$ $$\mathbf{(A + B)' = A' + B' }$$ $$\mathbf{(AB)' = B'A' }$$
+
+-   There are additional rules for different types of matrices that we will cover below
+
+## Partitioned Matrix Multiplication
+
+-   You may sometimes want to break matrices into vectors before you multiply
+
+-   Multiplication works the same way, but notation can be cleaner and more intuitive
+
+-   Suppose we have the following matrices $$\mathbf{A}= 
+    \begin{bmatrix}
+    a_{11}& a_{12} &\cdots & a_{1n} \\
+    a_{21}& a_{22} &\cdots & a_{2n} \\
+    \vdots & \vdots &\ddots & \vdots \\
+    a_{m1}& a_{m2} &\cdots & a_{mn} 
+    \end{bmatrix}
+    \mathbf{B}= 
+    \begin{bmatrix}
+    b_{11}& b_{12} &\cdots & b_{1p} \\
+    b_{21}& b_{22} &\cdots & b_{2p} \\
+    \vdots & \vdots &\ddots & \vdots \\
+    b_{n1}& b_{n2} &\cdots & b_{np} 
+    \end{bmatrix}$$
+
+-   We are interested in the product $\mathbf{AB}$
+
+## Partitioned Matrix Multiplication
+
+-   Break these matrices into vectors conformable for multiplication
+
+$$\mathbf{A}=
+\begin{bmatrix}
+\mathbf{a_{1}}&\mathbf{a_{2}} & \cdots & \mathbf{a_{n}}
+\end{bmatrix}
+\mathbf{B}= 
+\begin{bmatrix}
+\mathbf{b_{1}}\\
+\mathbf{b_{2} }\\
+\vdots  \\
+\mathbf{b_{n}}
+\end{bmatrix}$$
+
+-   Where
+
+$$\mathbf{a_{1}}=
+\begin{bmatrix}
+a_{11}\\
+a_{21}\\
+\cdots\\
+a_{m1}
+\end{bmatrix}
+\mathbf{b_{1}}=
+\begin{bmatrix}
+b_{11}&b_{12} & \cdots & b_{1p}
+\end{bmatrix}$$
+
+## Partitioned Matrix Multiplication
+
+-   Multiply the vectors to get
+
+$$\mathbf{AB} = \sum_{i=1}^{n} \mathbf{a_{i}b_{i}}$$
+
+-   This breaks the product $\mathbf{AB}$ into the sum of $n$ sub-matrices
+
+    -   Each sub-matrix is product of corresponding vectors
+
+    -   Also each sub-matrix will have dimension $m \times p$
+
+-   This will be useful for some econometric estimators we derive
+
+    -   Makes notation simpler and more intuitive
+
+-   Again, note that you get the same answer as doing straight matrix multiplication
+
+## Rules for Matrix Multiplication
+
+-   There are several useful properties for matrix (and scalar) multiplication
+
+$$(\alpha + \beta)\mathbf{A} = \alpha \mathbf{A} + \beta\mathbf{A}$$ $$\alpha (\mathbf{A} +\mathbf{B}) =\alpha \mathbf{A} +\alpha\mathbf{B}$$ $$(\alpha\beta) \mathbf{A}  =\alpha(\beta \mathbf{A})$$ $$\alpha (\mathbf{A}\mathbf{B}) =(\alpha \mathbf{A}) \mathbf{B}$$ $$(\mathbf{A}\mathbf{B} )\mathbf{C} =\mathbf{A}(\mathbf{B} \mathbf{C})$$ $$\mathbf{A}(\mathbf{B} +\mathbf{C}) =\mathbf{A}\mathbf{B} +\mathbf{A} \mathbf{C}$$ $$(\mathbf{A}+\mathbf{B} )\mathbf{C} =\mathbf{A}\mathbf{C} +\mathbf{B} \mathbf{C}$$ $$\mathbf{A}\mathbf{I}  =\mathbf{I}\mathbf{A} = \mathbf{A}$$ $$\mathbf{A}\mathbf{0}  =\mathbf{0}\mathbf{A} = \mathbf{0}$$ $$\mathbf{A}\mathbf{B}  \neq\mathbf{B}\mathbf{A}$$ ---
+
+## Trace
+
+-   The [trace]{.red} of a square matrix is the sum of the diagonal elements
+
+-   If square matrix $\mathbf{A}$ is
+
+$$\mathbf{A}= 
+    \begin{bmatrix}
+    a_{11}& a_{12} &\cdots & a_{1n} \\
+    a_{21}& a_{22} &\cdots & a_{2n} \\
+    \vdots & \vdots &\ddots & \vdots \\
+    a_{n1}& a_{n2} &\cdots & a_{nn} 
+    \end{bmatrix}$$
+
+-   Then its trace is
+
+$$tr(\mathbf{A})= \sum_{i=1}^{n} a_{ii}$$
+
+## Trace {#trace-1}
+
+-   Important properties of the trace are
+
+$$tr(\mathbf{I_{n}})= n$$ $$tr(\mathbf{A}')=tr(\mathbf{A})$$ $$tr(\mathbf{A +B})=tr(\mathbf{A}) + tr(\mathbf{B})$$ $$tr(\alpha \mathbf{A})=\alpha tr(\mathbf{A})$$ $$tr(\mathbf{AB})=tr(\mathbf{BA})$$
+
+## Marix Determinant
+
+-   The [determinant]{.red} is a scalar value associated with a square matrix
+
+    -   Helpful concept for several things in matrix algebra
+
+    -   For econometrics, most useful for solving systems of equations and finding inverse of a matrix
+
+-   For $2 \times 2$ matrix $\mathbf{A}$ $$\mathbf{A}= 
+    \begin{bmatrix}
+    a_{11}& a_{12} \\
+    a_{21}& a_{22}  \\
+    \end{bmatrix}$$
+
+-   The determinant is
+
+$$|\mathbf{A}|=a_{11}a_{22} - a_{12}a_{21}$$
+
+## Marix Determinant
+
+-   For $3 \times 3$ matrix $\mathbf{A}$
+
+$$\mathbf{A}= 
+\begin{bmatrix}
+a_{11}& a_{12} & a_{13} \\
+a_{21}& a_{22} & a_{23} \\
+a_{31}& a_{32} & a_{33} \\
+\end{bmatrix}$$
+
+-   The determinant is
+
+$$|\mathbf{A}|=a_{11}a_{22}a_{33} + a_{12}a_{23}a_{31} +a_{13}a_{21}a_{32}$$ $$-(a_{12}a_{21}a_{33} + a_{11}a_{23}a_{32} +a_{13}a_{22}a_{31})$$
+
+$$=a_{11}(a_{22}a_{33} - a_{23}a_{32}) + a_{12}(a_{23}a_{31} -a_{21}a_{33} )  +a_{13}(a_{21}a_{32} - a_{22}a_{31} )$$
+
+## Marix Determinant
+
+-   For $n \times n$ matrix $\mathbf{A}$ the determinant is
+
+$$|\mathbf{A}|=a_{i1}c_{i1} + a_{i2}c_{i2} + \cdots + a_{in}c_{in} \text{   for choice of any row i}$$
+
+-   Where
+
+    -   $a_{ij}$ is the $ij$ element of matrix $\mathbf{A}$
+
+    -   $c_{ij}$ is the $ij$ [cofactor]{.red} of matrix $\mathbf{A}$ defined as $$c_{ij} = (-1)^{i+j}|\mathbf{A}_{ij}|$$
+
+    -   $|\mathbf{A}_{ij}|$ is the [minor]{.red} of matrix $\mathbf{A}$
+
+        -   Determinant of the sub-matrix formed by deleting the $i$th row and $j$th column of $\mathbf{A}$
+
+-   Process is long and tedious for large matrices
+
+## Marix Determinant
+
+-   Example of $3 \times 3$ matrix
+
+$$\mathbf{A}= 
+\begin{bmatrix}
+1& 2 & 3 \\
+4& 5&6   \\
+7& 8 &9  
+\end{bmatrix}$$
+
+-   Choose any row to find cofactors and compute determinant
+
+    -   Does not matter which
+
+-   Let us expand along row 1
+
+$$|\mathbf{A}|=1(-1)^{1+1} 
+\begin{vmatrix}
+  5&6   \\
+ 8 &9  
+\end{vmatrix}
++2(-1)^{1+2} 
+\begin{vmatrix}
+  4&6   \\
+ 7 &9  
+\end{vmatrix}
++3(-1)^{1+3} 
+\begin{vmatrix}
+  4&5   \\
+ 7 &8  
+\end{vmatrix}$$
+
+$$|\mathbf{A}|= -3 +12 -9 = 0$$
+
+## Matrix Inverse
+
+-   The [inverse]{.red} of a square matrix $\mathbf{A}$ is defined such that
+
+$$\mathbf{A}\mathbf{A}^{-1} = \mathbf{A}^{-1}\mathbf{A} = \mathbf{I}$$
+
+-   It is roughly the equivalent of taking the reciprocal in scalar math
+
+    -   But it is **not** generally the reciprocal of the elements of a matrix
+
+-   The formula for the inverse is
+
+$$\mathbf{A}^{-1}= \frac{1}{|\mathbf{A}|}
+\begin{bmatrix}
+c_{11}& c_{12} &\cdots & c_{1n} \\
+c_{21}& c_{22} &\cdots & c_{2n} \\
+\vdots & \vdots &\ddots & \vdots \\
+c_{n1}& c_{n2} &\cdots & c_{nn} 
+\end{bmatrix}$$
+
+-   where $c_{ij}$ are the cofactors defined above
+
+## Matrix Inverse
+
+-   The inverse exists only when $|\mathbf{A}| \neq 0$
+
+    -   This is why it is important to know the determinant
+
+    -   In example above, inverse does not exist
+
+        -   We will see later that it is because the columns are linearly dependent
+
+-   A matrix that cannot be inverted is [singular]{.red}
+
+-   A matrix that has an inverse is [nonsingular]{.red}
+
+-   Inverse matrices have the following properties
+
+$$\mathbf{(\alpha A)^{-1} = \frac{1}{\alpha} A^{-1} }$$ $$\mathbf{(A')^{-1}} = \mathbf{(A^{-1})' }$$ $$\mathbf{(A^{-1})^{-1}} = \mathbf{A}$$ $$\mathbf{(AB)^{-1}= B^{-1}A^{-1} }$$
+
+# Linear Independence and Rank of a Matrix
+
+## Summary
+
+-   Now that we can manipulate matrices, we can move to more advanced topics
+
+-   Matrix algebra is useful for expressing and solving systems of equations
+
+    -   This is how we will use it in econometrics
+
+-   We will learn you can solve for the OLS estimator when regressors are linearly independent
+
+    -   They are not linear functions of one another
+
+-   To check linear independence, we use the concept of rank
+
+-   The [rank]{.red} of a matrix is the maximum number of independent rows or columns
+
+    -   For non-square matrices, the maximum rank is the lesser of the number or rows or columns
+
+## Linear Independence
+
+-   A set of vectors are [linearly independent]{.red} if you cannot express any of them as linear functions the others
+
+-   Mathematically, suppose that $\mathbf{A}=\begin{bmatrix} \mathbf{a}_{1}& \mathbf{a}_{2} &\cdots & \mathbf{a}_{m} \end{bmatrix}$
+
+    -   where $\mathbf{a}_{1}, \mathbf{a}_{2}, \cdots,\mathbf{a}_{m}$ are $n \times 1$ vectors
+
+-   The vectors are independent if the only solution to
+
+$$\alpha_{1}\mathbf{a}_{1}+ \alpha_{2}\mathbf{a}_{2}+ \cdots+\alpha_{m}\mathbf{a}_{m}= 0$$
+
+-   is
+
+$$\alpha_{1} = \alpha_{2}= \cdots=\alpha_{m}= 0$$ - If at least one $\alpha_{i} \neq 0$, then the vectors are linearly dependent
+
+## Rank of a Matrix
+
+-   The [rank]{.red} of a matrix is the maximum number of linearly independent rows or columns
+
+    -   The rank of the rows will always equal the rank of the columns
+
+    -   If the number of rows is less than columns, the highest rank is the number of rows
+
+    -   Vice versa if the number of columns is less than the number of rows
+
+-   A matrix has [full rank]{.red} if rank equals the minimum of the number of rows/columns
+
+-   In econometrics, we mostly deal with matrices with more rows than columns
+
+    -   So the matrix will be full rank if the rank equals the number of columns
+
+-   We will see later we need our matrix of regressors to have full rank
+
+    -   None of the regressors can be linear functions of each other (no multicollinearity)
+
+## Rank of a Matrix
+
+-   Some useful properties of the rank of a matrix
+
+    -   The rank of a matrix and transpose are the same $$rank(\mathbf{A'}) = rank(\mathbf{A})$$
+
+    -   If $\mathbf{A}$ is $n \times m$ then $$rank(\mathbf{A}) \le min(n,m)$$
+
+    -   If $\mathbf{A}$ is $n \times n$ and $rank(\mathbf{A}) =n$ then $\mathbf{A}$ is nonsingular (invertible)
+
+# Quadratic Forms and Positive Definite Matrices
+
+## Quadratic Form
+
+-   If $\mathbf{A}$ is $n \times n$ and symmetric, and $\mathbf{x}$ is $n \times 1$, the [quadratic form]{.red} for $\mathbf{A}$ is
+
+$$\mathbf{x'Ax}=
+\begin{bmatrix}
+x_{1}& x_{2} &\cdots & x_{n} 
+\end{bmatrix}
+\begin{bmatrix}
+a_{11}& a_{12} &\cdots & a_{1n} \\
+a_{21}& a_{22} &\cdots & a_{2n} \\
+\vdots & \vdots &\ddots & \vdots \\
+a_{n1}& a_{n2} &\cdots & a_{nn} 
+\end{bmatrix}
+\begin{bmatrix}
+x_{1}\\
+ x_{2} \\
+ \vdots \\
+  x_{n} 
+\end{bmatrix}$$
+
+$$=\sum_{i=1}^n a_{ii}x_{i}^2 + 2\sum_{i=1}^n \sum_{j>i}a_{ij}x_{i}x_{j}$$
+
+-   A matrix is [positive definite]{.red} if for all $\mathbf{x} \neq 0$
+
+$$\mathbf{x'Ax} > 0$$
+
+## Positive Definite Matrices
+
+-   A matrix is [positive semidefinite]{.red} if for all $\mathbf{x} \neq 0$
+
+$$\mathbf{x'Ax} \ge 0$$ - Positive definite matrices have diagonal elements that are strictly positive
+
+-   Positive semidefinite matrices have diagonal elements that are nonnegative
+
+-   Some other useful properties of positive definite/semidefinite matrices
+
+    -   If $\mathbf{A}$ is positive definite, then $\mathbf{A}^{-1}$ exists and is also positive definite
+
+    -   If $\mathbf{A}$ is $n \times m$, then $\mathbf{A'A}$ and $\mathbf{AA'}$ are positive definite
+
+    -   If $\mathbf{A}$ is $n \times m$ and $rank(\mathbf{A}) = m$ then $\mathbf{A'A}$ is positive definite
+
+-   These concepts are used mostly for variance-covariance matrices in econometrics
+
+## Idempotent Matrices
+
+-   An [idempotent]{.red} matrix is one that does not change when multiplied by itself
+
+-   Mathematically, $\mathbf{A}$ is idempotent when
+
+$$\mathbf{AA} = \mathbf{A}$$
+
+-   When we discuss OLS, we will work with the following idempotent matrices
+
+    -   Suppose $\mathbf{X}$ is $n \times k$ with full rank. Define
+
+$$\mathbf{P} = \mathbf{X(X'X)^{-1}X'}$$ $$\mathbf{M} =\mathbf{I_{n}} - \mathbf{X(X'X)^{-1}X'}$$
+
+-   You can verify they are idempotent my multiplying each by itself
+
+-   Some important properties of idempotent matrices are
+
+    -   $rank(\mathbf{A}) = tr(\mathbf{A})$
+
+    -   $\mathbf{A}$ is positive semidefinite
+
+# Moments of Random Vectors
+
+## Expected Value
+
+-   The [expected value]{.red} of a random matrix is the matrix of expected values
+
+-   If $\mathbf{X}$ is an $n \times m$ matrix, then
+
+$$\mathbf{E}(\mathbf{X})=
+\begin{bmatrix}
+\mathbf{E}(x_{11}) & \mathbf{E}(x_{12}) & \cdots & \mathbf{E}(x_{1m})\\
+\mathbf{E}(x_{21}) & \mathbf{E}(x_{22}) & \cdots &\mathbf{E}(x_{2m})\\
+\vdots & \vdots &\ddots & \vdots \\
+\mathbf{E}(x_{n1}) & \mathbf{E}(x_{n2}) & \cdots &\mathbf{E}(x_{nm})\\
+\end{bmatrix}$$
+
+-   Properties of expected values are similar to those in scalar math
+
+    -   If $\mathbf{x}$ is a random vector, $\mathbf{b}$ is a nonrandom vector, and $\mathbf{A}$ is a nonrandom matrix, then $\mathbf{E}(\mathbf{Ax+b}) = \mathbf{A}\mathbf{E}(\mathbf{x})+\mathbf{b}$
+
+    -   If $\mathbf{X}$ is a random matrix, and $\mathbf{B}$ and $\mathbf{A}$ are nonrandom matrices, then $\mathbf{E}(\mathbf{AXB}) = \mathbf{A}\mathbf{E}(\mathbf{X})\mathbf{B}$
+
+## Variance-Covariance Matrix
+
+-   The [variance-covariance matrix]{.red} of random vector $\mathbf{y}$ has variances on the diagonal, covariances in the off-diagonal
+
+-   If $\mathbf{y}$ is an $n \times 1$ random vector, then
+
+$$var(\mathbf{y})= \mathbf{\sigma_{y}} = \mathbf{E[(y-E[y])(y-E[y])']}$$ $$=
+\begin{bmatrix}
+\text{var}(y_{1}) & \text{cov}(y_{1},y_{2}) & \cdots &\text{cov}(y_{1},y_{n}) \\
+\text{cov}(y_{2},y_{1}) & \text{var}(y_{2}) & \cdots &\text{cov}(y_{2},y_{n}) \\
+\vdots & \vdots &\ddots & \vdots \\
+\text{cov}(y_{n},y_{1})  & \text{cov}(y_{n},y_{2}) & \cdots &\text{var}(y_{n})\\
+\end{bmatrix}$$
+
+## Variance-Covariance Matrix {#variance-covariance-matrix-1}
+
+-   Useful properties of variance-covariance matrices are
+
+    -   If $\mathbf{a}$ is a nonrandom vector, then $\text{var}(\mathbf{a'y}) =\mathbf{a'}\text{var}\mathbf{(y)a}$
+
+    -   If $\text{var}(\mathbf{a'y})>0$ for all $\mathbf{a>0}$, $\text{var}(\mathbf{y})$ is positive definite
+
+    -   If $\mathbf{A}$ is a nonrandom matrix, $\mathbf{b}$ is a nonrandom vector, then $\text{var}(\mathbf{Ay + b}) =\mathbf{A'}\text{var}\mathbf{(y)A}$
+
+    -   If $\text{var}(y_{j})=\sigma^{2}$ for all $j=1,2,...,n$, and the elements of $\textbf{y}$ are uncorrelated, then $\text{var}(\mathbf{y})=\sigma^{2}\mathbf{I_{n}}$
+
+# Matrix Differentiation
+
+## Scalar Functions
+
+-   A scalar function of a vector is a single function with respect to several variables
+
+    -   A vector function is a set of one or more scalar functions, each with respect to several variables
+
+    -   We will not cover these
+
+-   Consider the scalar function $y = f(\mathbf{x}) =f(x_{1}, x_{2},...,x_{n})$
+
+    -   The function takes the vector $\mathbf{x}$ and returns a scalar
+
+    -   This is just another way to write a multivariate function
+
+-   The derivative of this function is
+
+$$\frac{\partial f(\mathbf{x})}{\mathbf{x}}=
+\begin{bmatrix}
+\frac{\partial f(\mathbf{x})}{x_{1}} & \frac{\partial f(\mathbf{x})}{x_{2}} & \cdots & \frac{\partial f(\mathbf{x})}{x_{n}}  
+\end{bmatrix}$$
+
+## Derivative of Scalar Function
+
+-   We simply collect the derivative with respect to each element of $\mathbf{x}$ in a vector
+
+-   Ex: linear function of $\mathbf{x}$
+
+    -   Suppose $\mathbf{a}$ is an $n \times 1$ vector and $$y = f(\mathbf{x}) = \mathbf{a'x} = \sum_{i=1}^{n} a_{i}x_{i}$$
+
+    -   The derivative is
+
+    $$\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}}=\frac{\partial \mathbf{a'x} }{\partial \mathbf{x}}= \mathbf{a'} =
+        \begin{bmatrix}
+        a_{1}& a_{2}& \cdots & a_{n}
+        \end{bmatrix}$$
+
+## Derivative of Scalar Function
+
+-   Ex: Quadratic form of $\mathbf{x}$
+
+    -   Suppose $\mathbf{A}$ is an $n \times n$ symmetric matrix. The quadratic form is $$y = f(\mathbf{x}) = \mathbf{x'Ax} =\sum_{i=1}^n a_{ii}x_{i}^2 + 2\sum_{i=1}^n \sum_{j>i}a_{ij}x_{i}x_{j}$$
+
+    -   The derivative is $$\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}}=\frac{\partial \mathbf{x'Ax} }{\partial \mathbf{x}}= \mathbf{2x'A}$$
+
+# Linear Regression Model in Matrix Notation
+
+## Population Regression Model
+
+-   In undergraduate textbooks, the population linear regression model is written as
+
+$$y= \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{2} + \cdots + \beta_{k}x_{k} + u$$
+
+-   $y$ and $x_{1},...,x_{k}$ are observable random variables
+
+-   $u$ is an unobservable random variable
+
+-   We can write more compactly in vector form as
+
+$$y=  \mathbf{x}\boldsymbol{\beta}  + u$$
+
+-   $\mathbf{x}$ is a $1 \times (k+1)$ vector of independent variables
+
+    -   There are $k$ independent variables, plus an intercept
+
+-   $\boldsymbol{\beta}$ is a $(k+1) \times 1$ vector of slope parameters
+
+## Population Regression Model
+
+-   Now suppose we take a random sample of $n$ people from the population
+
+-   The population model holds for each member of the sample
+
+$$y_{i}=  \mathbf{x_{i}}\boldsymbol{\beta}  + u_{i}, \forall i=1,...,n$$
+
+-   We can express this more compactly with full matrix notation
+
+$$\mathbf{y}=  \mathbf{X}\boldsymbol{\beta}  + \mathbf{u}$$
+
+-   $\mathbf{X}$ is an $n \times (k+1)$ matrix of observations on each regressor
+
+-   $\boldsymbol{\beta}$ is still a $(k+1) \times 1$ vector of slope parameters
+
+-   $\mathbf{y}$ is an $n \times 1$ vector of observations on the dependent variable
+
+-   $\mathbf{u}$ is an $n \times 1$ vector of error terms

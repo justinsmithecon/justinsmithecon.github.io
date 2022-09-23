@@ -1,0 +1,204 @@
+---
+title: "The Simple Linear Regression Model"
+subtitle: "EC295"
+author: "Justin Smith"
+institute: "Wilfrid Laurier University"
+date: "Fall 2022"
+format: 
+  revealjs:
+    theme: [default, hygge.scss]
+    smaller: true
+    slide-number: true
+    chalkboard:
+      theme: whiteboard
+      src: drawings.json
+editor: visual
+title-slide-attributes:
+  data-background-color: "#43464B"
+---
+
+```{r , echo=FALSE, include=FALSE}
+
+library(sf)
+library(scales)
+library(ggplot2)
+library(ggpubr)
+library(tidyverse)
+library(hrbrthemes)
+library(kableExtra)
+library(viridis)
+library(DT)
+library(plotly)
+library(readxl)
+library(rgeos)
+library(maptools)
+library(directlabels)
+library(ggrepel)
+library(ggthemes)
+library(cancensus)
+library(bookdown)
+library(geomtextpath)
+library(egg)
+library(ggtext)
+library(ragg)
+library(scico)
+library(haven)
+library(here)
+library(knitr)
+library(jpeg)
+library(imager)
+library(Statamarkdown)
+library(ggdag)
+library(dagitty)
+library(geomtextpath)
+library(gganimate)
+library(gifski)
+
+knitr::opts_chunk$set(
+ echo=FALSE, 
+ message = FALSE,
+ warning = FALSE,
+ fig.retina = 3, 
+ fig.align = "center"
+ )
+
+set.seed(9810078)
+```
+
+# What is Econometrics?
+
+## What is Econometrics
+
+![](metrics.jpg){fig-align="center"}
+
+## What is Econometrics
+
+-   Defining characteristics of econometrics
+
+    -   Observational data
+
+    -   Use of regression analysis
+
+-   Motivating statistical models with economic models
+
+    -   Focus on causality
+
+-   This class introduces you to linear regression
+
+    -   Building block for many future economics classes
+
+    -   You will use this technique in EC481
+
+# The Linear Regression Model
+
+## Introduction
+
+-   Economic analysis often involves relating two or more variables
+
+    -   Does age of school entry affect test scores?
+
+    -   Does childhood health insurance affect adult health?
+
+    -   Does foreign competition affect domestic innovation?
+
+-   These relationships are typically used for
+
+    -   <font color="red">**Causal Inference**</font>: the independent effect of one variable on another
+
+    -   <font color="red">**Prediction**</font>: estimating value of one variable given values of another
+
+-   Which one you use depends on goals of your analysis
+
+    -   Causal inference is important in policy analysis
+
+    -   Prediction is useful for guessing unknown values of a variable
+
+-   We will develop a model to use for these goals
+
+## What Are We Trying to Model?
+
+-   We want to relate test scores to class size
+
+-   Hard to do this for specific individuals
+
+    -   Many reasons why test scores differ between people
+
+    -   Even people in same class sizes have very different scores
+
+-   Instead focus on the <font color="red">systematic</font> relationship
+
+-   We do this by focusing on average test scores
+
+    -   How do average test scores change with class size?
+
+-   Several reasons to use the average
+
+    -   Highlights systematic patterns between variables
+
+    -   It is mathematically optimal way to predict a variable given another
+
+    -   Intuitively appealing
+
+## What Are We Trying to Model?
+
+::: columns
+::: {.column width="50%"}
+-   Mathematically we focus on the [**Conditional Expectation**]{.red}
+
+-   In the context of test scores, the conditional expectation is $$ E[TestScore | STR] $$
+
+-   This is the average test score for each class size
+
+-   $STR$ is Student Teacher Ratio, a measure of class size
+:::
+
+::: {.column width="50%"}
+::: content-box-red
+**Reminder about Expected Values**
+
+-   The **Expected Value** $E[Y]$ of a random variable $Y$ is its weighted average
+
+-   The **Conditional Expectation** $E[Y|X]$ is the weighted average of a variable $Y$ at specific values of another variable $X$
+:::
+:::
+:::
+
+## What Are We Trying to Model?
+
+-   Big problem: we do not know how average test scores relate to class size
+
+    -   Could be linear
+
+    -   Could be non-linear
+
+    -   Could some other weird function
+
+-   Unfortunately, we will [never know]{.red} exactly how they relate `r emo::ji("sad")`
+
+-   Instead we approximate this relationship
+
+-   In EC295 our we use linear models for the approximation
+
+    -   Often a good guess at true relationship
+
+    -   But unknown true model is probably more complicated
+
+## The Population Linear Regression Model
+
+-   A linear model relating test scores to each class size is $$TestScore = \beta_{0} + \beta_{STR}STR + u$$
+
+-   Several important components of this model
+
+    -   $TestScore$ are individual test scores
+
+    -   STR are individual class sizes
+
+    -   $\beta_{STR}$ is the [slope]{.red}
+
+        -   Effect of one-unit change in class size on test scores
+
+    -   $\beta_{0}$ is the [intercept]{.red} parameter
+
+        -   Test scores when class size is zero
+
+    -   $u$ is everything except class size that determines test scores
