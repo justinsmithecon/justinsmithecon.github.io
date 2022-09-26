@@ -1088,7 +1088,7 @@ ggplot(outlierdata,aes(x=x,y=y)) +
 
 -   Its value therefore varies from sample to sample
 
-    -   It is a .red[random variable]
+  -   It is a .red[random variable]
 
 -   The sampling distribution of $\hat{\beta}_{1}$ describes the
     likelihood of values it can take across random samples
@@ -1131,6 +1131,20 @@ ggplot(outlierdata,aes(x=x,y=y)) +
 -   The last term can be simplified
     $$\sum_{i=1}^{n} (X_{i} - \bar{X})(u_{i} - \bar{u}) = \sum_{i=1}^{n} (X_{i} - \bar{X})u_{i} - \sum_{i=1}^{n} (X_{i} - \bar{X})\bar{u}$$
     $$= \sum_{i=1}^{n} (X_{i} - \bar{X})u_{i}$$
+    
+    
+---
+
+# Sampling Distribution of OLS Estimators    
+
+-   Because
+    $$\bar{u}\sum_{i=1}^{n}(X_{i} - \bar{X}) =\bar{u}(\sum_{i=1}^{n}X_{i} - \sum_{i=1}^{n}\bar{X})$$
+    $$=\bar{u}(\sum_{i=1}^{n}X_{i} - n\bar{x})=\bar{y}(\sum_{i=1}^{n}X_{i} - n\frac{1}{n}\sum_{i=1}^{n}X_{i})$$
+    $$=\bar{u}(\sum_{i=1}^{n}X_{i} - \sum_{i=1}^{n}X_{i})  =  0$$
+
+-   Putting this all together
+    $$\hat{\beta}_{1} = \frac{\beta_{1}\sum_{i=1}^{n}(X_{i} - \bar{X})^2 +\sum_{i=1}^{n} (X_{i} - \bar{X})u_{i}}{\sum_{i=1}^{n}(X_{i} - \bar{X})^2}$$
+    $$\hat{\beta}_{1} = \beta_{1}+\frac{\sum_{i=1}^{n} (X_{i} - \bar{X})u_{i}}{\sum_{i=1}^{n}(X_{i} - \bar{X})^2}$$
     
 ---
 
