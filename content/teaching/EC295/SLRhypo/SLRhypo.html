@@ -471,19 +471,16 @@
 <ul>
 <li><p><span class="red">Step 2</span>: choose a test statistic</p>
 <ul>
-<li>t-statistic Measures distance of estimate away from claim</li>
+<li><p>t-statistic Measures distance of estimate away from claim <span class="math display">\[t = \frac{\hat{\beta}_{1} -\beta_{1,0}  }{SE(\hat{\beta}_{1})}\]</span></p></li>
+<li><p>This is a random variable, because it varies across samples</p></li>
+<li><p>t-statistic has a Standard Normal distribution in large samples</p>
+<ul>
+<li>Result of the Central Limit Theorem</li>
+</ul></li>
+<li><p>Main complication is computing <span class="math inline">\(SE(\hat{\beta}_{1})\)</span></p></li>
+<li><p>Recall that the variance of <span class="math inline">\(\hat{\beta}_{1}\)</span> is</p></li>
 </ul></li>
 </ul>
-<p><span class="math display">\[t = \frac{\hat{\beta}_{1} -\beta_{1,0}  }{SE(\hat{\beta}_{1})}\]</span></p>
-<pre><code>-   This is a random variable, because it varies across samples
-
--   t-statistic has a Standard Normal distribution in large samples
-
-    -   Result of the Central Limit Theorem
-
--   Main complication is computing $SE(\hat{\beta}_{1})$
-
--   Recall that the variance of $\hat{\beta}_{1}$ is</code></pre>
 <p><span class="math display">\[\sigma^2_{\beta_{1}}=\frac{VAR\left( (X_{i} - \mu_{X})u_{i}\right) }{n(\sigma_{X}^2)^2}\]</span></p>
 </section>
 <section id="testing-two-sided-hypotheses-about-beta_1-3" class="slide level2">
@@ -578,6 +575,123 @@
 <ul>
 <li><p>Follows same procedure, with different standard error</p></li>
 <li><p>We will not cover this in lecture</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="errors-in-hypothesis-testing" class="slide level2">
+<h2>Errors in Hypothesis Testing</h2>
+<ul>
+<li><p>Two kinds of mistakes in hypothesis testing</p>
+<table>
+<caption>Error Table for Hypothesis Testing</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;"><span class="math inline">\(H_{0}\)</span> True</th>
+<th style="text-align: center;"><span class="math inline">\(H_{0}\)</span> False</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Accept <span class="math inline">\(H_{0}\)</span></td>
+<td style="text-align: center;">Correct</td>
+<td style="text-align: center;"><strong>Type II Error</strong></td>
+</tr>
+<tr class="even">
+<td>Reject <span class="math inline">\(H_{0}\)</span></td>
+<td style="text-align: center;"><strong>Type I Error</strong></td>
+<td style="text-align: center;">Correct</td>
+</tr>
+</tbody>
+</table></li>
+<li><p><span class="red">Type I Error</span>: Rejecting a true null hypothesis</p>
+<ul>
+<li><p>Recall: <span class="math inline">\(t\)</span> assumes <span class="math inline">\(H_{0}\)</span> is true</p></li>
+<li><p>Reject claims that are unlikely under sampling randomness</p></li>
+<li><p>Though unlikely, these values are <em>possible</em> when <span class="math inline">\(H_{0}\)</span> is true</p></li>
+<li><p>We could mistakenly reject <span class="math inline">\(H_{0}\)</span> when it is true if we get an odd sample</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="errors-in-hypothesis-testing-1" class="slide level2">
+<h2>Errors in Hypothesis Testing</h2>
+<ul>
+<li><p>Likelihood of Type I error equals to <span class="math inline">\(\alpha\)</span></p>
+<ul>
+<li><p><span class="math inline">\(\alpha\)</span> defines improbable values when <span class="math inline">\(H_{0}\)</span> is true</p></li>
+<li><p>Though unlikely, those values <em>actually occur</em> <span class="math inline">\(\alpha \%\)</span> of the time when <span class="math inline">\(H_{0}\)</span> is true</p></li>
+<li><p>So, probability of Type I error is <span class="math inline">\(\alpha\)</span></p></li>
+</ul></li>
+<li><p>Why not set <span class="math inline">\(\alpha\)</span> really low to avoid Type I Error?</p>
+<ul>
+<li><p>Makes it more difficult to reject any hypothesis</p></li>
+<li><p>Increases likelihood of Type II Error</p></li>
+</ul></li>
+<li><p><span class="red">Type II Error</span>: Accepting a false null hypothesis</p>
+<ul>
+<li><p>Depends on true value of parameter</p></li>
+<li><p>So we do not actually know likelihood of Type II Error</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="errors-in-hypothesis-testing-2" class="slide level2">
+<h2>Errors in Hypothesis Testing</h2>
+<ul>
+<li><p>But, we do know that</p>
+<ul>
+<li><p>As <span class="math inline">\(\alpha \downarrow\)</span>, Pr[Type II Error] <span class="math inline">\(\uparrow\)</span></p>
+<ul>
+<li><p>Higher <span class="math inline">\(\alpha\)</span> means accepting more null hypotheses</p></li>
+<li><p>Including <em>false</em> ones</p></li>
+</ul></li>
+<li><p>As <span class="math inline">\(\beta_{1}\)</span> gets closer to <span class="math inline">\(\beta_{1,0}\)</span>, Pr[Type II Error] <span class="math inline">\(\uparrow\)</span></p>
+<ul>
+<li><p>Hard to tell <span class="math inline">\(H_{0}\)</span> from truth when they are very close</p></li>
+<li><p>Many values will fall in acceptance region, even if <span class="math inline">\(H_{0}\)</span> is false</p></li>
+</ul></li>
+</ul></li>
+<li><p><span class="red">Power</span>: Probability of correctly rejecting <span class="math inline">\(H_{0}\)</span></p>
+<ul>
+<li>Equals <span class="math inline">\(1 -\)</span> Pr[Type II Error]</li>
+</ul></li>
+</ul>
+</section>
+<section id="p-values" class="slide level2">
+<h2>P-values</h2>
+<ul>
+<li><p>Another way to do hypothesis testing avoids pre-defining a significance level</p>
+<ul>
+<li><p>Instead find fraction of values more extreme than the estimate</p></li>
+<li><p>Find all significance levels consistent with rejection/acceptance</p></li>
+</ul></li>
+<li><p><span class="red">P-value</span>:The probability of drawing a test statistic at least as extreme as the one computed from the sample</p>
+<ul>
+<li><p>Small p-value means few values are more extreme</p>
+<ul>
+<li><p>Sample estimate is in the tails of the distribution</p></li>
+<li><p>Unlikely caused by random sampling, so <span class="math inline">\(H_{0}\)</span> may not be true</p></li>
+</ul></li>
+<li><p>Large p-value means many values could be more extreme</p>
+<ul>
+<li><p>Sample estimate is closer to the middle of the distribution</p></li>
+<li><p>Possible from random sampling , so <span class="math inline">\(H_{0}\)</span> may be true</p></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="p-values-1" class="slide level2">
+<h2>P-values</h2>
+<ul>
+<li><p>More formally, p-value is defined as below</p>
+<ul>
+<li><p>Lower-tailed test: p-value = <span class="math inline">\(Pr[t &lt; t^{act}]\)</span></p></li>
+<li><p>Upper-tailed test: p-value = <span class="math inline">\(Pr[t &gt; t^{act}]\)</span></p></li>
+<li><p>Two-tailed test: p-value = <span class="math inline">\(2*Pr[t &gt; |t^{act}|]\)</span></p></li>
+</ul></li>
+<li><p>P-values define significance levels consistent with acceptance/rejection</p>
+<ul>
+<li><p>All <span class="math inline">\(\alpha &gt;\)</span> p-value lead to rejecting <span class="math inline">\(H_{0}\)</span></p></li>
+<li><p>All <span class="math inline">\(\alpha &lt;\)</span> p-value lead to accepting <span class="math inline">\(H_{0}\)</span></p></li>
 </ul></li>
 </ul>
 </section></section>
@@ -689,16 +803,16 @@
 <li><p>The output from that command is summarized below</p></li>
 </ul>
 <div class="cell" data-layout-align="center" data-collectcode="true">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">clear</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">set</span> <span class="kw">obs</span> 420</span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="kw">set</span> <span class="dv">seed</span> 12345</span>
-<span id="cb2-4"><a href="#cb2-4"></a></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="kw">gen</span> str = rnormal(20,2)</span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="kw">gen</span> u = rnormal(0,20)</span>
-<span id="cb2-7"><a href="#cb2-7"></a></span>
-<span id="cb2-8"><a href="#cb2-8"></a><span class="kw">gen</span> testscr = 700 -2 * str + u</span>
-<span id="cb2-9"><a href="#cb2-9"></a>    </span>
-<span id="cb2-10"><a href="#cb2-10"></a><span class="kw">regress</span> testscr str</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">clear</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">set</span> <span class="kw">obs</span> 420</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">set</span> <span class="dv">seed</span> 12345</span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">gen</span> str = rnormal(20,2)</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="kw">gen</span> u = rnormal(0,20)</span>
+<span id="cb1-7"><a href="#cb1-7"></a></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="kw">gen</span> testscr = 700 -2 * str + u</span>
+<span id="cb1-9"><a href="#cb1-9"></a>    </span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="kw">regress</span> testscr str</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Number of observations (_N) was 0, now 420.
 
@@ -772,7 +886,7 @@
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center" data-collectcode="true">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">test</span> str = -2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">test</span> str = -2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> ( 1)  str = -2
 
@@ -940,10 +1054,10 @@
 <li><p>Then compare regression estimate to difference in means</p></li>
 </ul>
 <div class="cell" data-layout-align="center" data-collectcode="true">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">gen</span> <span class="kw">d</span> = 1 <span class="kw">if</span> str &gt;=20</span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="kw">replace</span> <span class="kw">d</span> = 0 <span class="kw">if</span> str &lt;20</span>
-<span id="cb6-3"><a href="#cb6-3"></a>    </span>
-<span id="cb6-4"><a href="#cb6-4"></a><span class="kw">regress</span> testscr <span class="kw">d</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">gen</span> <span class="kw">d</span> = 1 <span class="kw">if</span> str &gt;=20</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="kw">replace</span> <span class="kw">d</span> = 0 <span class="kw">if</span> str &lt;20</span>
+<span id="cb5-3"><a href="#cb5-3"></a>    </span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="kw">regress</span> testscr <span class="kw">d</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(206 missing values generated)
 
@@ -971,8 +1085,8 @@
 <li>Compare regression coefficients to differences in means</li>
 </ul>
 <div class="cell" data-layout-align="center" data-collectcode="true">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">sum</span> testscr <span class="kw">if</span> <span class="kw">d</span> == 1</span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="kw">sum</span> testscr <span class="kw">if</span> <span class="kw">d</span> == 0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">sum</span> testscr <span class="kw">if</span> <span class="kw">d</span> == 1</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="kw">sum</span> testscr <span class="kw">if</span> <span class="kw">d</span> == 0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Variable |        Obs        Mean    Std. dev.       Min        Max
 -------------+---------------------------------------------------------
@@ -1122,19 +1236,19 @@
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center" data-collectcode="true">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">clear</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="kw">set</span> <span class="kw">obs</span> 420</span>
-<span id="cb10-3"><a href="#cb10-3"></a><span class="kw">set</span> <span class="dv">seed</span> 12345</span>
-<span id="cb10-4"><a href="#cb10-4"></a><span class="kw">gen</span> str = rnormal(20,2)</span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="kw">gen</span> u = rnormal(0,.0005*str^4)</span>
-<span id="cb10-6"><a href="#cb10-6"></a></span>
-<span id="cb10-7"><a href="#cb10-7"></a><span class="kw">gen</span> testscr = 700 -2 * str + u</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">clear</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="kw">set</span> <span class="kw">obs</span> 420</span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="kw">set</span> <span class="dv">seed</span> 12345</span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="kw">gen</span> str = rnormal(20,2)</span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="kw">gen</span> u = rnormal(0,.0005*str^4)</span>
+<span id="cb9-6"><a href="#cb9-6"></a></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="kw">gen</span> testscr = 700 -2 * str + u</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="example-with-stata-8" class="slide level2" data-background-color="#d9edc2">
 <h2>Example with Stata</h2>
 <div class="cell" data-layout-align="center" data-collectcode="true">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">twoway</span> <span class="kw">scatter</span> testscr str, <span class="bn">title</span>(<span class="st">"Data with Heteroskedastic Errors"</span>) <span class="dv">scheme</span>(s1mono)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">twoway</span> <span class="kw">scatter</span> testscr str, <span class="bn">title</span>(<span class="st">"Data with Heteroskedastic Errors"</span>) <span class="dv">scheme</span>(s1mono)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code></code></pre>
 </div>
@@ -1147,7 +1261,7 @@
 <li>Code and results below show OLS with assumption of homoskedastic errors</li>
 </ul>
 <div class="cell" data-layout-align="center" data-collectcode="true">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">regress</span> testscr str</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">regress</span> testscr str</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      Source |       SS           df       MS      Number of obs   =       420
 -------------+----------------------------------   F(1, 418)       =      4.32
@@ -1172,7 +1286,7 @@
 <li><p>The standard error has become larger</p></li>
 </ul>
 <div class="cell" data-layout-align="center" data-collectcode="true">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">regress</span> testscr str, <span class="kw">robust</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">regress</span> testscr str, <span class="kw">robust</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear regression                               Number of obs     =        420
                                                 F(1, 418)         =       1.87
@@ -1203,43 +1317,43 @@
 <section id="example-with-stata-12" class="slide level2" data-background-color="#d9edc2">
 <h2>Example with Stata</h2>
 <div class="cell" data-layout-align="center" data-collectcode="true">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw">clear</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a><span class="kw">set</span> <span class="kw">more</span> <span class="kw">off</span></span>
-<span id="cb17-3"><a href="#cb17-3"></a><span class="kw">set</span> <span class="kw">obs</span> 999</span>
-<span id="cb17-4"><a href="#cb17-4"></a><span class="kw">set</span> <span class="dv">seed</span> 12345</span>
-<span id="cb17-5"><a href="#cb17-5"></a></span>
-<span id="cb17-6"><a href="#cb17-6"></a><span class="kw">gen</span> t_he = .</span>
-<span id="cb17-7"><a href="#cb17-7"></a><span class="kw">gen</span> t_ho = .</span>
-<span id="cb17-8"><a href="#cb17-8"></a></span>
-<span id="cb17-9"><a href="#cb17-9"></a><span class="kw">foreach</span> iter <span class="kw">of</span> numlist 1/999 {</span>
-<span id="cb17-10"><a href="#cb17-10"></a></span>
-<span id="cb17-11"><a href="#cb17-11"></a><span class="kw">preserve</span></span>
-<span id="cb17-12"><a href="#cb17-12"></a><span class="kw">clear</span></span>
-<span id="cb17-13"><a href="#cb17-13"></a><span class="kw">qui</span> <span class="kw">set</span> <span class="kw">obs</span> 420</span>
-<span id="cb17-14"><a href="#cb17-14"></a></span>
-<span id="cb17-15"><a href="#cb17-15"></a><span class="kw">gen</span> str = rnormal(20,2)</span>
-<span id="cb17-16"><a href="#cb17-16"></a><span class="kw">gen</span> u = rnormal(0,.0005*str^4)</span>
-<span id="cb17-17"><a href="#cb17-17"></a></span>
-<span id="cb17-18"><a href="#cb17-18"></a><span class="kw">gen</span> testscr = 700  + u</span>
-<span id="cb17-19"><a href="#cb17-19"></a></span>
-<span id="cb17-20"><a href="#cb17-20"></a><span class="kw">qui</span> <span class="kw">regress</span> testscr str </span>
-<span id="cb17-21"><a href="#cb17-21"></a>    <span class="kw">local</span> t_ho = _b[str]/_se[str] </span>
-<span id="cb17-22"><a href="#cb17-22"></a>    </span>
-<span id="cb17-23"><a href="#cb17-23"></a><span class="kw">qui</span> <span class="kw">regress</span> testscr str, <span class="kw">robust</span> </span>
-<span id="cb17-24"><a href="#cb17-24"></a>    <span class="kw">local</span> t_he = _b[str]/_se[str]   </span>
-<span id="cb17-25"><a href="#cb17-25"></a></span>
-<span id="cb17-26"><a href="#cb17-26"></a><span class="kw">restore</span></span>
-<span id="cb17-27"><a href="#cb17-27"></a></span>
-<span id="cb17-28"><a href="#cb17-28"></a><span class="kw">replace</span> t_ho = <span class="ot">`t_ho'</span> <span class="kw">in</span> <span class="ot">`iter'</span></span>
-<span id="cb17-29"><a href="#cb17-29"></a><span class="kw">replace</span> t_he = <span class="ot">`t_he'</span> <span class="kw">in</span> <span class="ot">`iter'</span></span>
-<span id="cb17-30"><a href="#cb17-30"></a></span>
-<span id="cb17-31"><a href="#cb17-31"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb16-1"><a href="#cb16-1"></a><span class="kw">clear</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="kw">set</span> <span class="kw">more</span> <span class="kw">off</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="kw">set</span> <span class="kw">obs</span> 999</span>
+<span id="cb16-4"><a href="#cb16-4"></a><span class="kw">set</span> <span class="dv">seed</span> 12345</span>
+<span id="cb16-5"><a href="#cb16-5"></a></span>
+<span id="cb16-6"><a href="#cb16-6"></a><span class="kw">gen</span> t_he = .</span>
+<span id="cb16-7"><a href="#cb16-7"></a><span class="kw">gen</span> t_ho = .</span>
+<span id="cb16-8"><a href="#cb16-8"></a></span>
+<span id="cb16-9"><a href="#cb16-9"></a><span class="kw">foreach</span> iter <span class="kw">of</span> numlist 1/999 {</span>
+<span id="cb16-10"><a href="#cb16-10"></a></span>
+<span id="cb16-11"><a href="#cb16-11"></a><span class="kw">preserve</span></span>
+<span id="cb16-12"><a href="#cb16-12"></a><span class="kw">clear</span></span>
+<span id="cb16-13"><a href="#cb16-13"></a><span class="kw">qui</span> <span class="kw">set</span> <span class="kw">obs</span> 420</span>
+<span id="cb16-14"><a href="#cb16-14"></a></span>
+<span id="cb16-15"><a href="#cb16-15"></a><span class="kw">gen</span> str = rnormal(20,2)</span>
+<span id="cb16-16"><a href="#cb16-16"></a><span class="kw">gen</span> u = rnormal(0,.0005*str^4)</span>
+<span id="cb16-17"><a href="#cb16-17"></a></span>
+<span id="cb16-18"><a href="#cb16-18"></a><span class="kw">gen</span> testscr = 700  + u</span>
+<span id="cb16-19"><a href="#cb16-19"></a></span>
+<span id="cb16-20"><a href="#cb16-20"></a><span class="kw">qui</span> <span class="kw">regress</span> testscr str </span>
+<span id="cb16-21"><a href="#cb16-21"></a>    <span class="kw">local</span> t_ho = _b[str]/_se[str] </span>
+<span id="cb16-22"><a href="#cb16-22"></a>    </span>
+<span id="cb16-23"><a href="#cb16-23"></a><span class="kw">qui</span> <span class="kw">regress</span> testscr str, <span class="kw">robust</span> </span>
+<span id="cb16-24"><a href="#cb16-24"></a>    <span class="kw">local</span> t_he = _b[str]/_se[str]   </span>
+<span id="cb16-25"><a href="#cb16-25"></a></span>
+<span id="cb16-26"><a href="#cb16-26"></a><span class="kw">restore</span></span>
+<span id="cb16-27"><a href="#cb16-27"></a></span>
+<span id="cb16-28"><a href="#cb16-28"></a><span class="kw">replace</span> t_ho = <span class="ot">`t_ho'</span> <span class="kw">in</span> <span class="ot">`iter'</span></span>
+<span id="cb16-29"><a href="#cb16-29"></a><span class="kw">replace</span> t_he = <span class="ot">`t_he'</span> <span class="kw">in</span> <span class="ot">`iter'</span></span>
+<span id="cb16-30"><a href="#cb16-30"></a></span>
+<span id="cb16-31"><a href="#cb16-31"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="example-with-stata-13" class="slide level2" data-background-color="#d9edc2">
 <h2>Example with Stata</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">twoway</span> (<span class="kw">kdensity</span> t_ho) (<span class="kw">kdensity</span> t_he) (<span class="kw">function</span> <span class="fu">tden</span>(420-2,x), <span class="kw">range</span>(-5 5)), <span class="bn">xtitle</span>(t) <span class="bn">title</span>(t-distribution when Null Hypothesis is True) <span class="bn">legend</span>(<span class="kw">order</span>(1 <span class="st">"Homoskedastic Errors"</span> 2 <span class="st">"Heteroskedastic Errors"</span> 3 <span class="st">"Actual t-dist"</span>)) <span class="dv">scheme</span>(s1color)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw">twoway</span> (<span class="kw">kdensity</span> t_ho) (<span class="kw">kdensity</span> t_he) (<span class="kw">function</span> <span class="fu">tden</span>(420-2,x), <span class="kw">range</span>(-5 5)), <span class="bn">xtitle</span>(t) <span class="bn">title</span>(t-distribution when Null Hypothesis is True) <span class="bn">legend</span>(<span class="kw">order</span>(1 <span class="st">"Homoskedastic Errors"</span> 2 <span class="st">"Heteroskedastic Errors"</span> 3 <span class="st">"Actual t-dist"</span>)) <span class="dv">scheme</span>(s1color)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 <img data-src="tdist.svg" class="r-stretch quarto-figure-center"></section>
@@ -1265,10 +1379,10 @@
 </ul>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb19-1"><a href="#cb19-1"></a><span class="kw">gen</span> reject_ho = <span class="fu">abs</span>(t_ho) &gt;=<span class="fu">invttail</span>(420-2,0.025)</span>
-<span id="cb19-2"><a href="#cb19-2"></a><span class="kw">gen</span> reject_he = <span class="fu">abs</span>(t_he) &gt;=<span class="fu">invttail</span>(420-2,0.025)</span>
-<span id="cb19-3"><a href="#cb19-3"></a></span>
-<span id="cb19-4"><a href="#cb19-4"></a><span class="kw">tab1</span> reject*</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">gen</span> reject_ho = <span class="fu">abs</span>(t_ho) &gt;=<span class="fu">invttail</span>(420-2,0.025)</span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="kw">gen</span> reject_he = <span class="fu">abs</span>(t_he) &gt;=<span class="fu">invttail</span>(420-2,0.025)</span>
+<span id="cb18-3"><a href="#cb18-3"></a></span>
+<span id="cb18-4"><a href="#cb18-4"></a><span class="kw">tab1</span> reject*</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>-&gt; tabulation of reject_ho  
 
