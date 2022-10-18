@@ -1,0 +1,1254 @@
+---
+title: "Linear Regression with Multiple Regressors"
+subtitle: "EC295"
+author: "Justin Smith"
+institute: "Wilfrid Laurier University"
+date: "Fall 2022"
+format: 
+  revealjs:
+    theme: [default, hygge.scss]
+    smaller: true
+    slide-number: true
+    chalkboard:
+      theme: whiteboard
+      src: drawings.json
+editor: visual
+title-slide-attributes:
+  data-background-color: "#43464B"
+---
+
+# Motivation
+
+## Motivation
+
+```{r , echo=FALSE, include=FALSE}
+
+library(sf)
+library(scales)
+library(ggplot2)
+library(ggpubr)
+library(tidyverse)
+library(hrbrthemes)
+library(kableExtra)
+library(viridis)
+library(DT)
+library(plotly)
+library(readxl)
+library(rgeos)
+library(maptools)
+library(directlabels)
+library(ggrepel)
+library(ggthemes)
+library(cancensus)
+library(bookdown)
+library(geomtextpath)
+library(egg)
+library(ggtext)
+library(ragg)
+library(scico)
+library(haven)
+library(here)
+library(knitr)
+library(jpeg)
+library(imager)
+library(Statamarkdown)
+library(ggdag)
+library(dagitty)
+library(geomtextpath)
+library(gganimate)
+library(gifski)
+
+knitr::opts_chunk$set(
+ echo=FALSE, 
+ message = FALSE,
+ warning = FALSE,
+ fig.retina = 3, 
+ fig.align = "center"
+ )
+
+set.seed(9810078)
+```
+
+-   We have discussed regression with one independent variable
+
+    -   Helps provide intuition
+
+    -   But, actual models rarely involve only one
+
+-   In this section, we will cover multiple regressors
+
+    -   Regression models with more than one independent variable
+
+    -   Most real models have many such variables
+
+-   Multiple regression allows us to
+
+    -   Explicitly hold constant other variables in a regression
+
+    -   More accurately estimate causal effects
+
+    -   Incorporate more general relationships between variables
+
+-   The same intuition carries forward for multiple regression
+
+    -   Math is slightly more involved
+
+# The Multiple Regression Model
+
+## Model with Two Regressors
+
+-   A regression model with two regressors is 
+$$Y_{i} = \beta_{0} + \beta_{1}X_{1i} + \beta_{2}X_{2i}+ u_{i}$$
+
+    -   $X_{1i}$ is the first independent variable
+
+    -   $X_{2i}$ is the second independent variable
+
+    -   $\beta_{0}$ is the intercept
+
+    -   $\beta_{1}$ is the all else equal effect of $X_{1i}$ on $Y_{i}$
+
+    -   $\beta_{2}$ is the all else equal effect of $X_{2i}$ on $Y_{i}$
+
+    -   $u_{i}$ is all factors other than $X_{1i},X_{2i}$ that affect $Y_{i}$
+
+-   The corresponding population regression function is 
+
+$$E[Y_{i}| X_{1i}, X_{2i}]= \beta_{0} + \beta_{1}X_{1i} + \beta_{2}X_{2i}$$
+
+## Model with Two Regressors
+
+-   [Key difference vs model with one regressor]{.red}: when measuring slope, we explicitly hold other factors constant
+
+    -   $\beta_{1}$ is effect of $X_{1i}$ on $Y_{i}$ holding $X_{2i}$ fixed
+
+    -   $\beta_{2}$ is effect of $X_{2i}$ on $Y_{i}$ holding $X_{1i}$ fixed
+
+-   To see this, take total change in $E[Y_{i}| X_{1i}, X_{2i}]$ $$\Delta E[Y_{i}| X_{1i}, X_{2i}] =  \beta_{1}\Delta X_{1i}+ \beta_{2}\Delta X_{2i}$$
+
+-   Now hold $X_{2i}$ fixed by setting $\Delta X_{2i} = 0$ $$\Delta E[Y_{i}| X_{1i}, X_{2i}] = \beta_{1}\Delta X_{1i}$$
+
+-   and as a result $$\beta_{1} = \frac{\Delta E[Y_{i}| X_{1i}, X_{2i}] }{\Delta X_{1i}}$$
+
+## Model with Two Regressors
+
+-   Key is that $\beta_{1}$ is calculated holding $X_{2i}$ constant
+
+    -   Called [partial effect]{.red} if $X_{1i}$ on $Y_{i}$
+
+-   Intercept also has slightly different interpretation
+
+    -   Average value of $Y_{i}$ when $X_{1i}$ and $X_{2i}$ are zero
+
+-   [Example]{.red}: Wages, schooling, and experience
+
+    -   If $Y$ is wages, $X_{1i}$ is education, and $X_{2i}$ is experience, then 
+    
+    $$wage_{i} = \beta_{0} + \beta_{1}educ_{i} + \beta_{2}exper_{i} + u_{i}$$
+
+    -   $\beta_{1}$ is effect of education on wages, holding experience fixed
+
+    -   $\beta_{2}$ is experience on wages, holding education fixed
+
+    -   $u$ is other variables that affect wages
+
+## Model with Two Regressors
+
+-   We will see that adding more variables to the model helps avoid bias in OLS
+
+    -   For OLS to be unbiased, need to assume unobserved variables have zero conditional mean
+
+    -   For variables included in the model, no longer need to make that assumption
+
+        -   Though we still do for variables that remain unobserved
+
+    -   Strengthens likelihood that OLS estimator is unbiased
+
+-   Definition of homoskedasticity and heteroskedasticity are natural extensions
+
+    -   Homoskedastic errors are $VAR(u_{i}|X_{1i}, X_{2i}) = \sigma^2_{u}$
+
+        -   A constant number that does not vary across individuals
+
+    -   Heteroskedastic errors are $VAR(u_{i}|X_{1i}, X_{2i}) = \sigma^2_{ui}$
+
+        -   Does vary across individuals
+
+## Model with $k$ Regressors
+
+-   A regression model with $k$ regressors is 
+$$Y_{i} = \beta_{0} + \beta_{1}X_{1i} + \beta_{2}X_{2i}+ ... + \beta_{k}X_{ki} + u_{i}$$
+
+    -   $X_{1i}, X_{2i}, ..., X_{ki}$ are independent variables
+
+    -   $\beta_{0}$ is the intercept
+
+    -   $\beta_{1}, \beta_{2}, ..., \beta_{k}$ are slope parameters
+
+        -   Partial effects holding other factors in model constant
+
+    -   $u_{i}$ is all factors other than $X_{1i}, X_{2i}, ..., X_{ki}$ that affect $Y_{i}$
+
+-   Population regression function is 
+
+$$E[Y_{i}| X_{1i}, X_{2i}, ...,X_{ki}]= \beta_{0} + \beta_{1}X_{1i} + \beta_{2}X_{2i}+ ... + \beta_{k}X_{ki}$$
+
+## Model with $k$ Regressors
+
+-   The partial effect of $X_{ji}$ on $Y_{i}$ is
+
+    $$\beta_{j} = \frac{\Delta E[Y_{i}| X_{1i}, X_{2i},..., X_{ki}] }{\Delta X_{ji}}$$
+
+    -   The effect of $X_{ji}$ on $Y_{i}$ holding all other variables fixed
+
+-   Intercept is value of $E[Y_{i}| X_{1i}, X_{2i},..., X_{ki}]$ when all independent variables equal zero
+
+-   As before, assumptions for errors are natural extensions
+
+    -   Homoskedastic errors are $VAR(u_{i}|X_{1i}, X_{2i},..., X_{ki}) = \sigma^2_{u}$
+
+    -   Heteroskedastic errors are $VAR(u_{i}|X_{1i}, X_{2i},..., X_{ki}) = \sigma^2_{ui}$
+
+# Estimation by OLS
+
+## Ordinary Least Squares
+
+-   Remember that OLS chooses estimates of $\beta$ to minimize the sum of the squared residuals in the sample
+
+-   The population model is $$Y_{i} = \beta_{0} + \beta_{1}X_{1i} + \beta_{2}X_{2i}+ ...+ \beta_{k}X_{ki}+ u_{i}$$
+
+-   When we replace parameters with estimates, we get $$Y_{i} = \hat{\beta}_{0} + \hat{\beta}_{1}X_{1i} + \hat{\beta}_{2}X_{2i}+ ...+ \hat{\beta}_{k}X_{ki}+ \hat{u}_{i}$$
+
+-   The sum of the squared residuals are $$\sum_{i=1}^{n} \left ( Y_{i}- \hat{\beta}_{0} - \hat{\beta}_{1}X_{1i} - \hat{\beta}_{2}X_{2i}- ...- \hat{\beta}_{k}X_{ki}  \right )^2$$
+
+## Ordinary Least Squares
+
+-   Minimizing this function, we get the following equations 
+
+$$\sum_{i=1}^{n} \left ( Y_{i} - \hat{\beta}_{0} - \hat{\beta}_{1}X_{1i} - \hat{\beta}_{2}X_{2i}- ...- \hat{\beta}_{k}X_{ki}  \right ) =0$$ $$\sum_{i=1}^{n} X_{1i} \left (  Y_{i} - \hat{\beta}_{0} - \hat{\beta}_{1}X_{1i} - \hat{\beta}_{2}X_{2i}- ...- \hat{\beta}_{k}X_{ki} \right ) = 0$$ 
+$$\vdots$$ 
+$$\sum_{i=1}^{n} X_{ki} \left (   Y_{i} - \hat{\beta}_{0} - \hat{\beta}_{1}X_{1i} - \hat{\beta}_{2}X_{2i}- ...- \hat{\beta}_{k}X_{ki} \right ) = 0$$
+
+-   The values $\hat{\beta}_{0}, \hat{\beta}_{1} ,...,\hat{\beta}_{k}$ are the solutions to these equations
+
+## Ordinary Least Squares
+
+-   The predicted values are computed as 
+
+$$\hat{Y}_{i} = \hat{\beta}_{0} + \hat{\beta}_{1}X_{1i} + \hat{\beta}_{2}X_{2i}+ ...+ \hat{\beta}_{k}X_{ki}$$
+
+-   The residuals are then computed as 
+
+$$\hat{u}_{i} = Y_{i} - \hat{Y}_{i}  = Y_{i} - \hat{\beta}_{0} - \hat{\beta}_{1}X_{1i} - \hat{\beta}_{2}X_{2i}- ...- \hat{\beta}_{k}X_{ki}$$
+
+-   $\hat{\beta}_{0}$ is the estimated intercept
+
+    -   Predicted value $\hat{Y_{i}}$ when all other variables equal zero
+
+-   $\hat{\beta}_{1},\hat{\beta}_{2},...,\hat{\beta}_{k}$ are the estimated partial effects
+
+    -   *change* in $\hat{Y_{i}}$ when a variable changes,*holding all other variables equal*
+
+## Ordinary Least Squares
+
+-   To see partial effect interpretation, take the total change in $\hat{Y_{i}}$
+
+    $$\Delta \hat{Y_{i}} =   \hat{\beta}_{1}\Delta X_{1i} + \hat{\beta}_{2}\Delta X_{2i}+ ...+ \hat{\beta}_{k}\Delta X_{ki}$$
+
+    -   If we set $\Delta X_{2i} = 0,...,\Delta X_{ki} = 0$ then
+
+        $$\hat{\beta}_{1} = \frac{\Delta \hat{Y}_{i}} {\Delta X_{1i}}$$
+
+    -   Similarly, if we set $\Delta X_{1i} = 0,\Delta X_{3i} = 0, ... ,\Delta X_{ki} = 0$ then
+
+        $$\hat{\beta}_{2} = \frac{\Delta \hat{Y}_{i}}{\Delta X_{2i}}$$
+
+## Partialling Out Interpretation
+
+-   We saw that $\hat{\beta}_{j}$ is the partial effect of $X_{ji}$ on $\hat{Y}_{i}$
+
+-   We can express $\hat{\beta}_{j}$ with a simple formula consistent with this interpretation
+
+-   Imagine a regression with $k=2$ 
+
+$$\hat{Y}_{i} = \hat{\beta}_{0}+  \hat{\beta}_{1}X_{1i} + \hat{\beta}_{2}X_{2i}$$
+
+-   Now, perform this two-step procedure
+
+    1.  Regress $X_{1i}$ on $X_{2i}$, and obtain the residuals $\hat{r}_{1i}$
+
+    2.  Estimate a regression of $Y_{i}$ on $\hat{r}_{i1}$
+
+## Partialling Out Interpretation
+
+-   $\hat{\beta}_{1}$ equals the slope estimate on the second regression 
+
+$$\hat{\beta}_{1} = \frac{\sum_{i=1}^{n} \hat{r}_{i1}Y_{i}}{\sum_{i=1}^{n} \hat{r}_{i1}^2}$$
+
+-   Why?
+
+    -   In step 1, we purge $X_{1i}$ of part that is correlated with $X_{2i}$
+
+    -   $\hat{r}_{i1}$ is piece of $X_{1i}$ unrelated to $X_{2i}$
+
+    -   By using $\hat{r}_{i1}$ step 2 regression, it is like we already controlled for $X_{2i}$
+
+-   Highlights intuition behind regression
+
+    -   When you regress $Y_{i}$ on $X_{1i}$, you separate $Y_{i}$ into two pieces
+
+        -   Part that is correlated with $X_{1i} \rightarrow \hat{Y}_{i}$
+
+        -   Part that is uncorrelated with $X_{1i} \rightarrow \hat{u}_{i}$
+
+## Comparing Simple and Multiple Regression
+
+-   Imagine the following predicted values from two different regressions 
+
+$$\tilde{Y}_{i} = \tilde{\beta}_{0}+  \tilde{\beta}_{1}X_{1i}$$ 
+$$\hat{Y}_{i} = \hat{\beta}_{0}+  \hat{\beta}_{1}X_{1i} + \hat{\beta}_{2}X_{2i}$$
+
+-   The slope coefficients have the following relationship
+
+    $$\tilde{\beta}_{1} =\hat{\beta}_{1} + \hat{\beta}_{2}\tilde{\delta}_{1}$$
+
+    -   $\tilde{\delta}_{1}$ is the slope in a regression of $X_{1i}$ on $X_{2i}$
+
+-   Simple and multiple regression coefficients are equal when
+
+    1.  $\hat{\beta}_{2} = 0$, which means $X_{2i}$ is unrelated to $Y_{i}$
+
+    2.  $\tilde{\delta}_{1} = 0$, which means $X_{1i}$ is unrelated to $X_{2i}$
+
+# Omitted Variables Bias
+
+## Introduction
+
+-   Suppose we are interested in $\beta_{1}$, the effect of $X_{i}$ on $Y_{i}$
+
+-   In regression of $Y_{i}$ on $X_{i}$, $\hat{\beta}_{1}$ is unbiased if unobserved factors are unrelated to $X_{i}$
+
+    -   Mathematically, this means $E[u_{i}|X_{i}] = 0$
+
+    -   When this is true, we estimate a causal effect
+
+    -   Recall this is an assumption
+
+-   When unobserved factors *are* related to $X_{i}$, a solution is to add them to the model
+
+    -   This is multiple regression
+
+    -   It explicitly holds them fixed when measuring effect of $X_{i}$ on $Y_{i}$
+
+    -   For these variables, we do not have to assume they are unrelated to $X_{i}$
+
+## Introduction
+
+-   It can often be difficult to hold *all* relevant factors fixed
+
+    -   Ex: class size and test scores
+
+        -   Many factors besides class size determine test scores
+
+        -   Family background, school quality, teachers, etc
+
+        -   Many are likely related to $X_{i}$
+
+-   What if we exclude a relevant factor that is related to $X_{i}$?
+
+-   Cannot assume $E[u_{i}|X_{i}] = 0$
+
+-   Estimator $\hat{\beta}_{1}$ will suffer from [Omitted Variables Bias]{.red}
+
+    -   $E[\hat{\beta}_{1}] \neq \beta_{1}$
+
+    -   $\hat{\beta}_{1}$ will not measure all else equal (causal) effect $X_{i}$ on $Y_{i}$
+
+    -   Instead it measures partly effect $X_{i}$ on $Y_{i}$, partly effect of excluded variable on $Y_{i}$
+
+## Introduction
+
+-   Suppose you are measuring effect of class size on test scores
+
+-   Below are some potential omitted factors
+
+    1.  Percentage of english as a second language (ESL) students
+
+        -   School districts with big classes have lots of ESL students
+
+        -   ESL students tend to perform worse on standardized tests
+
+        -   Even if class size has no independent effect, bigger classes will perform worse
+
+    2.  Parental background
+
+        -   Wealthier areas tend to have schools with smaller classes
+
+        -   Richer students may perform better on standardized tests, due to better resources at home
+
+        -   Even if class size has no independent effect, bigger classes will perform worse
+
+## Formula for Omitted Variables Bias
+
+-   Imagine that the correct model for outcome $Y_{i}$ is 
+$$Y_{i} = \beta_{0} + \beta_{1}X_{1i} + \beta_{2}X_{2i} + u_{i}$$
+
+    -   Assume that this model satisfies the OLS assumptions
+
+        -   Most importantly, $u_{i}$ is unrelated to both $X_{1i}$ and $X_{2i}$
+
+        -   Mathematically $E[u_{i}|X_{1i},X_{2i}] = 0$
+
+-   Suppose we omit $X_{2i}$, pushing it to the error term so that 
+$$Y_{i} = \beta_{0} + \beta_{1}X_{1i}  + v_{i}$$
+
+    -   where the new error is $v_{i} =\beta_{2}X_{2i} + u_{i}$
+
+## Formula for Omitted Variables Bias
+
+-   What happens if we try to estimate this second model?
+
+-   We know from the simple regression model that 
+
+$$\tilde{\beta}_{1} =\beta_{1} + \frac{\sum_{i=1}^{n}(X_{1i} - \bar{X}_{1})v_{i}}{\sum_{i=1}^{n}(X_{1i} - \bar{X}_{1})^2}$$
+
+-   The expected value of this estimator is 
+
+$$E[\tilde{\beta}_{1}| X_{1i}]=\beta_{1} + \frac{\sum_{i=1}^{n}(X_{1i} - \bar{X}_{1})E[v_{i} |X_{1i}]}{\sum_{i=1}^{n}(X_{1i} - \bar{X}_{1})^2}$$
+
+-   $\tilde{\beta}_{1}$ is unbiased if $E[v_{i} |X_{1i}] = 0$
+
+-   Working out that expectation, we get 
+
+$$E[v_{i} |X_{1i}]=E[\beta_{2}X_{2i} + u_{i}|X_{1i}]= \beta_{2}E[X_{2i}|X_{1i}] + E[u_{i}|X_{1i}]$$
+
+## Formula for Omitted Variables Bias
+
+-   Based on assumption that $u_{i}$ is unrelated to $X_{1i}$, $E[u_{i}|X_{1i}] = 0$
+
+-   Therefore 
+
+$$E[v_{i} |X_{1i}]= \beta_{2}E[X_{2i}|X_{1i}]$$
+
+-   In general, this is not equal to zero, so $\tilde{\beta}_{1}$ is biased
+
+    -   We discuss two exceptions below
+
+-   To quantify the bias, substitute back into the original formula to get 
+
+$$E[\tilde{\beta}_{1}| X_{1i}]=\beta_{1} + \frac{\sum_{i=1}^{n}(X_{1i} - \bar{X}_{1})\beta_{2}E[X_{2i}|X_{1i}]}{\sum_{i=1}^{n}(X_{1i} - \bar{X}_{1})^2}$$
+
+## Formula for Omitted Variables Bias
+
+-   Let $\delta_{1} = \frac{\sum_{i=1}^{n}(X_{1i} - \bar{X}_{1})E[X_{2i}|X_{1i}]}{\sum_{i=1}^{n}(X_{1i} - \bar{X}_{1})^2}$
+
+    -   $\delta_{1}$ represents the relationship between $X_{2i}$ and $X_{1i}$
+
+-   The formula above then simplifies to 
+
+$$E[\tilde{\beta}_{1}| X_{1i}]=\beta_{1} +\beta_{2}\delta_{1}$$
+
+-   The bias in OLS estimators from an omitted variable is $\beta_{2}\delta_{1}$
+
+-   Depends on two factors
+
+    -   $\beta_{2}$, the relationship between $Y_{i}$ and $X_{2i}$
+
+    -   $\delta_{1}$, the relationship between $X_{2i}$ and $X_{1i}$
+
+## Formula for Omitted Variables Bias
+
+-   We can use this to quantify the *direction* of the bias
+
+    |                | $corr(x_{i2}, x_{i1}) > 0$ | $corr(x_{i2}, x_{i1}) < 0$ |
+    |----------------|:--------------------------:|:--------------------------:|
+    | $\beta_{2} >0$ |       Positive Bias        |       Negative Bias        |
+    | $\beta_{2} <0$ |       Negative Bias        |       Positive Bias        |
+
+    : [Direction of Omitted Variables Bias]{.red}
+
+-   There are two situations where omitted variables do *not* cause bias
+
+    1.  $\beta_{2} = 0$, which means $X_{2i}$ is unrelated to $Y_{i}$
+
+        -   If $X_{2i}$ is irrelevant, then it will not cause bias
+
+    2.  $\delta_{1} = 0$, which means $X_{2i}$ is unrelated to $X_{1i}$
+
+        -   Even if $X_{2i}$ is relevant, it will not cause bias if it is unrelated to $X_{1i}$
+
+## Formula for Omitted Variables Bias
+
+-   [Example: Ability Bias]{.red}
+
+    -   The classic example of omitted variables bias is leaving ability out of a regression of wages on schooling
+
+    -   Suppose the true model linking wages to schooling is
+
+        $$wage_{i} = \beta_{0} + \beta_{1}educ_{i} + \beta_{2}abil_{i}+ u_{i}$$
+
+    -   Often we do not have measures of ability
+
+    -   If you were to leave it out and estimate
+
+        $$wage_{i} = \beta_{0} + \beta_{1}educ_{i} + v_{i}$$
+
+    -   The estimator would be biased
+
+        -   $\beta_{2} > 0$, ability is positively related to wages
+
+        -   $\delta_{1} > 0$, higher ability people get more schooling
+
+        -   Bias is positive: the return to education will appear higher than it really is
+
+## Formula for Omitted Variables Bias
+
+-   In more complicated models, omitting one variable can bias *all* estimators
+
+    -   Suppose the true model is
+
+        $$wage_{i} = \beta_{0} + \beta_{1}educ_{i} + \beta_{2}exper_{i} + \beta_{3}abil_{i} + u_{i}$$
+
+    -   If we leave ability out of the model and estimate
+
+        $$wage = \beta_{0} + \beta_{1}educ_{i} + \beta_{2}exper_{i} +v_{i}$$
+
+    -   Then estimators for $\beta_{1}$ [and]{.red} $\beta_{2}$ are biased
+
+    -   This is true even if only one variable is correlated with $abil_{i}$
+
+        -   Imagine that $educ_{i}$ and $abil_{i}$ are correlated
+
+        -   But, $exper_{i}$ and $abil_{i}$ are uncorrelated
+
+        -   Estimator for $\beta_{2}$ is still biased, unless $exper_{i}$ and $educ_{i}$ are unrelated
+
+## Example with Stata {background-color="#d9edc2"}
+
+-   We will again illustrate Stata commands in the context of a research question
+
+-   [Research Question]{.red}: Are test scores related to class size?
+
+-   Previous model is extended with another independent variable
+
+    -   Add percent free/reduced price lunch in district
+
+      -   Acts as a proxy for parent income
+
+      -   Students only qualify when parent income is below a cutoff
+
+-   We will see how the model changes with the additional variable
+
+## Example with Stata {background-color="#d9edc2"}
+
+-   We will assume the model relating math scores to explanatory factors is
+
+    $$testscr_{i} = \beta_{0} + \beta_{1}str_{i} + \beta_{2}mealpct_{i} + u_{i}$$
+
+    -   $\beta_{1}$ is effect of one extra student per teacher on test scores, all else equal
+
+    -   $\beta_{2}$ is effect of a 1-percentage point increase in free meal status on test scores, all else equal
+
+    -   $\beta_{0}$ is math scores when str and mealpct are zero
+
+    -   $u$ are things other than the model variables that explain math scores
+
+## Example with Stata {background-color="#d9edc2"}
+
+-   First create the simulated data
+
+```{stata, echo=TRUE, collectcode=TRUE, results="hide"}
+clear
+set obs 420
+set seed 12345
+
+gen str = rnormal(20,2)
+gen mealpct = 7 + 2*str + rnormal(0,25)
+	replace mealpct = 0 if mealpct < 0
+	replace mealpct = 100 if mealpct > 100
+gen u = rnormal(0,10)
+
+gen testscr = 700 -1 * str - 0.5*mealpct + u
+```
+
+- Meal percent variable is explicitly correlated with student teacher ratio
+
+- Intercept is 700
+
+- Slope on str is -1
+
+- Slope on mealpct is -0.5
+
+## Example with Stata {background-color="#d9edc2"}
+
+-   Summarize the relevant data
+
+```{stata, echo=TRUE, collectcode=TRUE}
+sum testscr str mealpct
+```
+
+-   Things to note
+
+    -   Test scores simulate data that are scaled to have mean 650 and SD 20
+
+    -   All data is simulated to look like real California data
+
+    -   In real data, you might need to deal with things like missing values
+
+        -   But we have avoided those complications here
+
+## Example with Stata {background-color="#d9edc2"}
+
+-   Estimate model by OLS
+
+```{stata, echo=TRUE, collectcode=TRUE}
+regress testscr str mealpct, robust
+```
+
+-   The output indicates that
+
+    -   $\hat{\beta}_{1} = -0.81$: 1-student increase in class size reduces scores by 0.81 points
+
+    -   $\hat{\beta}_{2} = -0.53$: 1-percentage point increase in free meals reduces scores by 0.53 points
+
+## Example with Stata {background-color="#d9edc2"}
+
+-   We can also estimate $\hat{\beta}_{1}$ by "partialling out" mealpct from str
+
+```{stata, echo=TRUE, collectcode=TRUE, results="hide"}
+regress str mealpct
+predict res, resid
+regress testscr res, robust
+```
+
+```{stata, echo=FALSE, collectcode=TRUE}
+regress testscr res, robust
+```
+
+-   First step keeps part of class size that is unrelated to free meal status (res)
+
+-   Second step regresses math scores on values from the first step
+
+## Example with Stata {background-color="#d9edc2"}
+
+-   We can illustrate omitted variables bias by leaving mealpct out of the regression
+
+```{stata, echo=TRUE, collectcode=TRUE}
+regress testscr str, robust
+```
+
+-   Notice the coefficient on str is lower
+
+-   Because str and mealpct are positively related and mealpct and testscr are negatively related
+
+# Measures of Fit in Multiple Regression
+
+## $R^2$
+
+-   We continue to use $R^2$ as a measure of goodness of fit
+
+$$R^2 = \frac{ESS}{TSS} = 1-\frac{SSR}{TSS}$$
+
+-   Recall that an $R^2$ is between 0 and 1, with higher values meaning better fit
+
+-   $R^2$ is still the square of the correlation coefficient between $Y_{i}$ and $\hat{Y}_{i}$
+
+$$R^2 = \frac{\left ( \sum_{i=1}^{n}(y_{i} - \bar{y})(\hat{y}_{i} - \bar{\hat{y}}) \right )^2}{\left (\sum_{i=1}^{n}(y_{i} - \bar{y})^2 \right ) \left (\sum_{i=1}^{n}(\hat{y}_{i} - \bar{\hat{y}})^2 \right )}$$
+
+## $R^2$
+
+-   The definitions of the sums of squares are the same 
+
+$$TSS = \sum_{i=1}^{n}(Y_{i} - \bar{Y})^2$$ 
+
+$$ESS = \sum_{i=1}^{n}(\hat{Y}_{i} - \bar{Y})^2$$ 
+
+$$SSR = \sum_{i=1}^{n}\hat{u}_{i}^2$$
+
+-   It is still true that you can decompose total sum of squares into the explained and residual component
+
+$$TSS = ESS + SSR$$
+
+## $R^2$
+
+-   Recall that a low $R^2$ does not mean regression is bad
+
+    -   Simply means we have not explained large proportion of variation in $Y_{i}$
+
+    -   Does not affect whether $\hat{\beta}_{j}$ is good estimate for $\beta_{j}$
+
+-   Important property of $R^2$ is that it never decreases with additional variables
+
+    -   Adding variables cannot *reduce* explanatory power of regression
+
+    -   ESS cannot fall when variables added to regression
+
+        -   Equivalently, SSR cannot rise with more variables in regression
+
+    -   Makes $R^2$ bad tool for deciding whether to add or drop variables
+
+        -   Ex: adding variable with random values slightly increases $R^2$
+
+        -   But clearly random values do not belong in regression
+
+## Adjusted $R^2$
+
+-   We discussed that $R^2$ measures goodness of fit
+
+    -   The fraction of variation in $Y_{i}$ explained by $X_{i}$
+
+    -   Correlation between actual $Y_{i}$ and fitted values
+
+    -   How closely datapoints fall along a straight line
+
+-   One issue with $R^2$ is that it never falls with additional variables
+
+    -   With new variables, ESS stays the same or goes up
+
+    -   You cannot explain less of variation in $Y_{i}$ with more variables
+
+-   It is mostly not useful to use $R^2$ to decide if a variable should be added to the model
+
+## Adjusted $R^2$
+
+-   Recall that the $R^2$ is written as $$R^2 = 1- \frac{SSR}{TSS}$$
+
+-   You can also write that as $$R^2 = 1- \frac{SSR/n}{TSS/n}$$
+
+-   Think of $SSR/n$ as estimate of error variance, and $TSS/n$ as estimate of variance in $y$
+
+-   But
+
+    -   $SSR/n$ is biased estimator of error variance
+
+    -   $TSS/n$ is biased estimator of variance in $y$
+
+## Adjusted $R^2$
+
+-   The [adjusted $R^2$]{.red} replaces these biased estimators with unbiased ones 
+
+$$\bar{R}^2 = 1- \frac{SSR/(n-k-1)}{SST/(n-1)} = 1- \frac{n-1}{n-k-1} \frac{SSR}{TSS}$$
+
+-   There are three useful things about the adjusted $R^2$
+
+1.  This measure does **not** always rise when a variable is added to the model
+
+    -   Imagine adding one new variable
+
+        -   $SSR$ will fall
+
+        -   $\frac{n-1}{n-k-1}$ rises (because $k$ rises)
+
+        -   Effect on $\bar{R}^2$ depends which is stronger
+
+        -   Thus, $\bar{R}^2$ can fall with new variables
+
+## Adjusted $R^2$
+
+2.  $\bar{R}^2$ is always less than ${R}^2$
+
+    -   $\frac{n-1}{n-k-1}$ is always greater than 1
+
+    -   So we subtract a bigger number from 1 in the $\bar{R}^2$ formula
+
+3.  $\bar{R}^2$ can be negative if the model has a very poor fit
+
+    -   Happens mainly when $SSR$ is large, $n$ is small, and $k$ is large
+
+## Standard Error of Regression (SER)
+
+-   The SER is still the estimated standard deviation of the residuals
+
+    -   Measures how far the $Y_{i}$ values are from the line, on average
+
+-   The formula changes due to degrees of freedom adjustment
+
+$$SER = s_{\hat{u}} = \sqrt{\frac{1}{n-k-1} \sum_{i=1}^{n}\hat{u}_{i}^2}$$
+$$= \sqrt{\frac{SSR}{n-k-1}}$$
+
+-   $k$ represents the number variables in the model
+
+    -   Each parameter estimate uses information, which is the reason for the adjustment
+
+    -   If $k=1$, then formula is same as we learned previously
+
+## Example with Stata {background-color="#d9edc2"}
+
+-   Below is the regression output from earlier
+
+```{stata, echo=TRUE, collectcode=TRUE}
+regress testscr str mealpct, robust
+```
+
+-   $R^2$ is in the top right ($\bar{R}^2$ only appears without robust option)
+
+-   The SER is equal to the "Root MSE"
+
+# Least Squares Assumptions for Multiple Regression
+
+## Introduction
+
+-   Like before, we need to make assumptions for causal inference
+  
+    - To estimate only direct effect of an independent variable on outcome
+
+-   Maintain the same three assumptions we learned in last section
+
+-   Add extra assumption about relationship between independent variables
+
+    - They cannot be perfectly related to each other
+
+## Assumption 1: Zero Conditional Mean of the Error
+
+-   The average error term $u_{i}$ conditional on all X variables is zero $$E[u_{i}| X_{1i},X_{2i},...,X_{ki}]=0$$
+
+-   This is the same condition as in the simple regression model
+
+-   Difference is that error has average of zero for all combinations of $X_{1i},X_{2i},...,X_{ki}$
+
+-   Also implies that $u_{i}$ is not systematically related to any of $X_{1i},X_{2i},...,X_{ki}$
+
+-   How can this assumption fail?
+
+    -   Model misspecification
+
+    -   Omitted variables
+
+    -   Simultaneous equations
+
+## Assumption 2: ($Y_{i},X_{1i},X_{2i},...,X_{ki})$ are iid
+
+-   These variables must be independent
+
+-   Also must come from the same distribution
+
+-   As discussed before, this holds true when we take a simple random sample
+
+-   Assumption use to establish slopes are consistent and have Normal distribution
+
+## Assumption 3: Large Outliers Unlikely
+
+-   Outliers are values far from the usual range of data
+
+-   They can have large effect on slope estimates
+
+## Assumption 4: No Perfect Multicollinearity
+
+-   Collinearity refers to correlations among independent variables
+
+-   [Perfect collinearity]{.red} is an exact linear relationship between one or more independent variables
+
+-   Perfectly collinear variables cannot be included in the model
+
+    -   Collinear variables can be included
+
+    -   But not [perfectly collinear]{.red} ones
+
+## Assumption 4: No Perfect Multicollinearity
+
+-   Exa,ple of perfect collinearity: Height on income
+
+    -   Suppose you want to estimate the effect of height on income
+
+    -   Your regresion model is 
+    
+    $$Y_{i} = \beta_{0} + \beta_{1}h\_inch_{i} + \beta_{1}h\_cm_{i} + u_{i}$$
+
+    -   Where $h\_cm_{i} = 2.54*h\_inch_{i}$
+
+    -   You cannot estimate a model with both $h\_cm_{i}$ and $h\_inch_{i}$
+
+    -   $h\_cm$ does not move independently from $h\_inch_{i}$
+
+    -   These variables are [perfectly collinear]{.red}
+
+## Assumption 4: No Perfect Multicollinearity
+
+-   Ex of [imperfect collinearity]{.red}: Height and weight on income
+
+    -   Suppose you want effect of height *and weight* on income
+
+    -   Your regresion model is $y = \beta_{0} + \beta_{1}h\_inch + \beta_{1}w\_lbs + u$
+
+    -   Height and weight are very highly related
+
+    -   But there is no [exact]{.red}, linear relationship
+
+    -   This model **can** be estimated
+
+## Assumption 4: No Perfect Multicollinearity
+
+-   Ex of [imperfect collinearity]{.red}: Height and height$^2$ on income
+
+    -   Regresion model is $y = \beta_{0} + \beta_{1}h\_inch + \beta_{1}h\_inch^2 + u$
+
+    -   $h\_inch^2$ is a perfect **nonlinear** function of $h\_inch$
+
+    -   This is allowed because there is no exact, [linear]{.red} relationship
+
+    -   This model can also be estimated
+
+-   Problem of perfect collinearity is we cannot estimate the model
+
+-   Intuitively, it is asking regression to answer illogical question
+
+    -   What is effect of $X_{i}$ on $Y_{i}$ holding $X_{i}$ fixed?
+
+-   As we discuss later, the solution is to drop one of the collinear variables
+
+# Distribution of the OLS Estimators in Multiple Regression
+
+## Expected Value of OLS Estimator
+
+-   We can show that if assumptions 1 - 4 are true, then
+
+    $$E[\hat{\beta}_{j}] =  \beta_{j},  j=0,1,...,k$$
+
+-   Which means that each $\hat{\beta}_{j}$ is an unbiased estimator for $\beta_{j}$
+
+-   The proof is long, but follows similar logic to the simple regression model
+
+-   Implies that we are not making any systematic errors in estimating $\beta_{j}$
+
+    -   Only reason $\hat{\beta}_{j}$ differs from $\beta_{j}$ is sampling error
+
+-   Remember that this is a statistical property
+
+    -   *In theory*, over many repeated samples, the average of all $\hat{\beta}_{j}$ equals the true value
+
+## Variance of OLS Estimator
+
+-   Remember that from one sample to the next, the value of OLS estimators will differ
+
+    -   This is sampling variation
+
+-   Variance and standard deviation describe this variation
+
+-   Variance of OLS estimators under heteroskedasticity is complicated
+
+-   [If]{.underline} we are willing to assume homoskedasticity, we can simplify
+
+-   Imposing this assumption, the variance of the $\hat{\beta}_{j}$ is $$Var[\hat{\beta}_{j}|X_{1i},X_{2i},...,X_{ki}] = \frac{\sigma_{u}^2 }{(\sum_{i=1}^{n}(X_{ji} - \bar{X}_{j})^2)(1-R^2_{j})}$$
+
+## Variance of OLS Estimator
+
+-   Formula applies for all slope estimates from $j = 1,...,k$
+
+    -   Intercept has different variance formula
+
+-   The term $R^2_{j}$ is the $R^2$ from a regression of ${X}_{ji}$ on all other independent variables
+
+    -   The part of ${X}_{ji}$ that is explained by all other variables
+
+    -   Note: this is not the original model $R^2$
+
+    -   This is an auxiliary $R^2$ from regressing ${X}_{ji}$ on other independent variables
+
+-   The variance of $\hat{\beta}_{j}$ consists of 3 components
+
+## Variance of OLS Estimator
+
+1.  The error variance $\sigma_{u}^2$
+
+    -   If the error is more variable, the estimate $\hat{\beta}_{j}$ is more variable
+
+        -   Means that values of $Y_{i}$ are more spread out around $E[Y_{i}|X_{1i},X_{2i},...,X_{ki}]$
+
+        -   More "noise" in the regression
+
+        -   Noise carries into the slope estimators
+
+2.  Sample variation in $X_{j}$, $\sum_{i=1}^{n}(X_{ji} - \bar{X}_{j})^2$
+
+    -   More variation in $X_{j}$ reduces variance in $\hat{\beta}_{j}$
+
+        -   More spread in $X_{j}$ makes it easier to estimate slope parameters
+
+        -   Important to sample such that $X_{j}$ is spread out widely
+
+## Variance of OLS Estimator
+
+3.  $R^2_{j}$ is the $R^2$ from a regression of ${X}_{ji}$ on all other independent variables
+
+    -   A larger $R^2_{j}$ increases the variance of $\hat{\beta}_{j}$
+
+        -   Larger $R^2_{j}$ means other variables explain more variation in ${X}_{j}$
+
+        -   Means ${X}_{j}$ is more collinear with other independent variables
+
+        -   There is less *independent* variation in ${x}_{j}$
+
+        -   Higher values will increase the variance of $\hat{\beta}_{j}$
+
+-   Higher $R^2_{j}$ illustrates problems created by collinearity
+
+    -   Larger $R^2_{j}$ means ${X}_{j}$ more collinear with other independent variables
+
+    -   At the extreme, $R^2_{j} = 1$ means perfect collinearity
+
+    -   As $R^2_{j} \rightarrow 1$, $var(\hat{\beta}_{j}) \rightarrow \infty$
+
+-   Thus, too much collinearity creates imprecise estimates of $\hat{\beta}_{j}$
+
+## Distribution of OLS Estimators
+
+-   As before, results from simple regression carry over to multiple regression
+
+-   Given 4 assumptions, OLS estimators $\hat{\beta}_{0}, \hat{\beta}_{1}, ...\hat{\beta}_{k}$ are Normally distributed in large samples
+
+    -   A result of the Central Limit Theorem
+
+-   Mean and variance are as discussed previously
+
+    -   Recall that variance formula above only appropriate under homoskedasticity
+
+    -   More complicated formula for heteroskedastic errors
+
+-   Knowing distribution of $\hat{\beta}_{0}, \hat{\beta}_{1}, ...\hat{\beta}_{k}$ will help us for hypothesis testing
+
+## Example with Stata {background-color="#d9edc2"}
+
+-   In our example we can simulate the sampling distribution of the slope
+
+-   Below we simulate the distribution for $\hat{\beta}_{1}$
+
+```{stata, echo=TRUE, collectcode=TRUE, results="hide"}
+clear all
+local sims = 9999
+set obs `sims'
+set seed 12345
+set more off
+
+gen beta1 = .
+
+forvalues x = 1/`sims' {
+
+	preserve
+	clear
+	
+	qui set obs 420
+
+	gen str = rnormal(20,2)
+	gen mealpct = 7 + 2*str + rnormal(0,25)
+		qui replace mealpct = 0 if mealpct < 0
+		qui replace mealpct = 100 if mealpct > 100
+	gen u = rnormal(0,10)
+
+	gen testscr = 700 -1 * str - 0.5*mealpct + u
+	
+	qui regress testscr str mealpct
+	restore
+	
+	qui replace beta1 = _b[str] in `x'
+ 	
+	display "Iteration `x'"
+}
+```
+
+## Example with Stata {background-color="#d9edc2"}
+
+```{stata, echo=1:2, collectcode=TRUE}
+sum beta1
+twoway hist beta1, title(Sampling Distribution of Beta1) scheme(s2mono)
+quietly graph export sampdistbeta1.svg, replace
+```
+
+![](sampdistbeta1.svg){fig-align="center"}
+
+# Multicollinearity
+
+## Introduction
+
+-   No perfect multicollinearity is one of the assumptions of the model
+
+-   Consequence of violating the assumption is the model cannot be estimated
+
+    -   Effectively like trying to estimate effect of a variable while holding it fixed
+
+    -   OLS does not work in this case
+
+-   We discussed some examples, and here we expand on that list
+
+-   Also add a few other details
+
+## Examples of Perfect Multicollinearity
+
+-   In each example below, imagine we start with the model $$TestScore_{i} = \beta_{0} + \beta_{1}STR_{i} + PctESL_{i} + u_{i}$$
+
+-   Then we create a multicollinearity problem by adding a third variable
+
+1.  Adding *Fraction* ESL
+
+    -   Fraction ESL varies between 0 and 1
+
+    -   It is perfectly functionally related to Percent ESL: $$PctESL_{i} = 100 \times FracESL_{i}$$
+
+    -   Impossible to estimate effect of $PctESL_{i}$ holding $FracESL_{i}$ constant
+
+    -   Because they measure exactly the same thing
+
+## Examples of Perfect Multicollinearity
+
+2.  "Not very small" classes
+
+    -   Suppose $NVS_{i} = 1\{STR \ge 12\}$
+
+    -   Also creates perfect collinearity for subtle reason
+
+    -   In the data no classes have $STR_{i} < 12$, so $NVS_{i} = 1$ for all observations
+
+    -   Perfectly collinear with the constant term in the regression
+
+        -   In linear regression models, intercept can be thought of as having variable equal to 1 for all observations
+
+3.  Percent English Speakers
+
+    -   Define English speakers as those who are not ESL students $$PctES_{i} = 100 - PctESL_{i}$$
+
+    -   $PctES_{i}$ is an exact function of the constant and $PctESL_{i}$ $$PctES_{i} = 100 \times (1) - PctESL_{i}$$
+
+## Dummy Variable Trap
+
+-   Dummy variables create special case of perfect collinearity
+
+-   Consider estimating a gender wage gap
+
+-   Create two dummy variables
+
+    -   $male = 1$ if person is male, and 0 otherwise
+
+    -   $female = 1$ if person is female, and 0 otherwise
+
+-   Adding both $male$ and $female$ to regression creates perfect multicollinearity
+
+    -   $male + female = 1$
+
+    -   This is perfectly collinear with the constant
+
+-   This is called the dummy variable trap
+
+## Dummy Variable Trap
+
+-   Generally, dummy variable trap is
+
+    -   There are G binary variables, and each observation falls into one category
+
+    -   Including all G variables creates perfect multicollinearity
+
+-   To avoid dummy variable trap, you can only include $G-1$ dummy variables
+
+-   Male-female example
+
+    -   G = 2, since we divide people into male or female
+
+    -   Based on rule above, can only include one
+
+    -   Either include $male$ or $female$, but not both
+
+    -   Which one you include depends on preference
+
+## Solutions to Multicollinearity
+
+-   Typically, perfect multicollinearity arises from a mistake
+
+-   Solution is to find mistake, and drop collinear variable
+
+    -   In dummy variable example, drop either $male$ or $female$ dummy
+
+-   Sometimes it is easy to find mistake, sometimes not
+
+    -   Especially when collinearity is subtle
+
+-   In practice, Stata does this automatically
+
+    -   It looks for perfect linear relationships among $X$ variables
+
+    -   If it finds one, it drops one or more variables until no more relationship exists
+
+## Imperfect Multicollinearity
+
+-   A [perfect]{.red} relationship between regressors makes us unable to produce OLS estimates
+
+-   However, regressors are still allowed to be related
+
+    -   Just not *perfectly* related
+
+-   A relationship between variables that is not exact is called [imperfect mutlicollinearity]{.red}
+
+-   Imperfect multicollinearity is allowed
+
+-   Key issue for imperfect multicollinearity is that it causes variance of $\hat{\beta}_{j}$ to rise
+
+    -   Depending on how closely variables are related
+
+## Solutions to Multicollinearity
+
+-   Intuition: OLS estimates independent effect of each $X_{j}$ on $Y_{i}$
+
+-   If $X_{j}$ is highly related to another variable, there is little independent variation
+
+    -   With little independent movement in $X_{j}$, $\hat{\beta}_{j}$ will fluctuate more from sample to sample
+
+-   There is no obvious solution to imperfect multicollinearity
+
+    -   You can still estimate all the $\hat{\beta}_{j}$
+
+    -   But they will not be very precise (i.e. their variance will be high)
+
+## Example with Stata {background-color="#d9edc2"}
+
+-   Suppose we try to add a collinear variable to the model
+
+    -   mealdec is mealpct divided by 100
+
+    -   These two variables are perfectly linearly related
+
+```{stata, echo=TRUE, collectcode=TRUE, results="hide"}
+clear
+set obs 420
+set seed 12345
+
+
+gen str = rnormal(20,2)
+gen mealpct = 7 + 2*str + rnormal(0,25)
+	replace mealpct = 0 if mealpct < 0
+	replace mealpct = 100 if mealpct > 100
+gen mealdec = mealpct/100	
+gen u = rnormal(0,10)
+
+gen testscr = 700 -1 * str - 0.5*mealpct + u
+```
+
+## Example with Stata {background-color="#d9edc2"}
+
+```{stata, echo=TRUE, collectcode=TRUE}
+regress testscr str mealpct mealdec
+```
+
+## Example with Stata {background-color="#d9edc2"}
+
+-   Finally, now we create two dummy variables
+
+```{stata, echo=TRUE, collectcode=TRUE, results="hide"}
+gen smallclass = str < 20
+gen bigclass = str >= 20
+```
+
+-   First use the small class dummy only in the regression
+
+```{stata, echo=TRUE, collectcode=TRUE}
+regress testscr smallclass mealpct, robust
+```
+
+## Example with Stata {background-color="#d9edc2"}
+
+-   Next try to add both dummies
+
+    -   Stata drops one of the dummies because $smallclass + bigclass = 1$
+
+    -   This is perfectly collinear with the constant
+
+```{stata, echo=TRUE, collectcode=TRUE}
+regress testscr smallclass bigclass mealpct, robust
+```
+

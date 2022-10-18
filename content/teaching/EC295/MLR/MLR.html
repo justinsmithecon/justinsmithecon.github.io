@@ -1,0 +1,2103 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="MLR_files/libs/clipboard/clipboard.min.js"></script>
+<script src="MLR_files/libs/quarto-html/tabby.min.js"></script>
+<script src="MLR_files/libs/quarto-html/popper.min.js"></script>
+<script src="MLR_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="MLR_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="MLR_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="MLR_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.1.189">
+
+  <meta name="author" content="Justin Smith">
+  <title>Linear Regression with Multiple Regressors</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="MLR_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="MLR_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="MLR_files/libs/revealjs/dist/theme/quarto.css" id="theme">
+  <link href="MLR_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="MLR_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="MLR_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="MLR_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="MLR_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="MLR_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-captioned.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-captioned) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-captioned.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-captioned .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-captioned .callout-caption  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-captioned.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-captioned.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-caption {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-caption {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-caption {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-captioned .callout-body > .callout-content > :last-child {
+    margin-bottom: 0.5rem;
+  }
+
+  .callout.callout-captioned .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-captioned) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-caption {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-caption {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-caption {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-caption {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-caption {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-background-color="#43464B" class="center">
+  <h1 class="title">Linear Regression with Multiple Regressors</h1>
+  <p class="subtitle">EC295</p>
+  <p class="author">Justin Smith</p>
+  <p class="institute">Wilfrid Laurier University</p>
+  <p class="date">Fall 2022</p>
+</section>
+
+<section>
+<section id="motivation" class="title-slide slide level1 center">
+<h1>Motivation</h1>
+
+</section>
+<section id="motivation-1" class="slide level2">
+<h2>Motivation</h2>
+<ul>
+<li><p>We have discussed regression with one independent variable</p>
+<ul>
+<li><p>Helps provide intuition</p></li>
+<li><p>But, actual models rarely involve only one</p></li>
+</ul></li>
+<li><p>In this section, we will cover multiple regressors</p>
+<ul>
+<li><p>Regression models with more than one independent variable</p></li>
+<li><p>Most real models have many such variables</p></li>
+</ul></li>
+<li><p>Multiple regression allows us to</p>
+<ul>
+<li><p>Explicitly hold constant other variables in a regression</p></li>
+<li><p>More accurately estimate causal effects</p></li>
+<li><p>Incorporate more general relationships between variables</p></li>
+</ul></li>
+<li><p>The same intuition carries forward for multiple regression</p>
+<ul>
+<li>Math is slightly more involved</li>
+</ul></li>
+</ul>
+</section></section>
+<section>
+<section id="the-multiple-regression-model" class="title-slide slide level1 center">
+<h1>The Multiple Regression Model</h1>
+
+</section>
+<section id="model-with-two-regressors" class="slide level2">
+<h2>Model with Two Regressors</h2>
+<ul>
+<li><p>A regression model with two regressors is <span class="math display">\[Y_{i} = \beta_{0} + \beta_{1}X_{1i} + \beta_{2}X_{2i}+ u_{i}\]</span></p>
+<ul>
+<li><p><span class="math inline">\(X_{1i}\)</span> is the first independent variable</p></li>
+<li><p><span class="math inline">\(X_{2i}\)</span> is the second independent variable</p></li>
+<li><p><span class="math inline">\(\beta_{0}\)</span> is the intercept</p></li>
+<li><p><span class="math inline">\(\beta_{1}\)</span> is the all else equal effect of <span class="math inline">\(X_{1i}\)</span> on <span class="math inline">\(Y_{i}\)</span></p></li>
+<li><p><span class="math inline">\(\beta_{2}\)</span> is the all else equal effect of <span class="math inline">\(X_{2i}\)</span> on <span class="math inline">\(Y_{i}\)</span></p></li>
+<li><p><span class="math inline">\(u_{i}\)</span> is all factors other than <span class="math inline">\(X_{1i},X_{2i}\)</span> that affect <span class="math inline">\(Y_{i}\)</span></p></li>
+</ul></li>
+<li><p>The corresponding population regression function is</p></li>
+</ul>
+<p><span class="math display">\[E[Y_{i}| X_{1i}, X_{2i}]= \beta_{0} + \beta_{1}X_{1i} + \beta_{2}X_{2i}\]</span></p>
+</section>
+<section id="model-with-two-regressors-1" class="slide level2">
+<h2>Model with Two Regressors</h2>
+<ul>
+<li><p><span class="red">Key difference vs model with one regressor</span>: when measuring slope, we explicitly hold other factors constant</p>
+<ul>
+<li><p><span class="math inline">\(\beta_{1}\)</span> is effect of <span class="math inline">\(X_{1i}\)</span> on <span class="math inline">\(Y_{i}\)</span> holding <span class="math inline">\(X_{2i}\)</span> fixed</p></li>
+<li><p><span class="math inline">\(\beta_{2}\)</span> is effect of <span class="math inline">\(X_{2i}\)</span> on <span class="math inline">\(Y_{i}\)</span> holding <span class="math inline">\(X_{1i}\)</span> fixed</p></li>
+</ul></li>
+<li><p>To see this, take total change in <span class="math inline">\(E[Y_{i}| X_{1i}, X_{2i}]\)</span> <span class="math display">\[\Delta E[Y_{i}| X_{1i}, X_{2i}] =  \beta_{1}\Delta X_{1i}+ \beta_{2}\Delta X_{2i}\]</span></p></li>
+<li><p>Now hold <span class="math inline">\(X_{2i}\)</span> fixed by setting <span class="math inline">\(\Delta X_{2i} = 0\)</span> <span class="math display">\[\Delta E[Y_{i}| X_{1i}, X_{2i}] = \beta_{1}\Delta X_{1i}\]</span></p></li>
+<li><p>and as a result <span class="math display">\[\beta_{1} = \frac{\Delta E[Y_{i}| X_{1i}, X_{2i}] }{\Delta X_{1i}}\]</span></p></li>
+</ul>
+</section>
+<section id="model-with-two-regressors-2" class="slide level2">
+<h2>Model with Two Regressors</h2>
+<ul>
+<li><p>Key is that <span class="math inline">\(\beta_{1}\)</span> is calculated holding <span class="math inline">\(X_{2i}\)</span> constant</p>
+<ul>
+<li>Called <span class="red">partial effect</span> if <span class="math inline">\(X_{1i}\)</span> on <span class="math inline">\(Y_{i}\)</span></li>
+</ul></li>
+<li><p>Intercept also has slightly different interpretation</p>
+<ul>
+<li>Average value of <span class="math inline">\(Y_{i}\)</span> when <span class="math inline">\(X_{1i}\)</span> and <span class="math inline">\(X_{2i}\)</span> are zero</li>
+</ul></li>
+<li><p><span class="red">Example</span>: Wages, schooling, and experience</p>
+<ul>
+<li>If <span class="math inline">\(Y\)</span> is wages, <span class="math inline">\(X_{1i}\)</span> is education, and <span class="math inline">\(X_{2i}\)</span> is experience, then</li>
+</ul>
+<p><span class="math display">\[wage_{i} = \beta_{0} + \beta_{1}educ_{i} + \beta_{2}exper_{i} + u_{i}\]</span></p>
+<ul>
+<li><p><span class="math inline">\(\beta_{1}\)</span> is effect of education on wages, holding experience fixed</p></li>
+<li><p><span class="math inline">\(\beta_{2}\)</span> is experience on wages, holding education fixed</p></li>
+<li><p><span class="math inline">\(u\)</span> is other variables that affect wages</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="model-with-two-regressors-3" class="slide level2">
+<h2>Model with Two Regressors</h2>
+<ul>
+<li><p>We will see that adding more variables to the model helps avoid bias in OLS</p>
+<ul>
+<li><p>For OLS to be unbiased, need to assume unobserved variables have zero conditional mean</p></li>
+<li><p>For variables included in the model, no longer need to make that assumption</p>
+<ul>
+<li>Though we still do for variables that remain unobserved</li>
+</ul></li>
+<li><p>Strengthens likelihood that OLS estimator is unbiased</p></li>
+</ul></li>
+<li><p>Definition of homoskedasticity and heteroskedasticity are natural extensions</p>
+<ul>
+<li><p>Homoskedastic errors are <span class="math inline">\(VAR(u_{i}|X_{1i}, X_{2i}) = \sigma^2_{u}\)</span></p>
+<ul>
+<li>A constant number that does not vary across individuals</li>
+</ul></li>
+<li><p>Heteroskedastic errors are <span class="math inline">\(VAR(u_{i}|X_{1i}, X_{2i}) = \sigma^2_{ui}\)</span></p>
+<ul>
+<li>Does vary across individuals</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="model-with-k-regressors" class="slide level2">
+<h2>Model with <span class="math inline">\(k\)</span> Regressors</h2>
+<ul>
+<li><p>A regression model with <span class="math inline">\(k\)</span> regressors is <span class="math display">\[Y_{i} = \beta_{0} + \beta_{1}X_{1i} + \beta_{2}X_{2i}+ ... + \beta_{k}X_{ki} + u_{i}\]</span></p>
+<ul>
+<li><p><span class="math inline">\(X_{1i}, X_{2i}, ..., X_{ki}\)</span> are independent variables</p></li>
+<li><p><span class="math inline">\(\beta_{0}\)</span> is the intercept</p></li>
+<li><p><span class="math inline">\(\beta_{1}, \beta_{2}, ..., \beta_{k}\)</span> are slope parameters</p>
+<ul>
+<li>Partial effects holding other factors in model constant</li>
+</ul></li>
+<li><p><span class="math inline">\(u_{i}\)</span> is all factors other than <span class="math inline">\(X_{1i}, X_{2i}, ..., X_{ki}\)</span> that affect <span class="math inline">\(Y_{i}\)</span></p></li>
+</ul></li>
+<li><p>Population regression function is</p></li>
+</ul>
+<p><span class="math display">\[E[Y_{i}| X_{1i}, X_{2i}, ...,X_{ki}]= \beta_{0} + \beta_{1}X_{1i} + \beta_{2}X_{2i}+ ... + \beta_{k}X_{ki}\]</span></p>
+</section>
+<section id="model-with-k-regressors-1" class="slide level2">
+<h2>Model with <span class="math inline">\(k\)</span> Regressors</h2>
+<ul>
+<li><p>The partial effect of <span class="math inline">\(X_{ji}\)</span> on <span class="math inline">\(Y_{i}\)</span> is</p>
+<p><span class="math display">\[\beta_{j} = \frac{\Delta E[Y_{i}| X_{1i}, X_{2i},..., X_{ki}] }{\Delta X_{ji}}\]</span></p>
+<ul>
+<li>The effect of <span class="math inline">\(X_{ji}\)</span> on <span class="math inline">\(Y_{i}\)</span> holding all other variables fixed</li>
+</ul></li>
+<li><p>Intercept is value of <span class="math inline">\(E[Y_{i}| X_{1i}, X_{2i},..., X_{ki}]\)</span> when all independent variables equal zero</p></li>
+<li><p>As before, assumptions for errors are natural extensions</p>
+<ul>
+<li><p>Homoskedastic errors are <span class="math inline">\(VAR(u_{i}|X_{1i}, X_{2i},..., X_{ki}) = \sigma^2_{u}\)</span></p></li>
+<li><p>Heteroskedastic errors are <span class="math inline">\(VAR(u_{i}|X_{1i}, X_{2i},..., X_{ki}) = \sigma^2_{ui}\)</span></p></li>
+</ul></li>
+</ul>
+</section></section>
+<section>
+<section id="estimation-by-ols" class="title-slide slide level1 center">
+<h1>Estimation by OLS</h1>
+
+</section>
+<section id="ordinary-least-squares" class="slide level2">
+<h2>Ordinary Least Squares</h2>
+<ul>
+<li><p>Remember that OLS chooses estimates of <span class="math inline">\(\beta\)</span> to minimize the sum of the squared residuals in the sample</p></li>
+<li><p>The population model is <span class="math display">\[Y_{i} = \beta_{0} + \beta_{1}X_{1i} + \beta_{2}X_{2i}+ ...+ \beta_{k}X_{ki}+ u_{i}\]</span></p></li>
+<li><p>When we replace parameters with estimates, we get <span class="math display">\[Y_{i} = \hat{\beta}_{0} + \hat{\beta}_{1}X_{1i} + \hat{\beta}_{2}X_{2i}+ ...+ \hat{\beta}_{k}X_{ki}+ \hat{u}_{i}\]</span></p></li>
+<li><p>The sum of the squared residuals are <span class="math display">\[\sum_{i=1}^{n} \left ( Y_{i}- \hat{\beta}_{0} - \hat{\beta}_{1}X_{1i} - \hat{\beta}_{2}X_{2i}- ...- \hat{\beta}_{k}X_{ki}  \right )^2\]</span></p></li>
+</ul>
+</section>
+<section id="ordinary-least-squares-1" class="slide level2">
+<h2>Ordinary Least Squares</h2>
+<ul>
+<li>Minimizing this function, we get the following equations</li>
+</ul>
+<p><span class="math display">\[\sum_{i=1}^{n} \left ( Y_{i} - \hat{\beta}_{0} - \hat{\beta}_{1}X_{1i} - \hat{\beta}_{2}X_{2i}- ...- \hat{\beta}_{k}X_{ki}  \right ) =0\]</span> <span class="math display">\[\sum_{i=1}^{n} X_{1i} \left (  Y_{i} - \hat{\beta}_{0} - \hat{\beta}_{1}X_{1i} - \hat{\beta}_{2}X_{2i}- ...- \hat{\beta}_{k}X_{ki} \right ) = 0\]</span> <span class="math display">\[\vdots\]</span> <span class="math display">\[\sum_{i=1}^{n} X_{ki} \left (   Y_{i} - \hat{\beta}_{0} - \hat{\beta}_{1}X_{1i} - \hat{\beta}_{2}X_{2i}- ...- \hat{\beta}_{k}X_{ki} \right ) = 0\]</span></p>
+<ul>
+<li>The values <span class="math inline">\(\hat{\beta}_{0}, \hat{\beta}_{1} ,...,\hat{\beta}_{k}\)</span> are the solutions to these equations</li>
+</ul>
+</section>
+<section id="ordinary-least-squares-2" class="slide level2">
+<h2>Ordinary Least Squares</h2>
+<ul>
+<li>The predicted values are computed as</li>
+</ul>
+<p><span class="math display">\[\hat{Y}_{i} = \hat{\beta}_{0} + \hat{\beta}_{1}X_{1i} + \hat{\beta}_{2}X_{2i}+ ...+ \hat{\beta}_{k}X_{ki}\]</span></p>
+<ul>
+<li>The residuals are then computed as</li>
+</ul>
+<p><span class="math display">\[\hat{u}_{i} = Y_{i} - \hat{Y}_{i}  = Y_{i} - \hat{\beta}_{0} - \hat{\beta}_{1}X_{1i} - \hat{\beta}_{2}X_{2i}- ...- \hat{\beta}_{k}X_{ki}\]</span></p>
+<ul>
+<li><p><span class="math inline">\(\hat{\beta}_{0}\)</span> is the estimated intercept</p>
+<ul>
+<li>Predicted value <span class="math inline">\(\hat{Y_{i}}\)</span> when all other variables equal zero</li>
+</ul></li>
+<li><p><span class="math inline">\(\hat{\beta}_{1},\hat{\beta}_{2},...,\hat{\beta}_{k}\)</span> are the estimated partial effects</p>
+<ul>
+<li><em>change</em> in <span class="math inline">\(\hat{Y_{i}}\)</span> when a variable changes,<em>holding all other variables equal</em></li>
+</ul></li>
+</ul>
+</section>
+<section id="ordinary-least-squares-3" class="slide level2">
+<h2>Ordinary Least Squares</h2>
+<ul>
+<li><p>To see partial effect interpretation, take the total change in <span class="math inline">\(\hat{Y_{i}}\)</span></p>
+<p><span class="math display">\[\Delta \hat{Y_{i}} =   \hat{\beta}_{1}\Delta X_{1i} + \hat{\beta}_{2}\Delta X_{2i}+ ...+ \hat{\beta}_{k}\Delta X_{ki}\]</span></p>
+<ul>
+<li><p>If we set <span class="math inline">\(\Delta X_{2i} = 0,...,\Delta X_{ki} = 0\)</span> then</p>
+<p><span class="math display">\[\hat{\beta}_{1} = \frac{\Delta \hat{Y}_{i}} {\Delta X_{1i}}\]</span></p></li>
+<li><p>Similarly, if we set <span class="math inline">\(\Delta X_{1i} = 0,\Delta X_{3i} = 0, ... ,\Delta X_{ki} = 0\)</span> then</p>
+<p><span class="math display">\[\hat{\beta}_{2} = \frac{\Delta \hat{Y}_{i}}{\Delta X_{2i}}\]</span></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="partialling-out-interpretation" class="slide level2">
+<h2>Partialling Out Interpretation</h2>
+<ul>
+<li><p>We saw that <span class="math inline">\(\hat{\beta}_{j}\)</span> is the partial effect of <span class="math inline">\(X_{ji}\)</span> on <span class="math inline">\(\hat{Y}_{i}\)</span></p></li>
+<li><p>We can express <span class="math inline">\(\hat{\beta}_{j}\)</span> with a simple formula consistent with this interpretation</p></li>
+<li><p>Imagine a regression with <span class="math inline">\(k=2\)</span></p></li>
+</ul>
+<p><span class="math display">\[\hat{Y}_{i} = \hat{\beta}_{0}+  \hat{\beta}_{1}X_{1i} + \hat{\beta}_{2}X_{2i}\]</span></p>
+<ul>
+<li><p>Now, perform this two-step procedure</p>
+<ol type="1">
+<li><p>Regress <span class="math inline">\(X_{1i}\)</span> on <span class="math inline">\(X_{2i}\)</span>, and obtain the residuals <span class="math inline">\(\hat{r}_{1i}\)</span></p></li>
+<li><p>Estimate a regression of <span class="math inline">\(Y_{i}\)</span> on <span class="math inline">\(\hat{r}_{i1}\)</span></p></li>
+</ol></li>
+</ul>
+</section>
+<section id="partialling-out-interpretation-1" class="slide level2">
+<h2>Partialling Out Interpretation</h2>
+<ul>
+<li><span class="math inline">\(\hat{\beta}_{1}\)</span> equals the slope estimate on the second regression</li>
+</ul>
+<p><span class="math display">\[\hat{\beta}_{1} = \frac{\sum_{i=1}^{n} \hat{r}_{i1}Y_{i}}{\sum_{i=1}^{n} \hat{r}_{i1}^2}\]</span></p>
+<ul>
+<li><p>Why?</p>
+<ul>
+<li><p>In step 1, we purge <span class="math inline">\(X_{1i}\)</span> of part that is correlated with <span class="math inline">\(X_{2i}\)</span></p></li>
+<li><p><span class="math inline">\(\hat{r}_{i1}\)</span> is piece of <span class="math inline">\(X_{1i}\)</span> unrelated to <span class="math inline">\(X_{2i}\)</span></p></li>
+<li><p>By using <span class="math inline">\(\hat{r}_{i1}\)</span> step 2 regression, it is like we already controlled for <span class="math inline">\(X_{2i}\)</span></p></li>
+</ul></li>
+<li><p>Highlights intuition behind regression</p>
+<ul>
+<li><p>When you regress <span class="math inline">\(Y_{i}\)</span> on <span class="math inline">\(X_{1i}\)</span>, you separate <span class="math inline">\(Y_{i}\)</span> into two pieces</p>
+<ul>
+<li><p>Part that is correlated with <span class="math inline">\(X_{1i} \rightarrow \hat{Y}_{i}\)</span></p></li>
+<li><p>Part that is uncorrelated with <span class="math inline">\(X_{1i} \rightarrow \hat{u}_{i}\)</span></p></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="comparing-simple-and-multiple-regression" class="slide level2">
+<h2>Comparing Simple and Multiple Regression</h2>
+<ul>
+<li>Imagine the following predicted values from two different regressions</li>
+</ul>
+<p><span class="math display">\[\tilde{Y}_{i} = \tilde{\beta}_{0}+  \tilde{\beta}_{1}X_{1i}\]</span> <span class="math display">\[\hat{Y}_{i} = \hat{\beta}_{0}+  \hat{\beta}_{1}X_{1i} + \hat{\beta}_{2}X_{2i}\]</span></p>
+<ul>
+<li><p>The slope coefficients have the following relationship</p>
+<p><span class="math display">\[\tilde{\beta}_{1} =\hat{\beta}_{1} + \hat{\beta}_{2}\tilde{\delta}_{1}\]</span></p>
+<ul>
+<li><span class="math inline">\(\tilde{\delta}_{1}\)</span> is the slope in a regression of <span class="math inline">\(X_{1i}\)</span> on <span class="math inline">\(X_{2i}\)</span></li>
+</ul></li>
+<li><p>Simple and multiple regression coefficients are equal when</p>
+<ol type="1">
+<li><p><span class="math inline">\(\hat{\beta}_{2} = 0\)</span>, which means <span class="math inline">\(X_{2i}\)</span> is unrelated to <span class="math inline">\(Y_{i}\)</span></p></li>
+<li><p><span class="math inline">\(\tilde{\delta}_{1} = 0\)</span>, which means <span class="math inline">\(X_{1i}\)</span> is unrelated to <span class="math inline">\(X_{2i}\)</span></p></li>
+</ol></li>
+</ul>
+</section></section>
+<section>
+<section id="omitted-variables-bias" class="title-slide slide level1 center">
+<h1>Omitted Variables Bias</h1>
+
+</section>
+<section id="introduction" class="slide level2">
+<h2>Introduction</h2>
+<ul>
+<li><p>Suppose we are interested in <span class="math inline">\(\beta_{1}\)</span>, the effect of <span class="math inline">\(X_{i}\)</span> on <span class="math inline">\(Y_{i}\)</span></p></li>
+<li><p>In regression of <span class="math inline">\(Y_{i}\)</span> on <span class="math inline">\(X_{i}\)</span>, <span class="math inline">\(\hat{\beta}_{1}\)</span> is unbiased if unobserved factors are unrelated to <span class="math inline">\(X_{i}\)</span></p>
+<ul>
+<li><p>Mathematically, this means <span class="math inline">\(E[u_{i}|X_{i}] = 0\)</span></p></li>
+<li><p>When this is true, we estimate a causal effect</p></li>
+<li><p>Recall this is an assumption</p></li>
+</ul></li>
+<li><p>When unobserved factors <em>are</em> related to <span class="math inline">\(X_{i}\)</span>, a solution is to add them to the model</p>
+<ul>
+<li><p>This is multiple regression</p></li>
+<li><p>It explicitly holds them fixed when measuring effect of <span class="math inline">\(X_{i}\)</span> on <span class="math inline">\(Y_{i}\)</span></p></li>
+<li><p>For these variables, we do not have to assume they are unrelated to <span class="math inline">\(X_{i}\)</span></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="introduction-1" class="slide level2">
+<h2>Introduction</h2>
+<ul>
+<li><p>It can often be difficult to hold <em>all</em> relevant factors fixed</p>
+<ul>
+<li><p>Ex: class size and test scores</p>
+<ul>
+<li><p>Many factors besides class size determine test scores</p></li>
+<li><p>Family background, school quality, teachers, etc</p></li>
+<li><p>Many are likely related to <span class="math inline">\(X_{i}\)</span></p></li>
+</ul></li>
+</ul></li>
+<li><p>What if we exclude a relevant factor that is related to <span class="math inline">\(X_{i}\)</span>?</p></li>
+<li><p>Cannot assume <span class="math inline">\(E[u_{i}|X_{i}] = 0\)</span></p></li>
+<li><p>Estimator <span class="math inline">\(\hat{\beta}_{1}\)</span> will suffer from <span class="red">Omitted Variables Bias</span></p>
+<ul>
+<li><p><span class="math inline">\(E[\hat{\beta}_{1}] \neq \beta_{1}\)</span></p></li>
+<li><p><span class="math inline">\(\hat{\beta}_{1}\)</span> will not measure all else equal (causal) effect <span class="math inline">\(X_{i}\)</span> on <span class="math inline">\(Y_{i}\)</span></p></li>
+<li><p>Instead it measures partly effect <span class="math inline">\(X_{i}\)</span> on <span class="math inline">\(Y_{i}\)</span>, partly effect of excluded variable on <span class="math inline">\(Y_{i}\)</span></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="introduction-2" class="slide level2">
+<h2>Introduction</h2>
+<ul>
+<li><p>Suppose you are measuring effect of class size on test scores</p></li>
+<li><p>Below are some potential omitted factors</p>
+<ol type="1">
+<li><p>Percentage of english as a second language (ESL) students</p>
+<ul>
+<li><p>School districts with big classes have lots of ESL students</p></li>
+<li><p>ESL students tend to perform worse on standardized tests</p></li>
+<li><p>Even if class size has no independent effect, bigger classes will perform worse</p></li>
+</ul></li>
+<li><p>Parental background</p>
+<ul>
+<li><p>Wealthier areas tend to have schools with smaller classes</p></li>
+<li><p>Richer students may perform better on standardized tests, due to better resources at home</p></li>
+<li><p>Even if class size has no independent effect, bigger classes will perform worse</p></li>
+</ul></li>
+</ol></li>
+</ul>
+</section>
+<section id="formula-for-omitted-variables-bias" class="slide level2">
+<h2>Formula for Omitted Variables Bias</h2>
+<ul>
+<li><p>Imagine that the correct model for outcome <span class="math inline">\(Y_{i}\)</span> is <span class="math display">\[Y_{i} = \beta_{0} + \beta_{1}X_{1i} + \beta_{2}X_{2i} + u_{i}\]</span></p>
+<ul>
+<li><p>Assume that this model satisfies the OLS assumptions</p>
+<ul>
+<li><p>Most importantly, <span class="math inline">\(u_{i}\)</span> is unrelated to both <span class="math inline">\(X_{1i}\)</span> and <span class="math inline">\(X_{2i}\)</span></p></li>
+<li><p>Mathematically <span class="math inline">\(E[u_{i}|X_{1i},X_{2i}] = 0\)</span></p></li>
+</ul></li>
+</ul></li>
+<li><p>Suppose we omit <span class="math inline">\(X_{2i}\)</span>, pushing it to the error term so that <span class="math display">\[Y_{i} = \beta_{0} + \beta_{1}X_{1i}  + v_{i}\]</span></p>
+<ul>
+<li>where the new error is <span class="math inline">\(v_{i} =\beta_{2}X_{2i} + u_{i}\)</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="formula-for-omitted-variables-bias-1" class="slide level2">
+<h2>Formula for Omitted Variables Bias</h2>
+<ul>
+<li><p>What happens if we try to estimate this second model?</p></li>
+<li><p>We know from the simple regression model that</p></li>
+</ul>
+<p><span class="math display">\[\tilde{\beta}_{1} =\beta_{1} + \frac{\sum_{i=1}^{n}(X_{1i} - \bar{X}_{1})v_{i}}{\sum_{i=1}^{n}(X_{1i} - \bar{X}_{1})^2}\]</span></p>
+<ul>
+<li>The expected value of this estimator is</li>
+</ul>
+<p><span class="math display">\[E[\tilde{\beta}_{1}| X_{1i}]=\beta_{1} + \frac{\sum_{i=1}^{n}(X_{1i} - \bar{X}_{1})E[v_{i} |X_{1i}]}{\sum_{i=1}^{n}(X_{1i} - \bar{X}_{1})^2}\]</span></p>
+<ul>
+<li><p><span class="math inline">\(\tilde{\beta}_{1}\)</span> is unbiased if <span class="math inline">\(E[v_{i} |X_{1i}] = 0\)</span></p></li>
+<li><p>Working out that expectation, we get</p></li>
+</ul>
+<p><span class="math display">\[E[v_{i} |X_{1i}]=E[\beta_{2}X_{2i} + u_{i}|X_{1i}]= \beta_{2}E[X_{2i}|X_{1i}] + E[u_{i}|X_{1i}]\]</span></p>
+</section>
+<section id="formula-for-omitted-variables-bias-2" class="slide level2">
+<h2>Formula for Omitted Variables Bias</h2>
+<ul>
+<li><p>Based on assumption that <span class="math inline">\(u_{i}\)</span> is unrelated to <span class="math inline">\(X_{1i}\)</span>, <span class="math inline">\(E[u_{i}|X_{1i}] = 0\)</span></p></li>
+<li><p>Therefore</p></li>
+</ul>
+<p><span class="math display">\[E[v_{i} |X_{1i}]= \beta_{2}E[X_{2i}|X_{1i}]\]</span></p>
+<ul>
+<li><p>In general, this is not equal to zero, so <span class="math inline">\(\tilde{\beta}_{1}\)</span> is biased</p>
+<ul>
+<li>We discuss two exceptions below</li>
+</ul></li>
+<li><p>To quantify the bias, substitute back into the original formula to get</p></li>
+</ul>
+<p><span class="math display">\[E[\tilde{\beta}_{1}| X_{1i}]=\beta_{1} + \frac{\sum_{i=1}^{n}(X_{1i} - \bar{X}_{1})\beta_{2}E[X_{2i}|X_{1i}]}{\sum_{i=1}^{n}(X_{1i} - \bar{X}_{1})^2}\]</span></p>
+</section>
+<section id="formula-for-omitted-variables-bias-3" class="slide level2">
+<h2>Formula for Omitted Variables Bias</h2>
+<ul>
+<li><p>Let <span class="math inline">\(\delta_{1} = \frac{\sum_{i=1}^{n}(X_{1i} - \bar{X}_{1})E[X_{2i}|X_{1i}]}{\sum_{i=1}^{n}(X_{1i} - \bar{X}_{1})^2}\)</span></p>
+<ul>
+<li><span class="math inline">\(\delta_{1}\)</span> represents the relationship between <span class="math inline">\(X_{2i}\)</span> and <span class="math inline">\(X_{1i}\)</span></li>
+</ul></li>
+<li><p>The formula above then simplifies to</p></li>
+</ul>
+<p><span class="math display">\[E[\tilde{\beta}_{1}| X_{1i}]=\beta_{1} +\beta_{2}\delta_{1}\]</span></p>
+<ul>
+<li><p>The bias in OLS estimators from an omitted variable is <span class="math inline">\(\beta_{2}\delta_{1}\)</span></p></li>
+<li><p>Depends on two factors</p>
+<ul>
+<li><p><span class="math inline">\(\beta_{2}\)</span>, the relationship between <span class="math inline">\(Y_{i}\)</span> and <span class="math inline">\(X_{2i}\)</span></p></li>
+<li><p><span class="math inline">\(\delta_{1}\)</span>, the relationship between <span class="math inline">\(X_{2i}\)</span> and <span class="math inline">\(X_{1i}\)</span></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="formula-for-omitted-variables-bias-4" class="slide level2">
+<h2>Formula for Omitted Variables Bias</h2>
+<ul>
+<li><p>We can use this to quantify the <em>direction</em> of the bias</p>
+<table>
+<caption><span class="red">Direction of Omitted Variables Bias</span></caption>
+<colgroup>
+<col style="width: 22%">
+<col style="width: 38%">
+<col style="width: 38%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;"><span class="math inline">\(corr(x_{i2}, x_{i1}) &gt; 0\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(corr(x_{i2}, x_{i1}) &lt; 0\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\beta_{2} &gt;0\)</span></td>
+<td style="text-align: center;">Positive Bias</td>
+<td style="text-align: center;">Negative Bias</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\beta_{2} &lt;0\)</span></td>
+<td style="text-align: center;">Negative Bias</td>
+<td style="text-align: center;">Positive Bias</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>There are two situations where omitted variables do <em>not</em> cause bias</p>
+<ol type="1">
+<li><p><span class="math inline">\(\beta_{2} = 0\)</span>, which means <span class="math inline">\(X_{2i}\)</span> is unrelated to <span class="math inline">\(Y_{i}\)</span></p>
+<ul>
+<li>If <span class="math inline">\(X_{2i}\)</span> is irrelevant, then it will not cause bias</li>
+</ul></li>
+<li><p><span class="math inline">\(\delta_{1} = 0\)</span>, which means <span class="math inline">\(X_{2i}\)</span> is unrelated to <span class="math inline">\(X_{1i}\)</span></p>
+<ul>
+<li>Even if <span class="math inline">\(X_{2i}\)</span> is relevant, it will not cause bias if it is unrelated to <span class="math inline">\(X_{1i}\)</span></li>
+</ul></li>
+</ol></li>
+</ul>
+</section>
+<section id="formula-for-omitted-variables-bias-5" class="slide level2">
+<h2>Formula for Omitted Variables Bias</h2>
+<ul>
+<li><p><span class="red">Example: Ability Bias</span></p>
+<ul>
+<li><p>The classic example of omitted variables bias is leaving ability out of a regression of wages on schooling</p></li>
+<li><p>Suppose the true model linking wages to schooling is</p>
+<p><span class="math display">\[wage_{i} = \beta_{0} + \beta_{1}educ_{i} + \beta_{2}abil_{i}+ u_{i}\]</span></p></li>
+<li><p>Often we do not have measures of ability</p></li>
+<li><p>If you were to leave it out and estimate</p>
+<p><span class="math display">\[wage_{i} = \beta_{0} + \beta_{1}educ_{i} + v_{i}\]</span></p></li>
+<li><p>The estimator would be biased</p>
+<ul>
+<li><p><span class="math inline">\(\beta_{2} &gt; 0\)</span>, ability is positively related to wages</p></li>
+<li><p><span class="math inline">\(\delta_{1} &gt; 0\)</span>, higher ability people get more schooling</p></li>
+<li><p>Bias is positive: the return to education will appear higher than it really is</p></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="formula-for-omitted-variables-bias-6" class="slide level2">
+<h2>Formula for Omitted Variables Bias</h2>
+<ul>
+<li><p>In more complicated models, omitting one variable can bias <em>all</em> estimators</p>
+<ul>
+<li><p>Suppose the true model is</p>
+<p><span class="math display">\[wage_{i} = \beta_{0} + \beta_{1}educ_{i} + \beta_{2}exper_{i} + \beta_{3}abil_{i} + u_{i}\]</span></p></li>
+<li><p>If we leave ability out of the model and estimate</p>
+<p><span class="math display">\[wage = \beta_{0} + \beta_{1}educ_{i} + \beta_{2}exper_{i} +v_{i}\]</span></p></li>
+<li><p>Then estimators for <span class="math inline">\(\beta_{1}\)</span> <span class="red">and</span> <span class="math inline">\(\beta_{2}\)</span> are biased</p></li>
+<li><p>This is true even if only one variable is correlated with <span class="math inline">\(abil_{i}\)</span></p>
+<ul>
+<li><p>Imagine that <span class="math inline">\(educ_{i}\)</span> and <span class="math inline">\(abil_{i}\)</span> are correlated</p></li>
+<li><p>But, <span class="math inline">\(exper_{i}\)</span> and <span class="math inline">\(abil_{i}\)</span> are uncorrelated</p></li>
+<li><p>Estimator for <span class="math inline">\(\beta_{2}\)</span> is still biased, unless <span class="math inline">\(exper_{i}\)</span> and <span class="math inline">\(educ_{i}\)</span> are unrelated</p></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="example-with-stata" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<ul>
+<li><p>We will again illustrate Stata commands in the context of a research question</p></li>
+<li><p><span class="red">Research Question</span>: Are test scores related to class size?</p></li>
+<li><p>Previous model is extended with another independent variable</p>
+<ul>
+<li><p>Add percent free/reduced price lunch in district</p></li>
+<li><p>Acts as a proxy for parent income</p></li>
+<li><p>Students only qualify when parent income is below a cutoff</p></li>
+</ul></li>
+<li><p>We will see how the model changes with the additional variable</p></li>
+</ul>
+</section>
+<section id="example-with-stata-1" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<ul>
+<li><p>We will assume the model relating math scores to explanatory factors is</p>
+<p><span class="math display">\[testscr_{i} = \beta_{0} + \beta_{1}str_{i} + \beta_{2}mealpct_{i} + u_{i}\]</span></p>
+<ul>
+<li><p><span class="math inline">\(\beta_{1}\)</span> is effect of one extra student per teacher on test scores, all else equal</p></li>
+<li><p><span class="math inline">\(\beta_{2}\)</span> is effect of a 1-percentage point increase in free meal status on test scores, all else equal</p></li>
+<li><p><span class="math inline">\(\beta_{0}\)</span> is math scores when str and mealpct are zero</p></li>
+<li><p><span class="math inline">\(u\)</span> are things other than the model variables that explain math scores</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="example-with-stata-2" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<ul>
+<li>First create the simulated data</li>
+</ul>
+<div class="cell" data-layout-align="center" data-collectcode="true">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">clear</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">set</span> <span class="kw">obs</span> 420</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">set</span> <span class="dv">seed</span> 12345</span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">gen</span> str = rnormal(20,2)</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="kw">gen</span> mealpct = 7 + 2*str + rnormal(0,25)</span>
+<span id="cb1-7"><a href="#cb1-7"></a>    <span class="kw">replace</span> mealpct = 0 <span class="kw">if</span> mealpct &lt; 0</span>
+<span id="cb1-8"><a href="#cb1-8"></a>    <span class="kw">replace</span> mealpct = 100 <span class="kw">if</span> mealpct &gt; 100</span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="kw">gen</span> u = rnormal(0,10)</span>
+<span id="cb1-10"><a href="#cb1-10"></a></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="kw">gen</span> testscr = 700 -1 * str - 0.5*mealpct + u</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>Meal percent variable is explicitly correlated with student teacher ratio</p></li>
+<li><p>Intercept is 700</p></li>
+<li><p>Slope on str is -1</p></li>
+<li><p>Slope on mealpct is -0.5</p></li>
+</ul>
+</section>
+<section id="example-with-stata-3" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<ul>
+<li>Summarize the relevant data</li>
+</ul>
+<div class="cell" data-layout-align="center" data-collectcode="true">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">sum</span> testscr str mealpct</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+     testscr |        420    657.2409    16.86402   612.8703   704.8796
+         str |        420    20.13071    2.103167    14.2861   27.30753
+     mealpct |        420    46.91004    24.46755          0        100</code></pre>
+</div>
+</div>
+<ul>
+<li><p>Things to note</p>
+<ul>
+<li><p>Test scores simulate data that are scaled to have mean 650 and SD 20</p></li>
+<li><p>All data is simulated to look like real California data</p></li>
+<li><p>In real data, you might need to deal with things like missing values</p>
+<ul>
+<li>But we have avoided those complications here</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="example-with-stata-4" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<ul>
+<li>Estimate model by OLS</li>
+</ul>
+<div class="cell" data-layout-align="center" data-collectcode="true">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">regress</span> testscr str mealpct, <span class="kw">robust</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear regression                               Number of obs     =        420
+                                                F(2, 417)         =     383.40
+                                                Prob &gt; F          =     0.0000
+                                                R-squared         =     0.6376
+                                                Root MSE          =     10.177
+
+------------------------------------------------------------------------------
+             |               Robust
+     testscr | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         str |  -.8082448   .2293604    -3.52   0.000    -1.259091   -.3573982
+     mealpct |  -.5341559   .0203418   -26.26   0.000    -.5741412   -.4941706
+       _cons |   698.5687   4.558356   153.25   0.000     689.6085    707.5289
+------------------------------------------------------------------------------</code></pre>
+</div>
+</div>
+<ul>
+<li><p>The output indicates that</p>
+<ul>
+<li><p><span class="math inline">\(\hat{\beta}_{1} = -0.81\)</span>: 1-student increase in class size reduces scores by 0.81 points</p></li>
+<li><p><span class="math inline">\(\hat{\beta}_{2} = -0.53\)</span>: 1-percentage point increase in free meals reduces scores by 0.53 points</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="example-with-stata-5" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<ul>
+<li>We can also estimate <span class="math inline">\(\hat{\beta}_{1}\)</span> by “partialling out” mealpct from str</li>
+</ul>
+<div class="cell" data-layout-align="center" data-collectcode="true">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">regress</span> str mealpct</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="kw">predict</span> res, <span class="kw">resid</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="kw">regress</span> testscr res, <span class="kw">robust</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center" data-collectcode="true">
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear regression                               Number of obs     =        420
+                                                F(1, 418)         =       3.89
+                                                Prob &gt; F          =     0.0494
+                                                R-squared         =     0.0099
+                                                Root MSE          =     16.801
+
+------------------------------------------------------------------------------
+             |               Robust
+     testscr | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         res |  -.8082448   .4100521    -1.97   0.049    -1.614266   -.0022236
+       _cons |   657.2409   .8197914   801.72   0.000     655.6295    658.8523
+------------------------------------------------------------------------------</code></pre>
+</div>
+</div>
+<ul>
+<li><p>First step keeps part of class size that is unrelated to free meal status (res)</p></li>
+<li><p>Second step regresses math scores on values from the first step</p></li>
+</ul>
+</section>
+<section id="example-with-stata-6" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<ul>
+<li>We can illustrate omitted variables bias by leaving mealpct out of the regression</li>
+</ul>
+<div class="cell" data-layout-align="center" data-collectcode="true">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">regress</span> testscr str, <span class="kw">robust</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear regression                               Number of obs     =        420
+                                                F(1, 418)         =      22.09
+                                                Prob &gt; F          =     0.0000
+                                                R-squared         =     0.0547
+                                                Root MSE          =     16.416
+
+------------------------------------------------------------------------------
+             |               Robust
+     testscr | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         str |  -1.874765   .3988784    -4.70   0.000    -2.658823   -1.090708
+       _cons |   694.9813   7.995686    86.92   0.000     679.2645     710.698
+------------------------------------------------------------------------------</code></pre>
+</div>
+</div>
+<ul>
+<li><p>Notice the coefficient on str is lower</p></li>
+<li><p>Because str and mealpct are positively related and mealpct and testscr are negatively related</p></li>
+</ul>
+</section></section>
+<section>
+<section id="measures-of-fit-in-multiple-regression" class="title-slide slide level1 center">
+<h1>Measures of Fit in Multiple Regression</h1>
+
+</section>
+<section id="r2" class="slide level2">
+<h2><span class="math inline">\(R^2\)</span></h2>
+<ul>
+<li>We continue to use <span class="math inline">\(R^2\)</span> as a measure of goodness of fit</li>
+</ul>
+<p><span class="math display">\[R^2 = \frac{ESS}{TSS} = 1-\frac{SSR}{TSS}\]</span></p>
+<ul>
+<li><p>Recall that an <span class="math inline">\(R^2\)</span> is between 0 and 1, with higher values meaning better fit</p></li>
+<li><p><span class="math inline">\(R^2\)</span> is still the square of the correlation coefficient between <span class="math inline">\(Y_{i}\)</span> and <span class="math inline">\(\hat{Y}_{i}\)</span></p></li>
+</ul>
+<p><span class="math display">\[R^2 = \frac{\left ( \sum_{i=1}^{n}(y_{i} - \bar{y})(\hat{y}_{i} - \bar{\hat{y}}) \right )^2}{\left (\sum_{i=1}^{n}(y_{i} - \bar{y})^2 \right ) \left (\sum_{i=1}^{n}(\hat{y}_{i} - \bar{\hat{y}})^2 \right )}\]</span></p>
+</section>
+<section id="r2-1" class="slide level2">
+<h2><span class="math inline">\(R^2\)</span></h2>
+<ul>
+<li>The definitions of the sums of squares are the same</li>
+</ul>
+<p><span class="math display">\[TSS = \sum_{i=1}^{n}(Y_{i} - \bar{Y})^2\]</span></p>
+<p><span class="math display">\[ESS = \sum_{i=1}^{n}(\hat{Y}_{i} - \bar{Y})^2\]</span></p>
+<p><span class="math display">\[SSR = \sum_{i=1}^{n}\hat{u}_{i}^2\]</span></p>
+<ul>
+<li>It is still true that you can decompose total sum of squares into the explained and residual component</li>
+</ul>
+<p><span class="math display">\[TSS = ESS + SSR\]</span></p>
+</section>
+<section id="r2-2" class="slide level2">
+<h2><span class="math inline">\(R^2\)</span></h2>
+<ul>
+<li><p>Recall that a low <span class="math inline">\(R^2\)</span> does not mean regression is bad</p>
+<ul>
+<li><p>Simply means we have not explained large proportion of variation in <span class="math inline">\(Y_{i}\)</span></p></li>
+<li><p>Does not affect whether <span class="math inline">\(\hat{\beta}_{j}\)</span> is good estimate for <span class="math inline">\(\beta_{j}\)</span></p></li>
+</ul></li>
+<li><p>Important property of <span class="math inline">\(R^2\)</span> is that it never decreases with additional variables</p>
+<ul>
+<li><p>Adding variables cannot <em>reduce</em> explanatory power of regression</p></li>
+<li><p>ESS cannot fall when variables added to regression</p>
+<ul>
+<li>Equivalently, SSR cannot rise with more variables in regression</li>
+</ul></li>
+<li><p>Makes <span class="math inline">\(R^2\)</span> bad tool for deciding whether to add or drop variables</p>
+<ul>
+<li><p>Ex: adding variable with random values slightly increases <span class="math inline">\(R^2\)</span></p></li>
+<li><p>But clearly random values do not belong in regression</p></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="adjusted-r2" class="slide level2">
+<h2>Adjusted <span class="math inline">\(R^2\)</span></h2>
+<ul>
+<li><p>We discussed that <span class="math inline">\(R^2\)</span> measures goodness of fit</p>
+<ul>
+<li><p>The fraction of variation in <span class="math inline">\(Y_{i}\)</span> explained by <span class="math inline">\(X_{i}\)</span></p></li>
+<li><p>Correlation between actual <span class="math inline">\(Y_{i}\)</span> and fitted values</p></li>
+<li><p>How closely datapoints fall along a straight line</p></li>
+</ul></li>
+<li><p>One issue with <span class="math inline">\(R^2\)</span> is that it never falls with additional variables</p>
+<ul>
+<li><p>With new variables, ESS stays the same or goes up</p></li>
+<li><p>You cannot explain less of variation in <span class="math inline">\(Y_{i}\)</span> with more variables</p></li>
+</ul></li>
+<li><p>It is mostly not useful to use <span class="math inline">\(R^2\)</span> to decide if a variable should be added to the model</p></li>
+</ul>
+</section>
+<section id="adjusted-r2-1" class="slide level2">
+<h2>Adjusted <span class="math inline">\(R^2\)</span></h2>
+<ul>
+<li><p>Recall that the <span class="math inline">\(R^2\)</span> is written as <span class="math display">\[R^2 = 1- \frac{SSR}{TSS}\]</span></p></li>
+<li><p>You can also write that as <span class="math display">\[R^2 = 1- \frac{SSR/n}{TSS/n}\]</span></p></li>
+<li><p>Think of <span class="math inline">\(SSR/n\)</span> as estimate of error variance, and <span class="math inline">\(TSS/n\)</span> as estimate of variance in <span class="math inline">\(y\)</span></p></li>
+<li><p>But</p>
+<ul>
+<li><p><span class="math inline">\(SSR/n\)</span> is biased estimator of error variance</p></li>
+<li><p><span class="math inline">\(TSS/n\)</span> is biased estimator of variance in <span class="math inline">\(y\)</span></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="adjusted-r2-2" class="slide level2">
+<h2>Adjusted <span class="math inline">\(R^2\)</span></h2>
+<ul>
+<li>The <span class="red">adjusted <span class="math inline">\(R^2\)</span></span> replaces these biased estimators with unbiased ones</li>
+</ul>
+<p><span class="math display">\[\bar{R}^2 = 1- \frac{SSR/(n-k-1)}{SST/(n-1)} = 1- \frac{n-1}{n-k-1} \frac{SSR}{TSS}\]</span></p>
+<ul>
+<li>There are three useful things about the adjusted <span class="math inline">\(R^2\)</span></li>
+</ul>
+<ol type="1">
+<li><p>This measure does <strong>not</strong> always rise when a variable is added to the model</p>
+<ul>
+<li><p>Imagine adding one new variable</p>
+<ul>
+<li><p><span class="math inline">\(SSR\)</span> will fall</p></li>
+<li><p><span class="math inline">\(\frac{n-1}{n-k-1}\)</span> rises (because <span class="math inline">\(k\)</span> rises)</p></li>
+<li><p>Effect on <span class="math inline">\(\bar{R}^2\)</span> depends which is stronger</p></li>
+<li><p>Thus, <span class="math inline">\(\bar{R}^2\)</span> can fall with new variables</p></li>
+</ul></li>
+</ul></li>
+</ol>
+</section>
+<section id="adjusted-r2-3" class="slide level2">
+<h2>Adjusted <span class="math inline">\(R^2\)</span></h2>
+<ol start="2" type="1">
+<li><p><span class="math inline">\(\bar{R}^2\)</span> is always less than <span class="math inline">\({R}^2\)</span></p>
+<ul>
+<li><p><span class="math inline">\(\frac{n-1}{n-k-1}\)</span> is always greater than 1</p></li>
+<li><p>So we subtract a bigger number from 1 in the <span class="math inline">\(\bar{R}^2\)</span> formula</p></li>
+</ul></li>
+<li><p><span class="math inline">\(\bar{R}^2\)</span> can be negative if the model has a very poor fit</p>
+<ul>
+<li>Happens mainly when <span class="math inline">\(SSR\)</span> is large, <span class="math inline">\(n\)</span> is small, and <span class="math inline">\(k\)</span> is large</li>
+</ul></li>
+</ol>
+</section>
+<section id="standard-error-of-regression-ser" class="slide level2">
+<h2>Standard Error of Regression (SER)</h2>
+<ul>
+<li><p>The SER is still the estimated standard deviation of the residuals</p>
+<ul>
+<li>Measures how far the <span class="math inline">\(Y_{i}\)</span> values are from the line, on average</li>
+</ul></li>
+<li><p>The formula changes due to degrees of freedom adjustment</p></li>
+</ul>
+<p><span class="math display">\[SER = s_{\hat{u}} = \sqrt{\frac{1}{n-k-1} \sum_{i=1}^{n}\hat{u}_{i}^2}\]</span> <span class="math display">\[= \sqrt{\frac{SSR}{n-k-1}}\]</span></p>
+<ul>
+<li><p><span class="math inline">\(k\)</span> represents the number variables in the model</p>
+<ul>
+<li><p>Each parameter estimate uses information, which is the reason for the adjustment</p></li>
+<li><p>If <span class="math inline">\(k=1\)</span>, then formula is same as we learned previously</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="example-with-stata-7" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<ul>
+<li>Below is the regression output from earlier</li>
+</ul>
+<div class="cell" data-layout-align="center" data-collectcode="true">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">regress</span> testscr str mealpct, <span class="kw">robust</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear regression                               Number of obs     =        420
+                                                F(2, 417)         =     383.40
+                                                Prob &gt; F          =     0.0000
+                                                R-squared         =     0.6376
+                                                Root MSE          =     10.177
+
+------------------------------------------------------------------------------
+             |               Robust
+     testscr | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         str |  -.8082448   .2293604    -3.52   0.000    -1.259091   -.3573982
+     mealpct |  -.5341559   .0203418   -26.26   0.000    -.5741412   -.4941706
+       _cons |   698.5687   4.558356   153.25   0.000     689.6085    707.5289
+------------------------------------------------------------------------------</code></pre>
+</div>
+</div>
+<ul>
+<li><p><span class="math inline">\(R^2\)</span> is in the top right (<span class="math inline">\(\bar{R}^2\)</span> only appears without robust option)</p></li>
+<li><p>The SER is equal to the “Root MSE”</p></li>
+</ul>
+</section></section>
+<section>
+<section id="least-squares-assumptions-for-multiple-regression" class="title-slide slide level1 center">
+<h1>Least Squares Assumptions for Multiple Regression</h1>
+
+</section>
+<section id="introduction-3" class="slide level2">
+<h2>Introduction</h2>
+<ul>
+<li><p>Like before, we need to make assumptions for causal inference</p>
+<ul>
+<li>To estimate only direct effect of an independent variable on outcome</li>
+</ul></li>
+<li><p>Maintain the same three assumptions we learned in last section</p></li>
+<li><p>Add extra assumption about relationship between independent variables</p>
+<ul>
+<li>They cannot be perfectly related to each other</li>
+</ul></li>
+</ul>
+</section>
+<section id="assumption-1-zero-conditional-mean-of-the-error" class="slide level2">
+<h2>Assumption 1: Zero Conditional Mean of the Error</h2>
+<ul>
+<li><p>The average error term <span class="math inline">\(u_{i}\)</span> conditional on all X variables is zero <span class="math display">\[E[u_{i}| X_{1i},X_{2i},...,X_{ki}]=0\]</span></p></li>
+<li><p>This is the same condition as in the simple regression model</p></li>
+<li><p>Difference is that error has average of zero for all combinations of <span class="math inline">\(X_{1i},X_{2i},...,X_{ki}\)</span></p></li>
+<li><p>Also implies that <span class="math inline">\(u_{i}\)</span> is not systematically related to any of <span class="math inline">\(X_{1i},X_{2i},...,X_{ki}\)</span></p></li>
+<li><p>How can this assumption fail?</p>
+<ul>
+<li><p>Model misspecification</p></li>
+<li><p>Omitted variables</p></li>
+<li><p>Simultaneous equations</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="assumption-2-y_ix_1ix_2i...x_ki-are-iid" class="slide level2">
+<h2>Assumption 2: (<span class="math inline">\(Y_{i},X_{1i},X_{2i},...,X_{ki})\)</span> are iid</h2>
+<ul>
+<li><p>These variables must be independent</p></li>
+<li><p>Also must come from the same distribution</p></li>
+<li><p>As discussed before, this holds true when we take a simple random sample</p></li>
+<li><p>Assumption use to establish slopes are consistent and have Normal distribution</p></li>
+</ul>
+</section>
+<section id="assumption-3-large-outliers-unlikely" class="slide level2">
+<h2>Assumption 3: Large Outliers Unlikely</h2>
+<ul>
+<li><p>Outliers are values far from the usual range of data</p></li>
+<li><p>They can have large effect on slope estimates</p></li>
+</ul>
+</section>
+<section id="assumption-4-no-perfect-multicollinearity" class="slide level2">
+<h2>Assumption 4: No Perfect Multicollinearity</h2>
+<ul>
+<li><p>Collinearity refers to correlations among independent variables</p></li>
+<li><p><span class="red">Perfect collinearity</span> is an exact linear relationship between one or more independent variables</p></li>
+<li><p>Perfectly collinear variables cannot be included in the model</p>
+<ul>
+<li><p>Collinear variables can be included</p></li>
+<li><p>But not <span class="red">perfectly collinear</span> ones</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="assumption-4-no-perfect-multicollinearity-1" class="slide level2">
+<h2>Assumption 4: No Perfect Multicollinearity</h2>
+<ul>
+<li><p>Exa,ple of perfect collinearity: Height on income</p>
+<ul>
+<li><p>Suppose you want to estimate the effect of height on income</p></li>
+<li><p>Your regresion model is</p></li>
+</ul>
+<p><span class="math display">\[Y_{i} = \beta_{0} + \beta_{1}h\_inch_{i} + \beta_{1}h\_cm_{i} + u_{i}\]</span></p>
+<ul>
+<li><p>Where <span class="math inline">\(h\_cm_{i} = 2.54*h\_inch_{i}\)</span></p></li>
+<li><p>You cannot estimate a model with both <span class="math inline">\(h\_cm_{i}\)</span> and <span class="math inline">\(h\_inch_{i}\)</span></p></li>
+<li><p><span class="math inline">\(h\_cm\)</span> does not move independently from <span class="math inline">\(h\_inch_{i}\)</span></p></li>
+<li><p>These variables are <span class="red">perfectly collinear</span></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="assumption-4-no-perfect-multicollinearity-2" class="slide level2">
+<h2>Assumption 4: No Perfect Multicollinearity</h2>
+<ul>
+<li><p>Ex of <span class="red">imperfect collinearity</span>: Height and weight on income</p>
+<ul>
+<li><p>Suppose you want effect of height <em>and weight</em> on income</p></li>
+<li><p>Your regresion model is <span class="math inline">\(y = \beta_{0} + \beta_{1}h\_inch + \beta_{1}w\_lbs + u\)</span></p></li>
+<li><p>Height and weight are very highly related</p></li>
+<li><p>But there is no <span class="red">exact</span>, linear relationship</p></li>
+<li><p>This model <strong>can</strong> be estimated</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="assumption-4-no-perfect-multicollinearity-3" class="slide level2">
+<h2>Assumption 4: No Perfect Multicollinearity</h2>
+<ul>
+<li><p>Ex of <span class="red">imperfect collinearity</span>: Height and height<span class="math inline">\(^2\)</span> on income</p>
+<ul>
+<li><p>Regresion model is <span class="math inline">\(y = \beta_{0} + \beta_{1}h\_inch + \beta_{1}h\_inch^2 + u\)</span></p></li>
+<li><p><span class="math inline">\(h\_inch^2\)</span> is a perfect <strong>nonlinear</strong> function of <span class="math inline">\(h\_inch\)</span></p></li>
+<li><p>This is allowed because there is no exact, <span class="red">linear</span> relationship</p></li>
+<li><p>This model can also be estimated</p></li>
+</ul></li>
+<li><p>Problem of perfect collinearity is we cannot estimate the model</p></li>
+<li><p>Intuitively, it is asking regression to answer illogical question</p>
+<ul>
+<li>What is effect of <span class="math inline">\(X_{i}\)</span> on <span class="math inline">\(Y_{i}\)</span> holding <span class="math inline">\(X_{i}\)</span> fixed?</li>
+</ul></li>
+<li><p>As we discuss later, the solution is to drop one of the collinear variables</p></li>
+</ul>
+</section></section>
+<section>
+<section id="distribution-of-the-ols-estimators-in-multiple-regression" class="title-slide slide level1 center">
+<h1>Distribution of the OLS Estimators in Multiple Regression</h1>
+
+</section>
+<section id="expected-value-of-ols-estimator" class="slide level2">
+<h2>Expected Value of OLS Estimator</h2>
+<ul>
+<li><p>We can show that if assumptions 1 - 4 are true, then</p>
+<p><span class="math display">\[E[\hat{\beta}_{j}] =  \beta_{j},  j=0,1,...,k\]</span></p></li>
+<li><p>Which means that each <span class="math inline">\(\hat{\beta}_{j}\)</span> is an unbiased estimator for <span class="math inline">\(\beta_{j}\)</span></p></li>
+<li><p>The proof is long, but follows similar logic to the simple regression model</p></li>
+<li><p>Implies that we are not making any systematic errors in estimating <span class="math inline">\(\beta_{j}\)</span></p>
+<ul>
+<li>Only reason <span class="math inline">\(\hat{\beta}_{j}\)</span> differs from <span class="math inline">\(\beta_{j}\)</span> is sampling error</li>
+</ul></li>
+<li><p>Remember that this is a statistical property</p>
+<ul>
+<li><em>In theory</em>, over many repeated samples, the average of all <span class="math inline">\(\hat{\beta}_{j}\)</span> equals the true value</li>
+</ul></li>
+</ul>
+</section>
+<section id="variance-of-ols-estimator" class="slide level2">
+<h2>Variance of OLS Estimator</h2>
+<ul>
+<li><p>Remember that from one sample to the next, the value of OLS estimators will differ</p>
+<ul>
+<li>This is sampling variation</li>
+</ul></li>
+<li><p>Variance and standard deviation describe this variation</p></li>
+<li><p>Variance of OLS estimators under heteroskedasticity is complicated</p></li>
+<li><p><u>If</u> we are willing to assume homoskedasticity, we can simplify</p></li>
+<li><p>Imposing this assumption, the variance of the <span class="math inline">\(\hat{\beta}_{j}\)</span> is <span class="math display">\[Var[\hat{\beta}_{j}|X_{1i},X_{2i},...,X_{ki}] = \frac{\sigma_{u}^2 }{(\sum_{i=1}^{n}(X_{ji} - \bar{X}_{j})^2)(1-R^2_{j})}\]</span></p></li>
+</ul>
+</section>
+<section id="variance-of-ols-estimator-1" class="slide level2">
+<h2>Variance of OLS Estimator</h2>
+<ul>
+<li><p>Formula applies for all slope estimates from <span class="math inline">\(j = 1,...,k\)</span></p>
+<ul>
+<li>Intercept has different variance formula</li>
+</ul></li>
+<li><p>The term <span class="math inline">\(R^2_{j}\)</span> is the <span class="math inline">\(R^2\)</span> from a regression of <span class="math inline">\({X}_{ji}\)</span> on all other independent variables</p>
+<ul>
+<li><p>The part of <span class="math inline">\({X}_{ji}\)</span> that is explained by all other variables</p></li>
+<li><p>Note: this is not the original model <span class="math inline">\(R^2\)</span></p></li>
+<li><p>This is an auxiliary <span class="math inline">\(R^2\)</span> from regressing <span class="math inline">\({X}_{ji}\)</span> on other independent variables</p></li>
+</ul></li>
+<li><p>The variance of <span class="math inline">\(\hat{\beta}_{j}\)</span> consists of 3 components</p></li>
+</ul>
+</section>
+<section id="variance-of-ols-estimator-2" class="slide level2">
+<h2>Variance of OLS Estimator</h2>
+<ol type="1">
+<li><p>The error variance <span class="math inline">\(\sigma_{u}^2\)</span></p>
+<ul>
+<li><p>If the error is more variable, the estimate <span class="math inline">\(\hat{\beta}_{j}\)</span> is more variable</p>
+<ul>
+<li><p>Means that values of <span class="math inline">\(Y_{i}\)</span> are more spread out around <span class="math inline">\(E[Y_{i}|X_{1i},X_{2i},...,X_{ki}]\)</span></p></li>
+<li><p>More “noise” in the regression</p></li>
+<li><p>Noise carries into the slope estimators</p></li>
+</ul></li>
+</ul></li>
+<li><p>Sample variation in <span class="math inline">\(X_{j}\)</span>, <span class="math inline">\(\sum_{i=1}^{n}(X_{ji} - \bar{X}_{j})^2\)</span></p>
+<ul>
+<li><p>More variation in <span class="math inline">\(X_{j}\)</span> reduces variance in <span class="math inline">\(\hat{\beta}_{j}\)</span></p>
+<ul>
+<li><p>More spread in <span class="math inline">\(X_{j}\)</span> makes it easier to estimate slope parameters</p></li>
+<li><p>Important to sample such that <span class="math inline">\(X_{j}\)</span> is spread out widely</p></li>
+</ul></li>
+</ul></li>
+</ol>
+</section>
+<section id="variance-of-ols-estimator-3" class="slide level2">
+<h2>Variance of OLS Estimator</h2>
+<ol start="3" type="1">
+<li><p><span class="math inline">\(R^2_{j}\)</span> is the <span class="math inline">\(R^2\)</span> from a regression of <span class="math inline">\({X}_{ji}\)</span> on all other independent variables</p>
+<ul>
+<li><p>A larger <span class="math inline">\(R^2_{j}\)</span> increases the variance of <span class="math inline">\(\hat{\beta}_{j}\)</span></p>
+<ul>
+<li><p>Larger <span class="math inline">\(R^2_{j}\)</span> means other variables explain more variation in <span class="math inline">\({X}_{j}\)</span></p></li>
+<li><p>Means <span class="math inline">\({X}_{j}\)</span> is more collinear with other independent variables</p></li>
+<li><p>There is less <em>independent</em> variation in <span class="math inline">\({x}_{j}\)</span></p></li>
+<li><p>Higher values will increase the variance of <span class="math inline">\(\hat{\beta}_{j}\)</span></p></li>
+</ul></li>
+</ul></li>
+</ol>
+<ul>
+<li><p>Higher <span class="math inline">\(R^2_{j}\)</span> illustrates problems created by collinearity</p>
+<ul>
+<li><p>Larger <span class="math inline">\(R^2_{j}\)</span> means <span class="math inline">\({X}_{j}\)</span> more collinear with other independent variables</p></li>
+<li><p>At the extreme, <span class="math inline">\(R^2_{j} = 1\)</span> means perfect collinearity</p></li>
+<li><p>As <span class="math inline">\(R^2_{j} \rightarrow 1\)</span>, <span class="math inline">\(var(\hat{\beta}_{j}) \rightarrow \infty\)</span></p></li>
+</ul></li>
+<li><p>Thus, too much collinearity creates imprecise estimates of <span class="math inline">\(\hat{\beta}_{j}\)</span></p></li>
+</ul>
+</section>
+<section id="distribution-of-ols-estimators" class="slide level2">
+<h2>Distribution of OLS Estimators</h2>
+<ul>
+<li><p>As before, results from simple regression carry over to multiple regression</p></li>
+<li><p>Given 4 assumptions, OLS estimators <span class="math inline">\(\hat{\beta}_{0}, \hat{\beta}_{1}, ...\hat{\beta}_{k}\)</span> are Normally distributed in large samples</p>
+<ul>
+<li>A result of the Central Limit Theorem</li>
+</ul></li>
+<li><p>Mean and variance are as discussed previously</p>
+<ul>
+<li><p>Recall that variance formula above only appropriate under homoskedasticity</p></li>
+<li><p>More complicated formula for heteroskedastic errors</p></li>
+</ul></li>
+<li><p>Knowing distribution of <span class="math inline">\(\hat{\beta}_{0}, \hat{\beta}_{1}, ...\hat{\beta}_{k}\)</span> will help us for hypothesis testing</p></li>
+</ul>
+</section>
+<section id="example-with-stata-8" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<ul>
+<li><p>In our example we can simulate the sampling distribution of the slope</p></li>
+<li><p>Below we simulate the distribution for <span class="math inline">\(\hat{\beta}_{1}\)</span></p></li>
+</ul>
+<div class="cell" data-layout-align="center" data-collectcode="true">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">clear</span> <span class="ot">all</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="kw">local</span> sims = 9999</span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="kw">set</span> <span class="kw">obs</span> <span class="ot">`sims'</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="kw">set</span> <span class="dv">seed</span> 12345</span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="kw">set</span> <span class="kw">more</span> <span class="kw">off</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a></span>
+<span id="cb12-7"><a href="#cb12-7"></a><span class="kw">gen</span> beta1 = .</span>
+<span id="cb12-8"><a href="#cb12-8"></a></span>
+<span id="cb12-9"><a href="#cb12-9"></a><span class="kw">forvalues</span> x = 1/<span class="ot">`sims'</span> {</span>
+<span id="cb12-10"><a href="#cb12-10"></a></span>
+<span id="cb12-11"><a href="#cb12-11"></a>    <span class="kw">preserve</span></span>
+<span id="cb12-12"><a href="#cb12-12"></a>    <span class="kw">clear</span></span>
+<span id="cb12-13"><a href="#cb12-13"></a>    </span>
+<span id="cb12-14"><a href="#cb12-14"></a>    <span class="kw">qui</span> <span class="kw">set</span> <span class="kw">obs</span> 420</span>
+<span id="cb12-15"><a href="#cb12-15"></a></span>
+<span id="cb12-16"><a href="#cb12-16"></a>    <span class="kw">gen</span> str = rnormal(20,2)</span>
+<span id="cb12-17"><a href="#cb12-17"></a>    <span class="kw">gen</span> mealpct = 7 + 2*str + rnormal(0,25)</span>
+<span id="cb12-18"><a href="#cb12-18"></a>        <span class="kw">qui</span> <span class="kw">replace</span> mealpct = 0 <span class="kw">if</span> mealpct &lt; 0</span>
+<span id="cb12-19"><a href="#cb12-19"></a>        <span class="kw">qui</span> <span class="kw">replace</span> mealpct = 100 <span class="kw">if</span> mealpct &gt; 100</span>
+<span id="cb12-20"><a href="#cb12-20"></a>    <span class="kw">gen</span> u = rnormal(0,10)</span>
+<span id="cb12-21"><a href="#cb12-21"></a></span>
+<span id="cb12-22"><a href="#cb12-22"></a>    <span class="kw">gen</span> testscr = 700 -1 * str - 0.5*mealpct + u</span>
+<span id="cb12-23"><a href="#cb12-23"></a>    </span>
+<span id="cb12-24"><a href="#cb12-24"></a>    <span class="kw">qui</span> <span class="kw">regress</span> testscr str mealpct</span>
+<span id="cb12-25"><a href="#cb12-25"></a>    <span class="kw">restore</span></span>
+<span id="cb12-26"><a href="#cb12-26"></a>    </span>
+<span id="cb12-27"><a href="#cb12-27"></a>    <span class="kw">qui</span> <span class="kw">replace</span> beta1 = _b[str] <span class="kw">in</span> <span class="ot">`x'</span></span>
+<span id="cb12-28"><a href="#cb12-28"></a>    </span>
+<span id="cb12-29"><a href="#cb12-29"></a>    <span class="kw">display</span> <span class="st">"Iteration `x'"</span></span>
+<span id="cb12-30"><a href="#cb12-30"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-with-stata-9" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<div class="cell" data-layout-align="center" data-collectcode="true">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">sum</span> beta1</span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="kw">twoway</span> <span class="kw">hist</span> beta1, <span class="bn">title</span>(Sampling Distribution <span class="kw">of</span> Beta1) <span class="dv">scheme</span>(s2mono)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+       beta1 |      9,999   -1.000459    .2472745  -2.063423  -.0158269
+</code></pre>
+</div>
+</div>
+
+<img data-src="sampdistbeta1.svg" class="r-stretch quarto-figure-center"></section></section>
+<section>
+<section id="multicollinearity" class="title-slide slide level1 center">
+<h1>Multicollinearity</h1>
+
+</section>
+<section id="introduction-4" class="slide level2">
+<h2>Introduction</h2>
+<ul>
+<li><p>No perfect multicollinearity is one of the assumptions of the model</p></li>
+<li><p>Consequence of violating the assumption is the model cannot be estimated</p>
+<ul>
+<li><p>Effectively like trying to estimate effect of a variable while holding it fixed</p></li>
+<li><p>OLS does not work in this case</p></li>
+</ul></li>
+<li><p>We discussed some examples, and here we expand on that list</p></li>
+<li><p>Also add a few other details</p></li>
+</ul>
+</section>
+<section id="examples-of-perfect-multicollinearity" class="slide level2">
+<h2>Examples of Perfect Multicollinearity</h2>
+<ul>
+<li><p>In each example below, imagine we start with the model <span class="math display">\[TestScore_{i} = \beta_{0} + \beta_{1}STR_{i} + PctESL_{i} + u_{i}\]</span></p></li>
+<li><p>Then we create a multicollinearity problem by adding a third variable</p></li>
+</ul>
+<ol type="1">
+<li><p>Adding <em>Fraction</em> ESL</p>
+<ul>
+<li><p>Fraction ESL varies between 0 and 1</p></li>
+<li><p>It is perfectly functionally related to Percent ESL: <span class="math display">\[PctESL_{i} = 100 \times FracESL_{i}\]</span></p></li>
+<li><p>Impossible to estimate effect of <span class="math inline">\(PctESL_{i}\)</span> holding <span class="math inline">\(FracESL_{i}\)</span> constant</p></li>
+<li><p>Because they measure exactly the same thing</p></li>
+</ul></li>
+</ol>
+</section>
+<section id="examples-of-perfect-multicollinearity-1" class="slide level2">
+<h2>Examples of Perfect Multicollinearity</h2>
+<ol start="2" type="1">
+<li><p>“Not very small” classes</p>
+<ul>
+<li><p>Suppose <span class="math inline">\(NVS_{i} = 1\{STR \ge 12\}\)</span></p></li>
+<li><p>Also creates perfect collinearity for subtle reason</p></li>
+<li><p>In the data no classes have <span class="math inline">\(STR_{i} &lt; 12\)</span>, so <span class="math inline">\(NVS_{i} = 1\)</span> for all observations</p></li>
+<li><p>Perfectly collinear with the constant term in the regression</p>
+<ul>
+<li>In linear regression models, intercept can be thought of as having variable equal to 1 for all observations</li>
+</ul></li>
+</ul></li>
+<li><p>Percent English Speakers</p>
+<ul>
+<li><p>Define English speakers as those who are not ESL students <span class="math display">\[PctES_{i} = 100 - PctESL_{i}\]</span></p></li>
+<li><p><span class="math inline">\(PctES_{i}\)</span> is an exact function of the constant and <span class="math inline">\(PctESL_{i}\)</span> <span class="math display">\[PctES_{i} = 100 \times (1) - PctESL_{i}\]</span></p></li>
+</ul></li>
+</ol>
+</section>
+<section id="dummy-variable-trap" class="slide level2">
+<h2>Dummy Variable Trap</h2>
+<ul>
+<li><p>Dummy variables create special case of perfect collinearity</p></li>
+<li><p>Consider estimating a gender wage gap</p></li>
+<li><p>Create two dummy variables</p>
+<ul>
+<li><p><span class="math inline">\(male = 1\)</span> if person is male, and 0 otherwise</p></li>
+<li><p><span class="math inline">\(female = 1\)</span> if person is female, and 0 otherwise</p></li>
+</ul></li>
+<li><p>Adding both <span class="math inline">\(male\)</span> and <span class="math inline">\(female\)</span> to regression creates perfect multicollinearity</p>
+<ul>
+<li><p><span class="math inline">\(male + female = 1\)</span></p></li>
+<li><p>This is perfectly collinear with the constant</p></li>
+</ul></li>
+<li><p>This is called the dummy variable trap</p></li>
+</ul>
+</section>
+<section id="dummy-variable-trap-1" class="slide level2">
+<h2>Dummy Variable Trap</h2>
+<ul>
+<li><p>Generally, dummy variable trap is</p>
+<ul>
+<li><p>There are G binary variables, and each observation falls into one category</p></li>
+<li><p>Including all G variables creates perfect multicollinearity</p></li>
+</ul></li>
+<li><p>To avoid dummy variable trap, you can only include <span class="math inline">\(G-1\)</span> dummy variables</p></li>
+<li><p>Male-female example</p>
+<ul>
+<li><p>G = 2, since we divide people into male or female</p></li>
+<li><p>Based on rule above, can only include one</p></li>
+<li><p>Either include <span class="math inline">\(male\)</span> or <span class="math inline">\(female\)</span>, but not both</p></li>
+<li><p>Which one you include depends on preference</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="solutions-to-multicollinearity" class="slide level2">
+<h2>Solutions to Multicollinearity</h2>
+<ul>
+<li><p>Typically, perfect multicollinearity arises from a mistake</p></li>
+<li><p>Solution is to find mistake, and drop collinear variable</p>
+<ul>
+<li>In dummy variable example, drop either <span class="math inline">\(male\)</span> or <span class="math inline">\(female\)</span> dummy</li>
+</ul></li>
+<li><p>Sometimes it is easy to find mistake, sometimes not</p>
+<ul>
+<li>Especially when collinearity is subtle</li>
+</ul></li>
+<li><p>In practice, Stata does this automatically</p>
+<ul>
+<li><p>It looks for perfect linear relationships among <span class="math inline">\(X\)</span> variables</p></li>
+<li><p>If it finds one, it drops one or more variables until no more relationship exists</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="imperfect-multicollinearity" class="slide level2">
+<h2>Imperfect Multicollinearity</h2>
+<ul>
+<li><p>A <span class="red">perfect</span> relationship between regressors makes us unable to produce OLS estimates</p></li>
+<li><p>However, regressors are still allowed to be related</p>
+<ul>
+<li>Just not <em>perfectly</em> related</li>
+</ul></li>
+<li><p>A relationship between variables that is not exact is called <span class="red">imperfect mutlicollinearity</span></p></li>
+<li><p>Imperfect multicollinearity is allowed</p></li>
+<li><p>Key issue for imperfect multicollinearity is that it causes variance of <span class="math inline">\(\hat{\beta}_{j}\)</span> to rise</p>
+<ul>
+<li>Depending on how closely variables are related</li>
+</ul></li>
+</ul>
+</section>
+<section id="solutions-to-multicollinearity-1" class="slide level2">
+<h2>Solutions to Multicollinearity</h2>
+<ul>
+<li><p>Intuition: OLS estimates independent effect of each <span class="math inline">\(X_{j}\)</span> on <span class="math inline">\(Y_{i}\)</span></p></li>
+<li><p>If <span class="math inline">\(X_{j}\)</span> is highly related to another variable, there is little independent variation</p>
+<ul>
+<li>With little independent movement in <span class="math inline">\(X_{j}\)</span>, <span class="math inline">\(\hat{\beta}_{j}\)</span> will fluctuate more from sample to sample</li>
+</ul></li>
+<li><p>There is no obvious solution to imperfect multicollinearity</p>
+<ul>
+<li><p>You can still estimate all the <span class="math inline">\(\hat{\beta}_{j}\)</span></p></li>
+<li><p>But they will not be very precise (i.e.&nbsp;their variance will be high)</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="example-with-stata-10" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<ul>
+<li><p>Suppose we try to add a collinear variable to the model</p>
+<ul>
+<li><p>mealdec is mealpct divided by 100</p></li>
+<li><p>These two variables are perfectly linearly related</p></li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center" data-collectcode="true">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">clear</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="kw">set</span> <span class="kw">obs</span> 420</span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="kw">set</span> <span class="dv">seed</span> 12345</span>
+<span id="cb15-4"><a href="#cb15-4"></a></span>
+<span id="cb15-5"><a href="#cb15-5"></a></span>
+<span id="cb15-6"><a href="#cb15-6"></a><span class="kw">gen</span> str = rnormal(20,2)</span>
+<span id="cb15-7"><a href="#cb15-7"></a><span class="kw">gen</span> mealpct = 7 + 2*str + rnormal(0,25)</span>
+<span id="cb15-8"><a href="#cb15-8"></a>    <span class="kw">replace</span> mealpct = 0 <span class="kw">if</span> mealpct &lt; 0</span>
+<span id="cb15-9"><a href="#cb15-9"></a>    <span class="kw">replace</span> mealpct = 100 <span class="kw">if</span> mealpct &gt; 100</span>
+<span id="cb15-10"><a href="#cb15-10"></a><span class="kw">gen</span> mealdec = mealpct/100   </span>
+<span id="cb15-11"><a href="#cb15-11"></a><span class="kw">gen</span> u = rnormal(0,10)</span>
+<span id="cb15-12"><a href="#cb15-12"></a></span>
+<span id="cb15-13"><a href="#cb15-13"></a><span class="kw">gen</span> testscr = 700 -1 * str - 0.5*mealpct + u</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-with-stata-11" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<div class="cell" data-layout-align="center" data-collectcode="true">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb16-1"><a href="#cb16-1"></a><span class="kw">regress</span> testscr str mealpct mealdec</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>note: mealdec omitted because of collinearity.
+
+      Source |       SS           df       MS      Number of obs   =       420
+-------------+----------------------------------   F(2, 417)       =    366.81
+       Model |  75975.9601         2    37987.98   Prob &gt; F        =    0.0000
+    Residual |  43185.6115       417  103.562617   R-squared       =    0.6376
+-------------+----------------------------------   Adj R-squared   =    0.6358
+       Total |  119161.572       419  284.395159   Root MSE        =    10.177
+
+------------------------------------------------------------------------------
+     testscr | Coefficient  Std. err.      t    P&gt;|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         str |  -.8082448   .2399457    -3.37   0.001    -1.279899   -.3365909
+     mealpct |  -.5341559   .0206251   -25.90   0.000    -.5746981   -.4936138
+     mealdec |          0  (omitted)
+       _cons |   698.5687   4.786449   145.95   0.000     689.1601    707.9773
+------------------------------------------------------------------------------</code></pre>
+</div>
+</div>
+</section>
+<section id="example-with-stata-12" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<ul>
+<li>Finally, now we create two dummy variables</li>
+</ul>
+<div class="cell" data-layout-align="center" data-collectcode="true">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">gen</span> smallclass = str &lt; 20</span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="kw">gen</span> bigclass = str &gt;= 20</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>First use the small class dummy only in the regression</li>
+</ul>
+<div class="cell" data-layout-align="center" data-collectcode="true">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb19-1"><a href="#cb19-1"></a><span class="kw">regress</span> testscr smallclass mealpct, <span class="kw">robust</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear regression                               Number of obs     =        420
+                                                F(2, 417)         =     376.52
+                                                Prob &gt; F          =     0.0000
+                                                R-squared         =     0.6355
+                                                Root MSE          =     10.206
+
+------------------------------------------------------------------------------
+             |               Robust
+     testscr | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+  smallclass |   3.018267   1.010161     2.99   0.003     1.032625    5.003909
+     mealpct |   -.534675    .020274   -26.37   0.000     -.574527    -.494823
+       _cons |   680.8421   1.268558   536.71   0.000     678.3486    683.3357
+------------------------------------------------------------------------------</code></pre>
+</div>
+</div>
+</section>
+<section id="example-with-stata-13" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<ul>
+<li><p>Next try to add both dummies</p>
+<ul>
+<li><p>Stata drops one of the dummies because <span class="math inline">\(smallclass + bigclass = 1\)</span></p></li>
+<li><p>This is perfectly collinear with the constant</p></li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center" data-collectcode="true">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb21-1"><a href="#cb21-1"></a><span class="kw">regress</span> testscr smallclass bigclass mealpct, <span class="kw">robust</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>note: bigclass omitted because of collinearity.
+
+Linear regression                               Number of obs     =        420
+                                                F(2, 417)         =     376.52
+                                                Prob &gt; F          =     0.0000
+                                                R-squared         =     0.6355
+                                                Root MSE          =     10.206
+
+------------------------------------------------------------------------------
+             |               Robust
+     testscr | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+  smallclass |   3.018267   1.010161     2.99   0.003     1.032625    5.003909
+    bigclass |          0  (omitted)
+     mealpct |   -.534675    .020274   -26.37   0.000     -.574527    -.494823
+       _cons |   680.8421   1.268558   536.71   0.000     678.3486    683.3357
+------------------------------------------------------------------------------</code></pre>
+</div>
+</div>
+<div class="footer footer-default">
+
+</div>
+</section></section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="MLR_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="MLR_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="MLR_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="MLR_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="MLR_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="MLR_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="MLR_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="MLR_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="MLR_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="MLR_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="MLR_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'smaller': true,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true,"theme":"whiteboard","src":"drawings.json"},
+'smaller': true,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          // dispatch for htmlwidgets
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for reveal
+        if (window.Reveal) {
+          window.Reveal.addEventListener("slidechanged", function(event) {
+            fireSlideChanged(event.previousSlide, event.currentSlide);
+          });
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const clipboard = new window.ClipboardJS('.code-copy-button', {
+        target: function(trigger) {
+          return trigger.previousElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        setTimeout(function() {
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      });
+      function tippyHover(el, contentFn) {
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto-reveal',
+          placement: 'bottom-start'
+        };
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          return note.innerHTML;
+        });
+      }
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+        tippyHover(ref, function() {
+          var popup = window.document.createElement('div');
+          cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    });
+    </script>
+    
+
+</body></html>
