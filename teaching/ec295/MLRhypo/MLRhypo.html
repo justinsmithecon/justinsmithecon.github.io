@@ -1,0 +1,2372 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="MLRhypo_files/libs/clipboard/clipboard.min.js"></script>
+<script src="MLRhypo_files/libs/quarto-html/tabby.min.js"></script>
+<script src="MLRhypo_files/libs/quarto-html/popper.min.js"></script>
+<script src="MLRhypo_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="MLRhypo_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="MLRhypo_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="MLRhypo_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.1.189">
+
+  <meta name="author" content="Justin Smith">
+  <title>Multiple Regression Model - Hypothesis Testing</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="MLRhypo_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="MLRhypo_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="MLRhypo_files/libs/revealjs/dist/theme/quarto.css" id="theme">
+  <link href="MLRhypo_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="MLRhypo_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="MLRhypo_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="MLRhypo_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="MLRhypo_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="MLRhypo_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-captioned.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-captioned) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-captioned.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-captioned .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-captioned .callout-caption  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-captioned.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-captioned.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-caption {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-caption {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-caption {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-captioned .callout-body > .callout-content > :last-child {
+    margin-bottom: 0.5rem;
+  }
+
+  .callout.callout-captioned .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-captioned) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-caption {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-caption {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-caption {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-caption {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-caption {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-background-color="#43464B" class="center">
+  <h1 class="title">Multiple Regression Model - Hypothesis Testing</h1>
+  <p class="subtitle">EC295</p>
+  <p class="author">Justin Smith</p>
+  <p class="institute">Wilfrid Laurier University</p>
+  <p class="date">Fall 2022</p>
+</section>
+
+<section>
+<section id="introduction" class="title-slide slide level1 center">
+<h1>Introduction</h1>
+
+</section>
+<section id="introduction-1" class="slide level2">
+<h2>Introduction</h2>
+<ul>
+<li><p>Recall that we can use estimates to test hypotheses about slope parameters</p></li>
+<li><p>In this section, we learn how to do this in a multiple regression</p></li>
+<li><p>In simple regression, hypotheses tests are about one parameter</p></li>
+<li><p>In multiple regression we can do more</p>
+<ul>
+<li><p>Tests of single hypotheses</p>
+<ul>
+<li><p>Involving one parameter</p></li>
+<li><p>Or multiple parameters</p></li>
+</ul></li>
+<li><p>Tests of multiple hypotheses</p>
+<ul>
+<li>Can jointly evaluate more than one hypothesis</li>
+</ul></li>
+</ul></li>
+<li><p>We will also learn confidence intervals for multiple parameters</p>
+<ul>
+<li>Called a confidence set</li>
+</ul></li>
+</ul>
+</section>
+<section id="introduction-2" class="slide level2">
+<h2>Introduction</h2>
+<ul>
+<li><p>Finally, we will learn about model specification</p>
+<ul>
+<li><p>Choosing which variables to include in the regression</p></li>
+<li><p>In many situations, we are interested in an unbiased estimate of a single parameter</p>
+<ul>
+<li>e.g.&nbsp;effect of class size on test scores</li>
+</ul></li>
+<li><p>In that case, other variables are added to “control” omitted variables bias</p>
+<ul>
+<li><p>Control variables are not object of interest</p></li>
+<li><p>Added to model to get unbiased estimate of main parameter</p></li>
+</ul></li>
+<li><p>We will learn how to get causal estimate of key parameter even when control variables are related to the error</p>
+<ul>
+<li>Change assumption about how error is related to x</li>
+</ul></li>
+</ul></li>
+</ul>
+</section></section>
+<section>
+<section id="testing-hypotheses-about-single-parameters" class="title-slide slide level1 center">
+<h1>Testing Hypotheses about Single Parameters</h1>
+
+</section>
+<section id="hypothesis-tests-for-a-single-parameters" class="slide level2">
+<h2>Hypothesis Tests for a Single Parameters</h2>
+<ul>
+<li><p>Tests about single parameters in multiple regression follows same process as single regression</p></li>
+<li><p>Use a t-test</p>
+<ol type="1">
+<li><p>Formulate opposing hypotheses about <span class="math inline">\(\beta_{j}\)</span></p></li>
+<li><p>Choose test statistic</p></li>
+<li><p>Derive a decision rule</p></li>
+<li><p>Use sample data to compute the observed value of the test statistic and confront it with the decision rule</p></li>
+</ol></li>
+<li><p>Or, use p-value in place of 3 and 4</p></li>
+<li><p>Opposing hypotheses for two-sided test are</p>
+<ul>
+<li><p><span class="math inline">\(H_{0}:\beta_{j} = \beta_{j,0}\)</span></p></li>
+<li><p><span class="math inline">\(H_{1}: \beta_{j} \ne \beta_{j,0}\)</span></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="hypothesis-tests-for-a-single-parameters-1" class="slide level2">
+<h2>Hypothesis Tests for a Single Parameters</h2>
+<ul>
+<li><p>Test statistic is again the t-statistic</p>
+<p><span class="math display">\[t = \frac{\hat{\beta}_{j} - \beta_{j,0}}{se(\hat{\beta}_{j})}\]</span></p>
+<ul>
+<li><span class="math inline">\(\beta_{j,0}\)</span> is value of the null hypothesis</li>
+</ul></li>
+<li><p>Decision rule</p>
+<ul>
+<li><p>Reject null if estimate <span class="math inline">\(\hat{\beta}_{j}\)</span> is too far away from the claim</p></li>
+<li><p>Set by the significance level, and associated critical value</p></li>
+</ul></li>
+<li><p>Can instead use p-value</p>
+<ul>
+<li>For 2-sided test p-value <span class="math inline">\(= 2Pr(t &gt; |t^{act}|)\)</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="standard-errors-for-ols-estimators" class="slide level2">
+<h2>Standard Errors for OLS Estimators</h2>
+<ul>
+<li><p>Recall the standard error is the estimate of the standard deviation of <span class="math inline">\(\hat{\beta}_{j}\)</span></p></li>
+<li><p>Necessary to compute the t-statistic</p></li>
+<li><p>In simple regression, we derived formulas for <span class="math inline">\(se(\hat{\beta}_{j})\)</span></p>
+<ul>
+<li>Under heteroskedasticity and homoskedasticity</li>
+</ul></li>
+<li><p>In multiple regression, formulas are more complex</p>
+<ul>
+<li><p>Under homoskedasticity <span class="math display">\[\hat{Var}[\hat{\beta}_{j}|X_{1i},X_{2i},...,X_{ki}] = \frac{\frac{1}{n-k-1}\sum_{i=1}^{n}\hat{u}_{i}^2 }{(\sum_{i=1}^{n}(X_{ji} - \bar{X}_{j})^2)(1-R^2_{j})}\]</span></p></li>
+<li><p>Under heteroskedasticity formula is messier, but same intuition</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="standard-errors-for-ols-estimators-1" class="slide level2">
+<h2>Standard Errors for OLS Estimators</h2>
+<ul>
+<li><p>For testing hypotheses, <span class="math inline">\(se(\hat{\beta}_{j})\)</span> are computed using software</p>
+<ul>
+<li>Remember: in Stata, use “robust” option to get heteroskedasticity-robust standard errors</li>
+</ul></li>
+<li><p>Use these in exactly the same way we did before</p></li>
+</ul>
+</section>
+<section id="confidence-intervals-for-single-coefficients" class="slide level2">
+<h2>Confidence Intervals for Single Coefficients</h2>
+<ul>
+<li><p>A confidence interval for <span class="math inline">\(\beta_{j}\)</span> is computed as <span class="math display">\[\hat{\beta}_{j} \pm t^c \times se(\hat{\beta}_{j})\]</span></p>
+<ul>
+<li>Recall that if computing <span class="math inline">\((1-\alpha)\%\)</span> interval, then <span class="math inline">\(t^c\)</span> is critical value from 2-sided <span class="math inline">\(\alpha\%\)</span> hypothesis test</li>
+</ul></li>
+<li><p>Constructing this interval is the same as for simple regression</p></li>
+</ul>
+</section>
+<section id="example-with-stata" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<ul>
+<li><p><strong>Research Question</strong>: What are the factors that determine birth weight?</p></li>
+<li><p>Low birth weight is linked to many negative future outcomes</p>
+<ul>
+<li><p>Health</p></li>
+<li><p>Developmental</p></li>
+<li><p>Economic</p></li>
+</ul></li>
+<li><p>Smoking while pregnant is identified as a major cause of low birth weight</p></li>
+<li><p>It is therefore important to curb maternal smoking</p></li>
+</ul>
+</section>
+<section id="example-with-stata-1" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<ul>
+<li><p>Suppose the model explaining birth weight is <span class="math display">\[bwghtlbs= \beta_{0} + \beta_{1}packs +  \beta_{2}motheduc + \beta_{3} fatheduc + \beta_{4} faminc+ u\]</span></p>
+<ul>
+<li><p><span class="math inline">\(\beta_{1}\)</span> is ceteris paribus effect of one extra pack of cigarettes smoked by the mother per day</p></li>
+<li><p><span class="math inline">\(\beta_{2}\)</span> is ceteris paribus effect of a 1-year increase in father education</p></li>
+<li><p><span class="math inline">\(\beta_{3}\)</span> is ceteris paribus effect of a 1-year increase in mother education</p></li>
+<li><p><span class="math inline">\(\beta_{4}\)</span> is ceteris paribus effect of a 1000 increase in family income</p></li>
+<li><p><span class="math inline">\(\beta_{0}\)</span> is birth weight when all variables and the error are zero</p></li>
+<li><p><span class="math inline">\(u\)</span> are unobserved factors that explain birth weight</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="example-with-stata-2" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<ul>
+<li><p>We have information on 1,388 children and their families</p>
+<ul>
+<li><p>Birth weight</p></li>
+<li><p>Family income and education</p></li>
+<li><p>Maternal smoking</p></li>
+<li><p>Tobacco prices and taxes</p></li>
+</ul></li>
+<li><p>Drop a few values due to missing information on education</p></li>
+<li><p>The datafile and dofile are posted to mylearningspace</p>
+<ul>
+<li><p>Datafile: <strong>bwght.dta</strong></p></li>
+<li><p>Dofile: <strong>EC295 Inference Example</strong></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="example-with-stata-3" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<div class="cell" data-layout-align="center" data-collectcode="true">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">use</span> <span class="st">"bwght.dta"</span>, <span class="kw">clear</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">keep</span> bwghtlbs packs motheduc fatheduc faminc</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">sum</span> bwghtlbs packs motheduc fatheduc faminc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+    bwghtlbs |      1,388    7.418723    1.272123     1.4375    16.9375
+       packs |      1,388    .1043588    .2986344          0        2.5
+    motheduc |      1,387    12.93583    2.376728          2         18
+    fatheduc |      1,192    13.18624    2.745985          1         18
+      faminc |      1,388    29.02666    18.73928         .5         65</code></pre>
+</div>
+</div>
+<ul>
+<li><p>There are some missing values for motheduc and fatheduc</p>
+<ul>
+<li>We will drop these</li>
+</ul></li>
+<li><p>Note that famic is measured in thousands</p></li>
+</ul>
+</section>
+<section id="example-with-stata-4" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<ul>
+<li>Estimating the parameters by OLS</li>
+</ul>
+<div class="cell" data-layout-align="center" data-collectcode="true">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">regress</span> bwghtlbs packs motheduc fatheduc faminc, <span class="kw">robust</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear regression                               Number of obs     =      1,191
+                                                F(4, 1186)        =      11.47
+                                                Prob &gt; F          =     0.0000
+                                                R-squared         =     0.0328
+                                                Root MSE          =     1.2401
+
+------------------------------------------------------------------------------
+             |               Robust
+    bwghtlbs | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       packs |  -.7368692   .1303338    -5.65   0.000    -.9925797   -.4811587
+    motheduc |  -.0273702   .0184606    -1.48   0.138    -.0635892    .0088488
+    fatheduc |   .0308543   .0165627     1.86   0.063     -.001641    .0633497
+      faminc |   .0033641    .002215     1.52   0.129    -.0009817    .0077099
+       _cons |   7.379629   .1995718    36.98   0.000     6.988075    7.771182
+------------------------------------------------------------------------------</code></pre>
+</div>
+</div>
+<ul>
+<li><p>Smoking has the expected negative effect on birth weight</p></li>
+<li><p>Mother and father education have opposite effects</p>
+<ul>
+<li>Not clear why</li>
+</ul></li>
+<li><p>All else equal, family income has a small effect</p></li>
+</ul>
+</section>
+<section id="example-with-stata-5" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<ul>
+<li><p>Without any more calculation, we can test <span class="math inline">\(H_{0}: \beta_{j} = 0\)</span> vs <span class="math inline">\(H_{1}: \beta_{j} \neq 0\)</span></p>
+<ul>
+<li>Stata automatically reports this beside slope estimates</li>
+</ul></li>
+<li><p>Using the p-values in our example, at the 5% level</p>
+<ul>
+<li><p>packs is statistically significant</p></li>
+<li><p>All other variables are not statistically significant at that level</p></li>
+<li><p>Recall that to reject the null, p-value <span class="math inline">\(\le \alpha\)</span></p></li>
+</ul></li>
+<li><p>We test other null hypotheses also, but we need to do calculations</p></li>
+</ul>
+</section>
+<section id="example-with-stata-6" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<ul>
+<li><p>Suppose we want to test <span class="math inline">\(H_{0}: \beta_{1} = -1\)</span> vs <span class="math inline">\(H_{1}: \beta_{1} \neq -1\)</span></p>
+<ul>
+<li><p>The observed value of the test statistic is</p>
+<p><span class="math display">\[t = \frac{\hat{\beta}_{j} - \beta_{j,0}}{se(\hat{\beta}_{j})}  = \frac{ -.736892 + 1}{.1303338} = 2.0187\]</span></p></li>
+<li><p><span class="math inline">\(\hat{\beta}_{j}\)</span> is 2.0187 standard deviations above hypothesized value</p></li>
+<li><p>The critical value at the 5% level is <span class="math inline">\(1.96\)</span></p>
+<ul>
+<li><p>Degrees of freedom <span class="math inline">\(=n-k-1 = 1191 - 4 - 1 = 1186\)</span></p></li>
+<li><p>stata code: display invttail(1186,.025)</p></li>
+</ul></li>
+<li><p>We fail to reject <span class="math inline">\(H_{0}\)</span> in this case</p></li>
+<li><p>P-value is 0.0437</p>
+<ul>
+<li><p>stata code: display 2*ttail(1186,2.0187)</p></li>
+<li><p>Reject if <span class="math inline">\(\alpha \ge 0.0437\)</span></p></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="example-with-stata-7" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<ul>
+<li><p>Regression table has 95% confidence intervals for each <span class="math inline">\(\hat{\beta}_{j}\)</span></p>
+<ul>
+<li><p>For packs, accept any <span class="math inline">\(H_{0}\)</span> between -.9925797 and -.4811587</p></li>
+<li><p>Any confidence interval that includes 0 means <span class="math inline">\(\hat{\beta}_{j}\)</span> is statistically insignificant</p></li>
+</ul></li>
+</ul>
+</section></section>
+<section>
+<section id="tests-of-joint-hypotheses" class="title-slide slide level1 center">
+<h1>Tests of Joint Hypotheses</h1>
+
+</section>
+<section id="introduction-3" class="slide level2">
+<h2>Introduction</h2>
+<ul>
+<li><p>So far, we have only tested single hypotheses involving one parameter</p>
+<ul>
+<li>e.g.&nbsp;is <span class="math inline">\(\beta_{j}\)</span> statistically different from zero?</li>
+</ul></li>
+<li><p>In a multiple regression, we might be interested in more than one test at a time</p>
+<ul>
+<li><p>Ex: are <span class="math inline">\(\beta_{1}\)</span> and <span class="math inline">\(\beta_{2}\)</span> both statistically different from zero?</p></li>
+<li><p>Ex: are <span class="math inline">\(\beta_{1}\)</span> and <span class="math inline">\(\beta_{2}\)</span> both statistically different from each other?</p></li>
+<li><p>Ex: are all parameters in the regression different from zero?</p></li>
+</ul></li>
+<li><p>When testing more than one hypothesis at a time, we need to alter the procedure slightly</p></li>
+<li><p>Biggest change is we use a different test statistic</p>
+<ul>
+<li>Use F-statistic for these tests</li>
+</ul></li>
+</ul>
+</section>
+<section id="hypotheses-about-two-or-more-parameters" class="slide level2">
+<h2>Hypotheses about Two or More Parameters</h2>
+<ul>
+<li><p>Suppose we are interested in the test score regression <span class="math display">\[TestScore_{i} = \beta_{0} + \beta_{1}STR_{i} + \beta_{2}Expn_{i} + \beta_{3}PctEL_{i} + u_{i}\]</span></p>
+<ul>
+<li><p>STR is student-teacher ratio</p></li>
+<li><p>Expn is expenditures per student</p></li>
+<li><p>PctEL is fraction in ESL</p></li>
+</ul></li>
+<li><p>Test whether class size and student expenditures have an effect on test scores</p></li>
+<li><p>We can test this with a joint null hypothesis <span class="math display">\[H_{0}: \beta_{1}=0 \text{ and } \beta_{2}=0\]</span> <span class="math display">\[H_{1}: \beta_{1}\neq 0 \text{ and/or } \beta_{2}\neq 0\]</span></p></li>
+</ul>
+</section>
+<section id="hypotheses-about-two-or-more-parameters-1" class="slide level2">
+<h2>Hypotheses about Two or More Parameters</h2>
+<ul>
+<li><p>Null is that <em>both</em> parameters are zero</p>
+<ul>
+<li><p>Imposes two restrictions on the values of the parameters</p></li>
+<li><p>Testing two hypotheses at the same time</p></li>
+</ul></li>
+<li><p>Alternative is <u>one or both</u> parameters are non-zero</p>
+<ul>
+<li><p>Null and alternative hypotheses have to account for all possible values of parameters</p></li>
+<li><p>Opposite to both parameters being zero is one or both not zero</p></li>
+</ul></li>
+<li><p>In a more general model <span class="math display">\[Y_{i} = \beta_{0} + \beta_{1}X_{1i} + \beta_{2}X_{2i}+ ... + \beta_{k}X_{ki} + u_{i}\]</span></p></li>
+<li><p>Imagine we want to test two or more restrictions (hypotheses)</p>
+<ul>
+<li>Call the number of restrictions <span class="math inline">\(q\)</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="hypotheses-about-two-or-more-parameters-2" class="slide level2">
+<h2>Hypotheses about Two or More Parameters</h2>
+<ul>
+<li><p>A <strong>joint hypothesis</strong> tests <span class="math inline">\(q\)</span> restrictions on the parameters <span class="math display">\[H_{0}: \beta_{j}=\beta_{j,0},\beta_{m}=\beta_{m,0}, ... \text{ for a total of q restrictions }\]</span> <span class="math display">\[H_{1}:\text{ One or more of the q restrictions under } H_{0} \text { does not hold}\]</span></p></li>
+<li><p>Examples</p>
+<ul>
+<li><p><span class="math inline">\(H_{0}: \beta_{1} = 0, \beta_{2} = 0, \beta_{4} = 0\)</span>; <span class="math inline">\(H_{1}:\)</span> one or all is not zero</p>
+<ul>
+<li>Testing <span class="math inline">\(q=3\)</span> total hypotheses</li>
+</ul></li>
+<li><p><span class="math inline">\(H_{0}: \beta_{2} = 4, \beta_{5} = -2\)</span>; <span class="math inline">\(H_{1}:\)</span> one or both not those values</p>
+<ul>
+<li>Testing <span class="math inline">\(q=2\)</span> total hypotheses</li>
+</ul></li>
+</ul></li>
+<li><p>The appropriate test statistic for joint tests is the F-statistic</p>
+<ul>
+<li>We cover this statistic in detail below</li>
+</ul></li>
+</ul>
+</section>
+<section id="why-not-test-hypotheses-individually" class="slide level2">
+<h2>Why not test hypotheses individually?</h2>
+<ul>
+<li><p>Suppose again that model is <span class="math display">\[TestScore_{i} = \beta_{0} + \beta_{1}STR_{i} + \beta_{2}Expn_{i} + \beta_{3}PctEL_{i} + u_{i}\]</span></p></li>
+<li><p>Test whether class size and student expenditures have an effect on test scores</p></li>
+<li><p>The null and alternative hypotheses are <span class="math display">\[H_{0}: \beta_{1}=0 \text{ and } \beta_{2}=0\]</span> <span class="math display">\[H_{1}: \beta_{1}\neq 0 \text{ and/or } \beta_{2}\neq 0\]</span></p></li>
+<li><p>Suppose we test this hypothesis with individual t-tests</p>
+<ul>
+<li><p><span class="math inline">\(t_{1}\)</span> is the t-statistic for testing <span class="math inline">\(\beta_{1} = 0\)</span></p></li>
+<li><p><span class="math inline">\(t_{2}\)</span> is the t-statistic for testing <span class="math inline">\(\beta_{2} = 0\)</span></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="why-not-test-hypotheses-individually-1" class="slide level2">
+<h2>Why not test hypotheses individually?</h2>
+<ul>
+<li><p>Strategy is reject <span class="math inline">\(H_{0}\)</span> if either <span class="math inline">\(t_{1}\)</span> or <span class="math inline">\(t_{2}\)</span> exceeds critical value</p></li>
+<li><p>Suppose we want 5% significance level</p>
+<ul>
+<li><p>Probability of making Type I error is 5%</p></li>
+<li><p>Critical value is 1.96 with large sample</p></li>
+</ul></li>
+<li><p>Problem with strategy above is it produces Type I error rate larger than <span class="math inline">\(5\%\)</span></p></li>
+<li><p>To see this, assume estimators of <span class="math inline">\(\beta_{1}\)</span> and <span class="math inline">\(\beta_{2 }\)</span> are unrelated</p>
+<ul>
+<li><p>Accept <span class="math inline">\(H_{0}\)</span> when <span class="math inline">\(t_{1} &lt; 1.96\)</span> and <span class="math inline">\(t_{2} &lt; 1.96\)</span></p></li>
+<li><p>The likelihood of this happening when <span class="math inline">\(H_{0}\)</span> is true is <span class="math display">\[Pr[t_{1} &lt; 1.96, t_{2} &lt; 1.96] = Pr[t_{1} &lt; 1.96] \times Pr[t_{2} &lt; 1.96]\]</span> <span class="math display">\[= 0.95 \times 0.95 = 0.9025\]</span></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="why-not-test-hypotheses-individually-2" class="slide level2">
+<h2>Why not test hypotheses individually?</h2>
+<ul>
+<li><p>The probability of <em>rejecting</em> <span class="math inline">\(H_{0}\)</span> when it is true is therefore <span class="math display">\[1 - Pr[t_{1} &lt; 1.96, t_{2} &lt; 1.96] =1-0.9025 = 0.0975\]</span></p></li>
+<li><p>So with individual t-test strategy, Type I error rate is actually 9.75%</p></li>
+<li><p>Why?</p>
+<ul>
+<li><p>You get multiple opportunities to reject null</p>
+<ul>
+<li><p>If don’t reject using first t-test, you can reject using second</p></li>
+<li><p>Effectively, you get two “kicks at the can”</p></li>
+</ul></li>
+<li><p>Drives up probability of rejecting <span class="math inline">\(H_{0}\)</span> when it is true</p></li>
+</ul></li>
+<li><p>For this reason, we cannot use individual testing approach</p></li>
+</ul>
+</section>
+<section id="the-f-statistic-with-2-restrictions" class="slide level2">
+<h2>The F-Statistic with 2 Restrictions</h2>
+<ul>
+<li><p>The appropriate statistic for testing multiple hypotheses is the F-statistic</p>
+<ul>
+<li>When testing with F-statistic, we call it an F-test</li>
+</ul></li>
+<li><p><u>With only 2 restrictions</u> and testing <span class="math inline">\(H_{0}: \beta_{1}=0 \text{ and } \beta_{2}=0\)</span></p>
+<p><span class="math display">\[F = \frac{1}{2} \left (  \frac{t_{1}^2 + t_{2}^2 - 2\hat{\rho}_{t_{1},t_{2}}t_{1}t_{2}}{1-\hat{\rho}_{t_{1},t_{2}}^2} \right )\]</span></p></li>
+<li><p>In this formula</p>
+<ul>
+<li><p><span class="math inline">\(t_{1}\)</span> is the t-statistic for testing <span class="math inline">\(\beta_{1} = 0\)</span></p></li>
+<li><p><span class="math inline">\(t_{2}\)</span> is the t-statistic for testing <span class="math inline">\(\beta_{2} = 0\)</span></p></li>
+<li><p><span class="math inline">\(\hat{\rho}_{t_{1},t_{2}}\)</span> is the correlation between the two t-statistics</p></li>
+</ul></li>
+<li><p>Formula valid for heteroskedastic or homoskedastic errors</p></li>
+</ul>
+</section>
+<section id="the-f-statistic-with-2-restrictions-1" class="slide level2">
+<h2>The F-Statistic with 2 Restrictions</h2>
+<ul>
+<li><p>In the F-test, we will reject <span class="math inline">\(H_{0}\)</span> when the F-statistic is large</p></li>
+<li><p>To understand intuition, imagine t-statistics are uncorrelated</p>
+<ul>
+<li><p>Set <span class="math inline">\(\hat{\rho}_{t_{1},t_{2}} = 0\)</span></p></li>
+<li><p>In this case <span class="math inline">\(F = \frac{1}{2} \left( t_{1}^2 + t_{2}^2 \right )\)</span></p></li>
+<li><p>F-stat is big when either <span class="math inline">\(t_{1}\)</span> or <span class="math inline">\(t_{2}\)</span> or both is big</p>
+<ul>
+<li>When either hypothesis is very different from the claim</li>
+</ul></li>
+<li><p>This will lead us to reject the null that both slopes are zero</p></li>
+<li><p>More complicated intuition when <span class="math inline">\(\hat{\rho}_{t_{1},t_{2}} \neq 0\)</span></p></li>
+</ul></li>
+<li><p>Whether the F-statistic is large enough is determined by</p>
+<ul>
+<li><p>The sampling distribution of the F-statistic</p></li>
+<li><p>The significance level of the test</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="the-f-statistic-with-2-restrictions-2" class="slide level2">
+<h2>The F-Statistic with 2 Restrictions</h2>
+<ul>
+<li><p>This F-statistic has an F distribution</p>
+<ul>
+<li><p>The F-distribution is big mass at low values and long right tail</p></li>
+<li><p>Only defined over positive values</p></li>
+<li><p>Depends on <em>two</em> sets of degrees of freedom</p>
+<ul>
+<li><p><span class="math inline">\(q\)</span>, the number of restrictions</p></li>
+<li><p><span class="math inline">\(n-k-1\)</span>, the model degrees of freedom</p></li>
+</ul></li>
+<li><p>Graph on next slide shows F distribution with different numbers of restrictions and 1000 model degrees of freedom</p></li>
+</ul></li>
+<li><p>Use this distribution to get critical values, p-values for the F-test</p>
+<ul>
+<li>Analogous to t-testing, with different test statistic and sampling distribution</li>
+</ul></li>
+</ul>
+</section>
+<section id="testing-multiple-linear-restrictions" class="slide level2">
+<h2>Testing Multiple Linear Restrictions</h2>
+
+<img data-src="MLRhypo_files/figure-revealjs/ex1-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="the-f-statistic-with-q-restrictions" class="slide level2">
+<h2>The F-Statistic with q Restrictions</h2>
+<ul>
+<li><p>With more than 2 restrictions, heteroskedasticity-robust formula is more complicated</p>
+<ul>
+<li>Cannot write it down easily without matrix algebra</li>
+</ul></li>
+<li><p>Formula is computed automatically in Stata (and other software)</p></li>
+<li><p>Intuition is the same</p>
+<ul>
+<li><p>F-statistic has an F-distribution with q, n-k-1 degrees of freedom</p></li>
+<li><p>Reject <span class="math inline">\(H_{0}\)</span> when F-stat is large</p></li>
+<li><p>With significance level, obtain critical value from F-distribution</p></li>
+<li><p>Or compute p-values based on F-statistic</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="p-values-in-an-f-test" class="slide level2">
+<h2>P-values in an F-test</h2>
+<ul>
+<li><p>Like in t-testing, we can compute a p-value for F-tests</p></li>
+<li><p>It is probability of getting F-stat larger than the one we observe <span class="math display">\[p-value = Pr[F_{q,n-k-1} &gt; F^{act}]\]</span></p></li>
+<li><p>Like before, we need Stata to compute this p-value</p>
+<ul>
+<li>Use “Ftail” function</li>
+</ul></li>
+<li><p>Intuition of p-value is the same</p>
+<ul>
+<li>Reject <span class="math inline">\(H_{0}\)</span> for all <span class="math inline">\(\alpha\)</span> larger than p-value</li>
+</ul></li>
+</ul>
+</section>
+<section id="f-test-of-overall-significance" class="slide level2">
+<h2>F-test of Overall Significance</h2>
+<ul>
+<li><p>Common to test whether <em>any</em> variable in the regression is significant</p>
+<p><span class="math display">\[H_{0}: \beta_{1}=0, \beta_{2}=0,..., \beta_{k}=0\]</span> <span class="math display">\[H_{1}: \text{Any one or more of } \beta_{1}, \beta_{2}, ...,\beta_{k}  \text{ is not zero}\]</span></p></li>
+<li><p>Called test of overall significance because we are testing whether any variable matters</p>
+<ul>
+<li><p>Accepting null means none of them matter</p></li>
+<li><p>Rejecting null means at least one matters</p></li>
+</ul></li>
+<li><p>This test statistic is automatically reported in regression output</p>
+<ul>
+<li>In top right corner of Stata regression table</li>
+</ul></li>
+</ul>
+</section>
+<section id="the-f-statistic-with-1-restriction" class="slide level2">
+<h2>The F-Statistic with 1 Restriction</h2>
+<ul>
+<li><p>Finally, you can use an F-test test single hypotheses</p>
+<ul>
+<li>We have been using t-tests for this</li>
+</ul></li>
+<li><p>When testing one restriction, then</p>
+<p><span class="math display">\[F =  t^2\]</span></p></li>
+<li><p>An F-test and t-test with one restriction will produce identical conclusions</p>
+<ul>
+<li><p>Given direct link between the test statistics</p></li>
+<li><p>So, you can use either one</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="example-with-stata-8" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<ul>
+<li><p>Recall the birthweight example</p></li>
+<li><p>The regression model we are estimating is <span class="math display">\[bwghtlbs= \beta_{0} + \beta_{1}packs +  \beta_{2}motheduc + \beta_{3} fatheduc + \beta_{4} faminc+ u\]</span></p></li>
+<li><p>Suppose we want to test the joint hypotheses <span class="math display">\[H_{0}: \beta_{2}= 0, \beta_{3}=0, \beta_{4}=0\]</span> <span class="math display">\[H_{1}: \mbox{Any one or more of } \beta_{2}, \beta_{3}, \beta_{4} \mbox{ is not zero}\]</span></p></li>
+<li><p>In this example we have q=3 restrictions</p></li>
+<li><p>To get the heteroskedasticity-robust F-statistic, we need Stata</p></li>
+<li><p>The command for F-tests following regression is “test”</p></li>
+</ul>
+</section>
+<section id="example-with-stata-9" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<div class="cell" data-layout-align="center" data-collectcode="true">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">regress</span> bwghtlbs packs motheduc fatheduc faminc, <span class="kw">robust</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="kw">test</span> motheduc fatheduc faminc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear regression                               Number of obs     =      1,191
+                                                F(4, 1186)        =      11.47
+                                                Prob &gt; F          =     0.0000
+                                                R-squared         =     0.0328
+                                                Root MSE          =     1.2401
+
+------------------------------------------------------------------------------
+             |               Robust
+    bwghtlbs | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       packs |  -.7368692   .1303338    -5.65   0.000    -.9925797   -.4811587
+    motheduc |  -.0273702   .0184606    -1.48   0.138    -.0635892    .0088488
+    fatheduc |   .0308543   .0165627     1.86   0.063     -.001641    .0633497
+      faminc |   .0033641    .002215     1.52   0.129    -.0009817    .0077099
+       _cons |   7.379629   .1995718    36.98   0.000     6.988075    7.771182
+------------------------------------------------------------------------------
+
+
+ ( 1)  motheduc = 0
+ ( 2)  fatheduc = 0
+ ( 3)  faminc = 0
+
+       F(  3,  1186) =    2.66
+            Prob &gt; F =    0.0469</code></pre>
+</div>
+</div>
+</section>
+<section id="example-with-stata-10" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<ul>
+<li><p>The test command does the F-test for multiple restrictions</p>
+<ul>
+<li>Reminder: this is not the same as the ttest command</li>
+</ul></li>
+<li><p>The output reports the following things</p>
+<ul>
+<li><p>The restrictions it is testing</p></li>
+<li><p>The F-statistic</p></li>
+<li><p>The p-value for the F-test</p></li>
+</ul></li>
+<li><p>If you use the robust option in your regression, the F-stat in “test” will be heteroskedasticity-robust</p>
+<ul>
+<li>If you <u>do not</u> use the robust option, it will report the homoskedasticity-only F-stat</li>
+</ul></li>
+<li><p>Critical value from F(3,1186) distribution and <span class="math inline">\(\alpha = 0.05\)</span></p>
+<ul>
+<li><p>Stata code: display invFtail(3,1186,0.05)</p></li>
+<li><p><span class="math inline">\(F^c = 2.61\)</span></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="homoskedasticity-only-f-statistic" class="slide level2">
+<h2>Homoskedasticity-only F-statistic</h2>
+<ul>
+<li><p>The F-statistics discussed above are robust to heteroskedasticity</p>
+<ul>
+<li>You can use them with both heteroskedastic and homoskedastic errors</li>
+</ul></li>
+<li><p>If you are sure your errors are homoskedastic, we can use alternate formula</p></li>
+<li><p>This formula is based on the sum of squared residuals (SSR) from two regressions</p>
+<ol type="1">
+<li><p><strong>Unrestricted model</strong>: the original regression model estimated with all variables</p></li>
+<li><p><strong>Restricted model</strong>: the model after restrictions in <span class="math inline">\(H_{0}\)</span> are imposed</p></li>
+</ol></li>
+</ul>
+</section>
+<section id="homoskedasticity-only-f-statistic-1" class="slide level2">
+<h2>Homoskedasticity-only F-statistic</h2>
+<ul>
+<li><p>The homoskedasticity-only F-statistic is <span class="math display">\[F = \frac{(SSR_{r} - SSR_{ur})/q }{SSR_{ur}/(n-k-1)}\]</span></p></li>
+<li><p>Test is based on changes in SSR when we impose restrictions</p>
+<ul>
+<li><p>SSR always increases when variables are excluded from a model</p>
+<ul>
+<li><p>Equivalently, <span class="math inline">\(SSR_{r} \ge SSR_{ur}\)</span></p></li>
+<li><p>With fewer variables in model, more variation in residual</p></li>
+</ul></li>
+<li><p>The F-test is based on <em>how much</em> SSR increases when we exclude variables</p></li>
+<li><p>F-stat will be large when <span class="math inline">\(SSR_{r}\)</span> is much higher than <span class="math inline">\(SSR_{ur}\)</span></p>
+<ul>
+<li><p>Happens if imposing restriction significantly worsens model fit</p></li>
+<li><p>This will lead us to reject the restrictions in <span class="math inline">\(H_{0}\)</span></p></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="homoskedasticity-only-f-statistic-2" class="slide level2">
+<h2>Homoskedasticity-only F-statistic</h2>
+<ul>
+<li><p>You can also express the homoskedasticity-only F-statistic in terms of <span class="math inline">\(R^2\)</span> <span class="math display">\[F = \frac{(R^2_{ur} - R^2_{r})/q }{(1-R^2_{ur})/(n-k-1)}\]</span></p></li>
+<li><p>We learned previously that <span class="math inline">\(R^2\)</span> rises with more variables</p>
+<ul>
+<li><p>So, <span class="math inline">\(R^2_{ur} \ge R^2_{r}\)</span></p></li>
+<li><p>Model with more variables has higher <span class="math inline">\(R^2\)</span> than model with less</p></li>
+</ul></li>
+<li><p>F-stat will be large if <span class="math inline">\(R^2\)</span> rises a lot when we remove restrictions</p>
+<ul>
+<li><p>Happens when adding variables significantly increases fit</p></li>
+<li><p>This will lead us to reject the restrictions in <span class="math inline">\(H_{0}\)</span></p></li>
+</ul></li>
+<li><p>Both versions of this test statistic say the same thing</p>
+<ul>
+<li>If restrictions significantly worsen fit, we reject them</li>
+</ul></li>
+</ul>
+</section>
+<section id="homoskedasticity-only-f-statistic-3" class="slide level2">
+<h2>Homoskedasticity-only F-statistic</h2>
+<ul>
+<li><p>Return again to birthweight example</p></li>
+<li><p>Unrestricted model is <span class="math display">\[bwghtlbs= \beta_{0} + \beta_{1}packs +  \beta_{2}motheduc + \beta_{3} fatheduc + \beta_{4} faminc+ u\]</span></p></li>
+<li><p>Hypotheses <span class="math display">\[H_{0}: \beta_{2}= 0, \beta_{3}=0, \beta_{4}=0\]</span> <span class="math display">\[H_{1}: \mbox{Any one of } \beta_{2}, \beta_{3}, \beta_{4} \mbox{ is not zero}\]</span></p></li>
+<li><p>Restricted model (when we impose restrictions in <span class="math inline">\(H_{0}\)</span>) <span class="math display">\[bwghtlbs= \beta_{0} + \beta_{1}packs + u\]</span></p></li>
+</ul>
+</section>
+<section id="example-with-stata-11" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<div class="cell" data-layout-align="center" data-collectcode="true">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1"></a>*unrestricted <span class="kw">model</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="kw">regress</span> bwghtlbs packs motheduc fatheduc faminc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Source |       SS           df       MS      Number of obs   =     1,191
+-------------+----------------------------------   F(4, 1186)      =     10.05
+       Model |  61.8267942         4  15.4566986   Prob &gt; F        =    0.0000
+    Residual |  1823.90247     1,186  1.53786043   R-squared       =    0.0328
+-------------+----------------------------------   Adj R-squared   =    0.0295
+       Total |  1885.72927     1,190  1.58464644   Root MSE        =    1.2401
+
+------------------------------------------------------------------------------
+    bwghtlbs | Coefficient  Std. err.      t    P&gt;|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       packs |  -.7368692   .1382715    -5.33   0.000    -1.008153   -.4655852
+    motheduc |  -.0273702   .0199836    -1.37   0.171    -.0665774    .0118369
+    fatheduc |   .0308543   .0177056     1.74   0.082    -.0038834    .0655921
+      faminc |   .0033641   .0022906     1.47   0.142    -.0011301    .0078582
+       _cons |   7.379629   .2187682    33.73   0.000     6.950413    7.808844
+------------------------------------------------------------------------------</code></pre>
+</div>
+</div>
+</section>
+<section id="example-with-stata-12" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<div class="cell" data-layout-align="center" data-collectcode="true">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb9-1"><a href="#cb9-1"></a>*restricted <span class="kw">model</span>;</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="kw">regress</span> bwghtlbs packs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Source |       SS           df       MS      Number of obs   =     1,388
+-------------+----------------------------------   F(1, 1386)      =     32.24
+       Model |  51.0172634         1  51.0172634   Prob &gt; F        =    0.0000
+    Residual |  2193.55977     1,386  1.58265495   R-squared       =    0.0227
+-------------+----------------------------------   Adj R-squared   =    0.0220
+       Total |  2244.57703     1,387  1.61829634   Root MSE        =     1.258
+
+------------------------------------------------------------------------------
+    bwghtlbs | Coefficient  Std. err.      t    P&gt;|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       packs |  -.6422151   .1131137    -5.68   0.000    -.8641076   -.4203226
+       _cons |   7.485744   .0357713   209.27   0.000     7.415572    7.555915
+------------------------------------------------------------------------------</code></pre>
+</div>
+</div>
+<div class="cell" data-layout-align="center" data-collectcode="true">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb11-1"><a href="#cb11-1"></a>*Critical <span class="ot">value</span>;</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="kw">display</span> <span class="fu">invFtail</span>(3,1186,0.05)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>2.6124063</code></pre>
+</div>
+</div>
+</section>
+<section id="example-with-stata-13" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<ul>
+<li><p>From the output, we can obtain</p>
+<ul>
+<li><p><span class="math inline">\(SSR_{ur} = 1823.90247\)</span></p></li>
+<li><p><span class="math inline">\(SSR_{r} = 1834.65173\)</span></p></li>
+<li><p><span class="math inline">\(q =3\)</span></p></li>
+<li><p><span class="math inline">\(n-k-1 = 1186\)</span></p></li>
+</ul></li>
+<li><p>Bringing this together <span class="math display">\[F = \frac{(SSR_{r} - SSR_{ur})/q}{SSR_{ur}/(n-k-1)} =\frac{(1834.65173 - 1823.90247)/3}{1823.90247/1186} = 2.33\]</span></p></li>
+<li><p>Critical value from F(3,1186) distribution and <span class="math inline">\(\alpha = 0.05\)</span></p>
+<ul>
+<li><p>Stata code: display invFtail(3,1186,0.05)</p></li>
+<li><p><span class="math inline">\(F^c = 2.61\)</span></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="example-with-stata-14" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<ul>
+<li><p>Using the <span class="math inline">\(R^2\)</span> version of the formula</p>
+<ul>
+<li><p><span class="math inline">\(R^2_{ur} = 0.0328\)</span></p></li>
+<li><p><span class="math inline">\(R^2_{r} = 0.0271\)</span></p></li>
+<li><p><span class="math inline">\(q =3\)</span></p></li>
+<li><p><span class="math inline">\(n-k-1 = 1186\)</span></p></li>
+</ul></li>
+<li><p>Bringing this together <span class="math display">\[F =  \frac{(R^2_{ur} - R^2_{r})/q }{(1-R^2_{ur})/(n-k-1)} =\frac{(0.0328- 0.0271)/3}{(1-0.0328)/1186} = 2.33\]</span></p></li>
+<li><p>Critical value from F(3,1186) distribution and <span class="math inline">\(\alpha = 0.05\)</span></p>
+<ul>
+<li><p>Stata code: display invFtail(3,1186,0.05)</p></li>
+<li><p><span class="math inline">\(F^c = 2.61\)</span></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="example-with-stata-15" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<ul>
+<li><p>Can also just use “test” command</p></li>
+<li><p>Note how F-statistic is different from earlier</p>
+<ul>
+<li>Because we did not specify “robust” in the regression</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center" data-collectcode="true">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">regress</span> bwghtlbs packs motheduc fatheduc faminc</span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="kw">test</span> motheduc fatheduc faminc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Source |       SS           df       MS      Number of obs   =     1,191
+-------------+----------------------------------   F(4, 1186)      =     10.05
+       Model |  61.8267942         4  15.4566986   Prob &gt; F        =    0.0000
+    Residual |  1823.90247     1,186  1.53786043   R-squared       =    0.0328
+-------------+----------------------------------   Adj R-squared   =    0.0295
+       Total |  1885.72927     1,190  1.58464644   Root MSE        =    1.2401
+
+------------------------------------------------------------------------------
+    bwghtlbs | Coefficient  Std. err.      t    P&gt;|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       packs |  -.7368692   .1382715    -5.33   0.000    -1.008153   -.4655852
+    motheduc |  -.0273702   .0199836    -1.37   0.171    -.0665774    .0118369
+    fatheduc |   .0308543   .0177056     1.74   0.082    -.0038834    .0655921
+      faminc |   .0033641   .0022906     1.47   0.142    -.0011301    .0078582
+       _cons |   7.379629   .2187682    33.73   0.000     6.950413    7.808844
+------------------------------------------------------------------------------
+
+
+ ( 1)  motheduc = 0
+ ( 2)  fatheduc = 0
+ ( 3)  faminc = 0
+
+       F(  3,  1186) =    2.33
+            Prob &gt; F =    0.0728</code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="testing-hypotheses-about-combinations-of-parameters" class="title-slide slide level1 center">
+<h1>Testing Hypotheses About Combinations of Parameters</h1>
+
+</section>
+<section id="introduction-4" class="slide level2">
+<h2>Introduction</h2>
+<ul>
+<li><p>So far, we have tested restrictions that involve one parameter each</p>
+<ul>
+<li><p>e.g.&nbsp;<span class="math inline">\(H_{0}: \beta_{1} = 0\)</span></p></li>
+<li><p>e.g.&nbsp;<span class="math inline">\(H_{0}: \beta_{1} = 0, \beta_{2} = 0\)</span></p></li>
+</ul></li>
+<li><p>You can also test hypotheses involving multiple parameters</p></li>
+<li><p>Suppose again the model explaining birth weight is <span class="math display">\[bwghtlbs= \beta_{0} + \beta_{1}packs +  \beta_{2}motheduc + \beta_{3} fatheduc + \beta_{4} faminc+ u\]</span></p></li>
+<li><p>And we want to know whether mother and father education have the same effect on birth weight</p></li>
+<li><p>The null and alternative hypotheses are</p>
+<ul>
+<li><p><span class="math inline">\(H_{0}: \beta_{2} = \beta_{3}\)</span></p></li>
+<li><p><span class="math inline">\(H_{1}: \beta_{2} \neq \beta_{3}\)</span></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="introduction-5" class="slide level2">
+<h2>Introduction</h2>
+<ul>
+<li><p>Reject if there is a big <em>difference</em> in education effects</p>
+<ul>
+<li><p>Equivalently, reject if difference is much higher or much lower than zero</p></li>
+<li><p>Can rewrite null and alternative hypotheses as</p>
+<ul>
+<li><p><span class="math inline">\(H_{0}: \beta_{2} - \beta_{3} = 0\)</span></p></li>
+<li><p><span class="math inline">\(H_{1}: \beta_{2} - \beta_{3}\neq 0\)</span></p></li>
+</ul></li>
+</ul></li>
+<li><p>How do we conduct this test?</p></li>
+</ul>
+</section>
+<section id="approach-1-use-t-or-f-test" class="slide level2">
+<h2>Approach 1: Use t-or F-test</h2>
+<ul>
+<li><p>This is a situation with q=1 restrictions</p></li>
+<li><p>You can use a regular t- or F-test</p></li>
+<li><p>The t-statistic for such a test would be</p>
+<p><span class="math display">\[t = \frac{\hat{\beta}_{3} - \hat{\beta}_{2}}{se(\hat{\beta}_{3} - \hat{\beta}_{2})}\]</span></p></li>
+<li><p>It is difficult to compute <span class="math inline">\(se(\hat{\beta}_{3} - \hat{\beta}_{2})\)</span></p>
+<ul>
+<li>Remember rules of variance <span class="math display">\[Var(\hat{\beta}_{3} - \hat{\beta}_{2}) = Var(\hat{\beta}_{3}) + Var(\hat{\beta}_{2}) - 2Cov(\hat{\beta}_{3}, \hat{\beta}_{2})\]</span> <span class="math display">\[se(\hat{\beta}_{3} - \hat{\beta}_{2}) = \sqrt{se(\hat{\beta}_{3})^2 + se(\hat{\beta}_{2})^2 -2Cov(\hat{\beta}_{3}, \hat{\beta}_{2})}\]</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="approach-1-use-t-or-f-test-1" class="slide level2">
+<h2>Approach 1: Use t-or F-test</h2>
+<ul>
+<li><p>We do not usually have <span class="math inline">\(Cov(\hat{\beta}_{3}, \hat{\beta}_{2})\)</span> available</p>
+<ul>
+<li>Need Stata or other software to compute this</li>
+</ul></li>
+<li><p>You can also use an F-test</p>
+<ul>
+<li>This is a situation with q=1 restrictions</li>
+</ul></li>
+<li><p>The “test” command in Stata computes the F-statistic</p></li>
+</ul>
+</section>
+<section id="example-with-stata-16" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<div class="cell" data-layout-align="center" data-collectcode="true">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">regress</span> bwghtlbs packs motheduc fatheduc faminc, <span class="kw">robust</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="kw">test</span> motheduc= fatheduc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear regression                               Number of obs     =      1,191
+                                                F(4, 1186)        =      11.47
+                                                Prob &gt; F          =     0.0000
+                                                R-squared         =     0.0328
+                                                Root MSE          =     1.2401
+
+------------------------------------------------------------------------------
+             |               Robust
+    bwghtlbs | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       packs |  -.7368692   .1303338    -5.65   0.000    -.9925797   -.4811587
+    motheduc |  -.0273702   .0184606    -1.48   0.138    -.0635892    .0088488
+    fatheduc |   .0308543   .0165627     1.86   0.063     -.001641    .0633497
+      faminc |   .0033641    .002215     1.52   0.129    -.0009817    .0077099
+       _cons |   7.379629   .1995718    36.98   0.000     6.988075    7.771182
+------------------------------------------------------------------------------
+
+
+ ( 1)  motheduc - fatheduc = 0
+
+       F(  1,  1186) =    3.53
+            Prob &gt; F =    0.0605</code></pre>
+</div>
+</div>
+</section>
+<section id="approach-2-use-modified-regression" class="slide level2">
+<h2>Approach 2: Use modified regression</h2>
+<ul>
+<li><p>We can also implement the test with a modified regression</p></li>
+<li><p>Define the parameter <span class="math inline">\(\theta\)</span> as <span class="math display">\[\theta = \beta_{3} - \beta_{2}\]</span></p></li>
+<li><p>Then we can recast the hypotheses as</p>
+<ul>
+<li><p><span class="math inline">\(H_{0}: \theta = 0\)</span></p></li>
+<li><p><span class="math inline">\(H_{1}: \theta \neq 0\)</span></p></li>
+</ul></li>
+<li><p>So now we are testing hypotheses about <span class="math inline">\(\theta\)</span></p></li>
+<li><p>We just need to find a way to estimate <span class="math inline">\(\theta\)</span></p></li>
+<li><p>First, rearrange the <span class="math inline">\(\theta\)</span> equation as <span class="math display">\[\beta_{3} = \beta_{2} + \theta\]</span></p></li>
+</ul>
+</section>
+<section id="approach-2-use-modified-regression-1" class="slide level2">
+<h2>Approach 2: Use modified regression</h2>
+<ul>
+<li><p>Then substitute into the regression <span class="math display">\[bwghtlbs= \beta_{0} + \beta_{1}packs +  \beta_{2}motheduc\]</span> <span class="math display">\[+  (\beta_{2} + \theta) fatheduc + \beta_{4} faminc+ u\]</span></p></li>
+<li><p>Rearranging <span class="math display">\[bwghtlbs= \beta_{0} + \beta_{1}packs +  \beta_{2}(motheduc + fatheduc)\]</span> <span class="math display">\[+ \theta fatheduc + \beta_{4} faminc+ u\]</span></p></li>
+<li><p>Based on this, we can estimate <span class="math inline">\(\theta\)</span> by estimating <span class="math display">\[bwghtlbs= \beta_{0} + \beta_{1}packs +  \beta_{2}toteduc + \theta fatheduc + \beta_{4} faminc+ u\]</span></p>
+<ul>
+<li><p>where <span class="math inline">\(toteduc =motheduc + fatheduc\)</span></p></li>
+<li><p>You need to create the variable <span class="math inline">\(toteduc\)</span> before estimating the regression</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="approach-2-use-modified-regression-2" class="slide level2">
+<h2>Approach 2: Use modified regression</h2>
+<ul>
+<li><p>When you estimate the regression above, it will produce the estimate <span class="math display">\[\hat{\theta} = \hat{\beta}_{3} - \hat{\beta}_{2}\]</span></p></li>
+<li><p>The standard error estimate for <span class="math inline">\(\hat{\theta}\)</span> will therefore measure <span class="math display">\[se(\hat{\theta}) = se(\hat{\beta}_{3} - \hat{\beta}_{2})\]</span></p></li>
+<li><p>You can then do a regular t-test of <span class="math inline">\(H_{0} : \theta = 0\)</span></p>
+<ul>
+<li><p>In this example, test slope on <span class="math inline">\(fatheduc\)</span></p></li>
+<li><p><strong>Not</strong> coefficient on <span class="math inline">\(toteduc\)</span></p></li>
+</ul></li>
+<li><p>Next slide implements this test with our Stata example</p></li>
+</ul>
+</section>
+<section id="example-with-stata-17" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<div class="cell" data-layout-align="center" data-collectcode="true">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw">gen</span> toteduc = motheduc + fatheduc</span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="kw">regress</span> bwghtlbs packs toteduc fatheduc faminc, <span class="kw">robust</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(197 missing values generated)
+
+
+Linear regression                               Number of obs     =      1,191
+                                                F(4, 1186)        =      11.47
+                                                Prob &gt; F          =     0.0000
+                                                R-squared         =     0.0328
+                                                Root MSE          =     1.2401
+
+------------------------------------------------------------------------------
+             |               Robust
+    bwghtlbs | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       packs |  -.7368692   .1303338    -5.65   0.000    -.9925797   -.4811587
+     toteduc |  -.0273702   .0184606    -1.48   0.138    -.0635892    .0088488
+    fatheduc |   .0582246   .0309845     1.88   0.060     -.002566    .1190151
+      faminc |   .0033641    .002215     1.52   0.129    -.0009817    .0077099
+       _cons |   7.379629   .1995718    36.98   0.000     6.988075    7.771182
+------------------------------------------------------------------------------</code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="confidence-sets-for-multiple-coefficients" class="title-slide slide level1 center">
+<h1>Confidence Sets for Multiple Coefficients</h1>
+
+</section>
+<section id="confidence-sets" class="slide level2">
+<h2>Confidence Sets</h2>
+<ul>
+<li><p>We have learned several times about confidence intervals for single parameters</p>
+<ul>
+<li><p>An interval estimate for a parameter</p></li>
+<li><p>Parameter is inside interval in <span class="math inline">\((1-\alpha)\%\)</span> of samples</p></li>
+<li><p>Values inside interval are accepted in 2-sided t-test at <span class="math inline">\(\alpha\%\)</span> level</p></li>
+</ul></li>
+<li><p>The concept for multiple parameters is the confidence set</p>
+<ul>
+<li><strong>Confidence Set</strong>: the set that contains the parameters in <span class="math inline">\((1-\alpha)\%\)</span> of repeated samples</li>
+</ul></li>
+<li><p>This is a generalization of the confidence interval for 2 or more parameters</p></li>
+<li><p>Formula is more complicated, so we will not show it</p>
+<ul>
+<li>It is based on the F-statistic we learned previously</li>
+</ul></li>
+</ul>
+</section>
+<section id="confidence-sets-1" class="slide level2">
+<h2>Confidence Sets</h2>
+<ul>
+<li><p>Like before, we can use confidence sets for hypothesis testing</p>
+<ul>
+<li><p>Suppose we construct a <span class="math inline">\((1-\alpha)\%\)</span> confidence set</p></li>
+<li><p>Any combination of parameter values in set is accepted in an F-test at <span class="math inline">\(\alpha\%\)</span> level</p></li>
+<li><p>Any combination outside the set is rejected</p></li>
+</ul></li>
+<li><p>Ex: Suppose we are again estimating the regression <span class="math display">\[TestScore_{i} = \beta_{0} + \beta_{1}STR_{i} + \beta_{2}Expn_{i} + \beta_{3}PctEL_{i} + u_{i}\]</span></p></li>
+<li><p>A 95% confidence set for the parameters <span class="math inline">\(\beta_{1}\)</span> and <span class="math inline">\(\beta_{2}\)</span> is shown on next slide</p>
+<ul>
+<li><p>Graphs <span class="math inline">\(\beta_{2}\)</span> against <span class="math inline">\(\beta_{1}\)</span></p></li>
+<li><p>Shaded ellipse shows confidence set</p></li>
+<li><p>Center of set is estimates <span class="math inline">\(\hat{\beta}_{1}\)</span> and <span class="math inline">\(\hat{\beta}_{2}\)</span></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="confidence-sets-2" class="slide level2">
+<h2>Confidence Sets</h2>
+
+<img data-src="ellipse.jpg" style="width:4.25in" class="r-stretch"></section>
+<section id="confidence-sets-3" class="slide level2">
+<h2>Confidence Sets</h2>
+<ul>
+<li><p>Any parameter combination inside ellipse is accepted</p></li>
+<li><p>Confidence set takes elliptical shape with two parameters</p>
+<ul>
+<li>Cannot plot graph with <span class="math inline">\(&gt;2\)</span> parameters</li>
+</ul></li>
+<li><p>Ellipse tilts rightward because <span class="math inline">\(\hat{\beta}_{1}\)</span> and <span class="math inline">\(\hat{\beta}_{2}\)</span> positively correlated</p>
+<ul>
+<li><p>If negatively correlated, it would tilt leftward</p></li>
+<li><p>If uncorrelated, it would not tilt</p></li>
+<li><p>Correlations between <span class="math inline">\(\hat{\beta}_{1}\)</span> and <span class="math inline">\(\hat{\beta}_{2}\)</span> driven by correlations in underlying variables</p></li>
+</ul></li>
+<li><p>Higher standard errors make ellipse taller, wider</p>
+<ul>
+<li><p>Sampling variation in <span class="math inline">\(\hat{\beta}_{1}\)</span> makes it wider</p></li>
+<li><p>Sampling variation in <span class="math inline">\(\hat{\beta}_{2}\)</span> makes it taller</p></li>
+</ul></li>
+</ul>
+</section></section>
+<section>
+<section id="model-specification" class="title-slide slide level1 center">
+<h1>Model Specification</h1>
+
+</section>
+<section id="introduction-6" class="slide level2">
+<h2>Introduction</h2>
+<ul>
+<li><p>Model specification refers to what variables enter a model</p></li>
+<li><p>This is trickiest aspect of applied econometrics</p></li>
+<li><p>Main goal of many econometric analyses is the unbiased effect of a single independent variable on <span class="math inline">\(Y\)</span></p>
+<ul>
+<li><p>Effect of class size on test scores</p></li>
+<li><p>Effect of education on wages</p></li>
+</ul></li>
+<li><p>In this case, additional variables only added to model to avoid omitted variables bias</p>
+<ul>
+<li><p>Include variable if related to <span class="math inline">\(Y\)</span> and main <span class="math inline">\(X\)</span> of interest</p></li>
+<li><p>These variables are called “control variables”</p></li>
+</ul></li>
+<li><p>So a good starting point for model specification is avoidance of omitted variables bias</p></li>
+</ul>
+</section>
+<section id="introduction-7" class="slide level2">
+<h2>Introduction</h2>
+<ul>
+<li><p>Requires giving thought to determinants of <span class="math inline">\(Y\)</span></p>
+<ul>
+<li><p>Some background knowledge of research question is important</p></li>
+<li><p>E.g. need to know that wealthier school districts have smaller classes and do better on tests</p></li>
+</ul></li>
+<li><p>You should avoid using only statistical measures of fit as reason to add/remove variable</p>
+<ul>
+<li><p>Sometimes people use <span class="math inline">\(R^2\)</span> or <span class="math inline">\(\bar{R}^2\)</span></p></li>
+<li><p>They say only whether <span class="math inline">\(X\)</span> variables are good at explaining <span class="math inline">\(Y\)</span> in sample at hand</p></li>
+<li><p>It is uninformative about causality or omitted variables</p></li>
+<li><p>Can have high <span class="math inline">\(R^2\)</span> but biased estimates</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="control-variables-in-multiple-regression" class="slide level2">
+<h2>Control Variables in Multiple Regression</h2>
+<ul>
+<li><p>As mentioned above, many econometric analyses seek an unbiased effect of a single independent variable on <span class="math inline">\(Y\)</span></p></li>
+<li><p>So we differentiate between two types of independent variables</p>
+<ul>
+<li><p><strong>Variable of interest</strong>: regressor for which we want to estimate a causal effect</p></li>
+<li><p><strong>Control variable</strong>: regressor included to hold constant factors that would lead to omitted variables bias if neglected. Not the object of interest</p></li>
+</ul></li>
+<li><p>Our initial OLS assumptions did not make this distinction</p>
+<ul>
+<li><p>Treated all variables like variables of interest</p></li>
+<li><p>So we assumed that all <span class="math inline">\(X\)</span> variables were uncorrelated with <span class="math inline">\(u\)</span></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="control-variables-in-multiple-regression-1" class="slide level2">
+<h2>Control Variables in Multiple Regression</h2>
+<ul>
+<li><p>Most of the time, we do not need an unbiased estimate for control variables</p></li>
+<li><p>This means we can loosen OLS assumptions</p></li>
+<li><p>Suppose regression model is <span class="math display">\[Y_{i} = \beta_{0} + \beta_{1}X_{1i} + \beta_{2}X_{2i}  + u_{i}\]</span></p></li>
+<li><p>Imagine <span class="math inline">\(X_{1i}\)</span> is variable of interest</p>
+<ul>
+<li>We want an unbiased estimate of <span class="math inline">\(\beta_{1}\)</span></li>
+</ul></li>
+<li><p><span class="math inline">\(X_{2i}\)</span> is a control variable</p>
+<ul>
+<li>We do not need an unbiased estimate of <span class="math inline">\(\beta_{2}\)</span></li>
+</ul></li>
+<li><p>In this scenario, we <u>do not</u> have to assume <span class="math inline">\(E[u_{i}|X_{1i}, X_{2i}] = 0\)</span></p>
+<ul>
+<li>Do not need both variables to be unrelated to <span class="math inline">\(u_{i}\)</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="control-variables-in-multiple-regression-2" class="slide level2">
+<h2>Control Variables in Multiple Regression</h2>
+<ul>
+<li><p>Instead, we can assume conditional mean independence</p>
+<ul>
+<li><strong>Conditional Mean Independence</strong>: when control variables are added to the model, unobserved factors are no longer related to variable of interest</li>
+</ul></li>
+<li><p>Mathematically, assumption is <span class="math inline">\(E[u_{i}|X_{1i}, X_{2i}] = E[u_{i}|X_{2i}]\)</span></p>
+<ul>
+<li>When you control for <span class="math inline">\(X_{2i}\)</span>, average of unobserved factors do not depend on <span class="math inline">\(X_{1i}\)</span></li>
+</ul></li>
+<li><p>Including <span class="math inline">\(X_{2i}\)</span> breaks the correlation between <span class="math inline">\(X_{1i}\)</span> and <span class="math inline">\(u_{i}\)</span></p>
+<ul>
+<li><p>We allow <span class="math inline">\(X_{2i}\)</span> to be correlated with error term</p></li>
+<li><p>Through its correlation with the error, <span class="math inline">\(X_{2i}\)</span> holds constant itself <em>and any related unobserved factor</em></p></li>
+<li><p>Estimate of <span class="math inline">\(\beta_{1}\)</span> is unbiased if no other relevant unobserved factors are related to <span class="math inline">\(X_{1i}\)</span></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="control-variables-in-multiple-regression-3" class="slide level2">
+<h2>Control Variables in Multiple Regression</h2>
+<ul>
+<li><p>Estimate of <span class="math inline">\(\beta_{2}\)</span> is <em>not</em> necessarily unbiased</p>
+<ul>
+<li><p>We allow <span class="math inline">\(X_{2i}\)</span> to be correlated with error term</p>
+<ul>
+<li>When this correlation exists, its slope estimate is biased</li>
+</ul></li>
+<li><p>This is okay, because it is not the variable of interest</p></li>
+<li><p>Key is that estimate of <span class="math inline">\(\beta_{1}\)</span> is unbiased</p></li>
+</ul></li>
+<li><p>Ex: Effect of class size on test scores <span class="math display">\[TestScore_{i} = \beta_{0} + \beta_{1}STR_{i} + \beta_{2}PctEL_{i} + \beta_{3}LchPct_{i} + u_{i}\]</span></p></li>
+<li><p>Variable of interest is <span class="math inline">\(STR_{i}\)</span></p></li>
+<li><p>We are worried that <span class="math inline">\(STR_{i}\)</span> is related to unobserved factors</p>
+<ul>
+<li><p>e.g., unobserved student economic background</p></li>
+<li><p>Without controlling for economic background, we have omitted variables bias in <span class="math inline">\(\hat{\beta}_{1}\)</span></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="control-variables-in-multiple-regression-4" class="slide level2">
+<h2>Control Variables in Multiple Regression</h2>
+<ul>
+<li><p>To control for economic background, include <span class="math inline">\(PctEL_{i}\)</span> and <span class="math inline">\(LchPct_{i}\)</span> as control variables</p>
+<ul>
+<li><p>Holds constant direct effects of <span class="math inline">\(PctEL_{i}\)</span> and <span class="math inline">\(LchPct_{i}\)</span></p></li>
+<li><p>Also holds constant other related economic background factors</p></li>
+</ul></li>
+<li><p>If conditional independence assumption holds, <span class="math inline">\(\hat{\beta}_{1}\)</span> is unbiased</p>
+<ul>
+<li>With <span class="math inline">\(PctEL_{i}\)</span> and <span class="math inline">\(LchPct_{i}\)</span> in model, <span class="math inline">\(STR_{i}\)</span> is not related to unobserved factors</li>
+</ul></li>
+<li><p>Note that <span class="math inline">\(\hat{\beta}_{2}\)</span> and <span class="math inline">\(\hat{\beta}_{3}\)</span> are in general biased</p>
+<ul>
+<li><p><span class="math inline">\(PctEL_{i}\)</span> and <span class="math inline">\(LchPct_{i}\)</span> are related to relevant unobserved factors</p>
+<ul>
+<li><p>They control for those unobserved factors</p></li>
+<li><p>This is what makes them good control variables</p></li>
+</ul></li>
+<li><p>Relationship with unobserved factors means their slope estimates are biased</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="conditional-mean-independence" class="slide level2">
+<h2>Conditional Mean Independence</h2>
+<ul>
+<li><p>Suppose regression model is <span class="math display">\[Y_{i} = \beta_{0} + \beta_{1}X_{1i} + \beta_{2}X_{2i}  + u_{i}\]</span></p></li>
+<li><p>For this model, imagine <span class="math inline">\(E[u_{i}|X_{1i}, X_{2i}] = 0\)</span> is not true</p>
+<ul>
+<li>Regressors might be correlated with unobserved factors</li>
+</ul></li>
+<li><p>But we can assume <span class="math inline">\(E[u_{i}|X_{1i}, X_{2i}] = E[u_{i}|X_{2i}]\)</span></p>
+<ul>
+<li><p>With <span class="math inline">\(X_{2i}\)</span> in the model, <span class="math inline">\(X_{1i}\)</span> is not related to unobserved factors</p>
+<ul>
+<li>But, <span class="math inline">\(X_{2i}\)</span> can be related to them</li>
+</ul></li>
+</ul></li>
+<li><p>If second assumption is true, we can get unbiased estimate of <span class="math inline">\(\beta_{1}\)</span>, but not <span class="math inline">\(\beta_{2}\)</span></p></li>
+</ul>
+</section>
+<section id="conditional-mean-independence-1" class="slide level2">
+<h2>Conditional Mean Independence</h2>
+<ul>
+<li><p>Imagine the error is linearly related to <span class="math inline">\(X_{1i}\)</span> and <span class="math inline">\(X_{2i}\)</span> <span class="math display">\[u_{i} = \gamma_{0} +\gamma_{1}X_{1i}+ \gamma_{2}X_{2i} + v_{i}\]</span></p>
+<ul>
+<li>Assume error in this equation <span class="math inline">\(v_{i}\)</span> is unrelated to <span class="math inline">\(X_{1i}\)</span> and <span class="math inline">\(X_{2i}\)</span></li>
+</ul></li>
+<li><p>Conditional mean independence is equivalent to <span class="math inline">\(\gamma_{1}=0\)</span></p></li>
+<li><p>The error equation under this assumption is <span class="math display">\[u_{i} = \gamma_{0} + \gamma_{2}X_{2i} + v_{i}\]</span></p></li>
+<li><p>From this you can see <span class="math inline">\(E[u_{i}| X_{1i},X_{2i}] = E[u_{i}|X_{2i}]\)</span></p>
+<ul>
+<li><p>The expected value of <span class="math inline">\(u_{i}\)</span> given <span class="math inline">\(X_{1i}\)</span> and <span class="math inline">\(X_{2i}\)</span> is <span class="math display">\[E[u_{i}| X_{1i},X_{2i}]= \gamma_{0} + \gamma_{2}X_{2i}\]</span></p></li>
+<li><p>Because <span class="math inline">\(X_{1i}\)</span> is not in the equation, this is the same as <span class="math display">\[E[u_{i}|X_{2i}]= \gamma_{0} + \gamma_{2}X_{2i}\]</span></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="conditional-mean-independence-2" class="slide level2">
+<h2>Conditional Mean Independence</h2>
+<ul>
+<li><p>Substitute <span class="math inline">\(u_{i}\)</span> equation into original regression <span class="math display">\[Y_{i} = \beta_{0} + \beta_{1}X_{1i} + \beta_{2}X_{2i}  +\gamma_{0} + \gamma_{2}X_{2i} + v_{i}\]</span></p></li>
+<li><p>Collecting terms, <span class="math display">\[Y_{i} = (\beta_{0}+ \gamma_{0}) + \beta_{1}X_{1i} + (\beta_{2} + \gamma_{2})X_{2i}  + v_{i}\]</span></p></li>
+<li><p>Equivalently, <span class="math display">\[Y_{i} = \delta_{0} + \beta_{1}X_{1i} + \delta_{2} X_{2i}  + v_{i}\]</span></p></li>
+<li><p>This model satisfies the 4 OLS assumptions</p></li>
+<li><p>So if we estimate a regression of <span class="math inline">\(Y_{i}\)</span> on <span class="math inline">\(X_{1i}\)</span> and <span class="math inline">\(X_{2i}\)</span></p>
+<ul>
+<li><p>We get unbiased estimate of <span class="math inline">\(\beta_{1}\)</span></p></li>
+<li><p>And unbiased estimate of <span class="math inline">\(\delta_{2}\)</span></p>
+<ul>
+<li>Because <span class="math inline">\(\delta_{2}=\beta_{2} + \gamma_{2}\)</span>, this is not unbiased for <span class="math inline">\(\beta_{2}\)</span></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="model-specification-in-practice" class="slide level2">
+<h2>Model Specification in Practice</h2>
+<ul>
+<li><p>Main reason to add variables to a regression is to control omitted variables bias</p></li>
+<li><p>Requires knowing what factors determine <span class="math inline">\(Y\)</span> that relate to <span class="math inline">\(X\)</span></p>
+<ul>
+<li>Obtaining background knowledge on the economic question is crucial</li>
+</ul></li>
+<li><p>Even with some background knowledge, judgement calls are necessary</p>
+<ul>
+<li><p>Experts often disagree on appropriate control variables</p></li>
+<li><p>And in the end, conditional independence is an unverifiable assumption</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="model-specification-in-practice-1" class="slide level2">
+<h2>Model Specification in Practice</h2>
+<ul>
+<li><p>In practice, researchers present results from several model specifications</p>
+<ul>
+<li><p><strong>Base specification</strong>: basic regression containing variables of interest and control variables suggested by theory and judgement</p></li>
+<li><p><strong>Alternative specification</strong>: regressions with alternative sets of regressors, often the ones in base specification plus more</p></li>
+</ul></li>
+<li><p>If slope estimate on variable of interest is unchanged across specifications, that is evidence that it is unbiased</p>
+<ul>
+<li>Big changes in main estimate would be signal of omitted variables bias</li>
+</ul></li>
+<li><p>However, it is not indisputable proof of unbiased estimates</p>
+<ul>
+<li>There could still be omitted variables</li>
+</ul></li>
+</ul>
+</section>
+<section id="interpreting-r2-and-barr2-in-practice" class="slide level2">
+<h2>Interpreting <span class="math inline">\(R^2\)</span> and <span class="math inline">\(\bar{R}^2\)</span> in Practice</h2>
+<ul>
+<li><p><span class="math inline">\(R^2\)</span> and <span class="math inline">\(\bar{R}^2\)</span> are not useful for deciding to add/drop variables</p></li>
+<li><p>There are several pitfalls when using these measures</p></li>
+</ul>
+<ol type="1">
+<li><p>Increases in <span class="math inline">\(R^2\)</span> and <span class="math inline">\(\bar{R}^2\)</span> do not mean a variable is significant</p>
+<ul>
+<li><p><span class="math inline">\(R^2\)</span> always increases with an additional regressor</p></li>
+<li><p><span class="math inline">\(\bar{R}^2\)</span> sometimes increases when regressor overcomes “penalty”</p></li>
+<li><p>Neither mean new variable is statistically significant</p></li>
+</ul></li>
+<li><p>A high <span class="math inline">\(R^2\)</span> or <span class="math inline">\(\bar{R}^2\)</span> does not mean regressors cause changes in dependent variable</p>
+<ul>
+<li><p><span class="math inline">\(R^2\)</span> and <span class="math inline">\(\bar{R}^2\)</span> measure only how model fits the sample</p></li>
+<li><p>Causality is related to relationship between regressors and error</p></li>
+<li><p>These are independent concepts</p></li>
+</ul></li>
+</ol>
+</section>
+<section id="interpreting-r2-and-barr2-in-practice-1" class="slide level2">
+<h2>Interpreting <span class="math inline">\(R^2\)</span> and <span class="math inline">\(\bar{R}^2\)</span> in Practice</h2>
+<ol start="3" type="1">
+<li><p>A high <span class="math inline">\(R^2\)</span> or <span class="math inline">\(\bar{R}^2\)</span> does not mean there is no omitted variables bias</p>
+<ul>
+<li><p>Again, <span class="math inline">\(R^2\)</span> and <span class="math inline">\(\bar{R}^2\)</span> measure only how model fits the sample</p></li>
+<li><p>Omitted variables bias is related to relationship between error and X</p></li>
+<li><p>These concepts are not directly related</p></li>
+</ul></li>
+<li><p>A high <span class="math inline">\(R^2\)</span> or <span class="math inline">\(\bar{R}^2\)</span> does not mean you have the most appropriate set of regressors</p>
+<ul>
+<li><p>The “right” set of regressors is a difficult concept</p></li>
+<li><p>There are varying opinions on what should be in a model</p></li>
+<li><p>Partly it is driven by fit, partly by data availability, partly by theory</p></li>
+</ul></li>
+</ol>
+</section></section>
+<section>
+<section id="analysis-of-test-score-data" class="title-slide slide level1 center">
+<h1>Analysis of Test Score Data</h1>
+
+</section>
+<section id="introduction-8" class="slide level2">
+<h2>Introduction</h2>
+<ul>
+<li><p>Here we demonstrate the model specification lessons with an example</p></li>
+<li><p>As in the past, we examine the relationship between class size and test scores</p></li>
+<li><p>Also learn some practical advice for reporting regression results</p>
+<ul>
+<li><p>Includes discussion on scale of the variables in model</p></li>
+<li><p>Also how researchers typically structure output in a table</p></li>
+<li><p>And how to present graphs</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="base-and-alternative-specifications" class="slide level2">
+<h2>Base and Alternative Specifications</h2>
+<ul>
+<li><p>We discussed base and alternative specifications</p>
+<ul>
+<li><p>Base contains variables of primary interest</p></li>
+<li><p>Alternative specifications test different sets of regressors</p></li>
+</ul></li>
+<li><p>Before showing results, need to identify variable of interest</p></li>
+<li><p>We are interested in effect of class size on test scores</p>
+<ul>
+<li>So variable of interest is class size</li>
+</ul></li>
+<li><p>Control variables added to hold constant relevant factors related to class size</p>
+<ul>
+<li><p>Many factors affect test scores and are related to class size</p>
+<ul>
+<li><p>Outside learning opportunities</p></li>
+<li><p>Economic background</p></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="base-and-alternative-specifications-1" class="slide level2">
+<h2>Base and Alternative Specifications</h2>
+<ul>
+<li><p>As control variables, we have the following</p>
+<ul>
+<li><p>Percent of students ESL</p></li>
+<li><p>Percent eligible for free/subsidized lunch</p></li>
+<li><p>Percent who qualify for income assistance</p></li>
+</ul></li>
+<li><p>These variables control for their direct effects and related unobserved factors</p>
+<ul>
+<li><p>Economic background</p></li>
+<li><p>Measures of economic disadvantage</p></li>
+</ul></li>
+<li><p>Estimate of class size effect unbiased when conditional independence is true</p>
+<ul>
+<li><p>If adding variables above breaks link between error and class size, conditional independence is satisfied</p></li>
+<li><p>Control variables hold constant omitted factors</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="base-and-alternative-specifications-2" class="slide level2">
+<h2>Base and Alternative Specifications</h2>
+<ul>
+<li><p>Base specification will be regression of test score on student-teacher ratio</p></li>
+<li><p>Alternatives will add different sets of control variables</p></li>
+<li><p>We examine how estimate on student teacher ratio changes</p>
+<ul>
+<li><p>Big changes suggest there was omitted variables bias</p></li>
+<li><p>No changes suggest the opposite</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="scale-of-the-regressors" class="slide level2">
+<h2>Scale of the Regressors</h2>
+<ul>
+<li><p>All regressors are measured on a particular scale</p>
+<ul>
+<li>In example all are measured in percentage points</li>
+</ul></li>
+<li><p>In practice you can change the scale for easier interpretation</p></li>
+</ul>
+</section>
+<section id="scale-of-the-regressors-1" class="slide level2">
+<h2>Scale of the Regressors</h2>
+<ul>
+<li><p>Example: percentage points vs fraction</p>
+<ul>
+<li><p>Percentage points range from 0 to 100</p></li>
+<li><p>Decimal fraction measures same thing from 0 to 1</p></li>
+<li><p>Decimal fraction equals percentage divided by 100</p>
+<ul>
+<li>Ex: if half of people get free/reduced lunch, then percentage is 50 and fraction is 0.5</li>
+</ul></li>
+</ul></li>
+<li><p>Changing scale alters interpretation of regression slope</p></li>
+<li><p>Slope always measures effect of 1-unit change in <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span></p>
+<ul>
+<li><p>If free lunch measured as <em>percent</em>, one unit is 1 percentage point</p></li>
+<li><p>If free lunch measured as <em>fraction</em>, one unit is 100 percentage points</p>
+<ul>
+<li>Moving fraction from 0 to 1 is a 100 percentage point change</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="scale-of-the-regressors-2" class="slide level2">
+<h2>Scale of the Regressors</h2>
+<ul>
+<li><p>Common to change scale for <span class="math inline">\(X\)</span> variables like income</p>
+<ul>
+<li><p>If measured in <em>dollars</em>, slope measures effect of $1 change</p>
+<ul>
+<li><p>Often produces very small coefficients</p></li>
+<li><p>$1 change is usually not policy relevant</p></li>
+</ul></li>
+<li><p>If you divide income by $1000, it is measured in <em>thousands of dollars</em></p></li>
+<li><p>In this case slope measures effect of $1000 change</p>
+<ul>
+<li><p>Much easier to interpret</p></li>
+<li><p>More policy relevant</p></li>
+</ul></li>
+</ul></li>
+<li><p>Choosing scale of variables is where statistics meets arts</p>
+<ul>
+<li>A matter of personal preference which scale to use</li>
+</ul></li>
+</ul>
+</section>
+<section id="graphical-presentation-of-data" class="slide level2">
+<h2>Graphical Presentation of Data</h2>
+
+<img data-src="testgraph.jpg" style="width:3.5in" class="r-stretch"></section>
+<section id="graphical-presentation-of-data-1" class="slide level2">
+<h2>Graphical Presentation of Data</h2>
+<ul>
+<li><p>Previous slide shows three scatterplots</p>
+<ul>
+<li><p>Test scores against percent ESL</p></li>
+<li><p>Test scores against percent free/reduced lunch</p></li>
+<li><p>Test scores against percent income assistance</p></li>
+</ul></li>
+<li><p>Researchers present graphs like these as descriptive evidence</p>
+<ul>
+<li>Shows correlation of each variable with test scores</li>
+</ul></li>
+<li><p>Based on this, we expect all variables are negatively related to test scores</p>
+<ul>
+<li>Clearest relationship is with free/reduced lunch</li>
+</ul></li>
+<li><p>These graphs are purely descriptive</p>
+<ul>
+<li><p>Do not show causal relationships, only correlation</p></li>
+<li><p>Nothing is held constant when producing these plots</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="tabular-presentation-of-results" class="slide level2">
+<h2>Tabular Presentation of Results</h2>
+
+<img data-src="tabreg.jpg" style="width:4in" class="r-stretch"></section>
+<section id="tabular-presentation-of-results-1" class="slide level2">
+<h2>Tabular Presentation of Results</h2>
+<ul>
+<li><p>Previous slide is typical of how regression results are presented</p></li>
+<li><p>Results from several specifications grouped into one table</p>
+<ul>
+<li><p>First is base specification</p></li>
+<li><p>Other four are alternative specifications</p></li>
+</ul></li>
+<li><p>To evaluate omitted variables bias, look at estimate on student-teacher ratio across columns</p>
+<ul>
+<li><p>Big drop in estimate when control variables added</p></li>
+<li><p>Then stays relatively stable with different sets of controls</p></li>
+<li><p>Suggests that controls absorb effect of some omitted factors</p></li>
+</ul></li>
+<li><p>Measures of fit presented at bottom</p>
+<ul>
+<li><p>Can compare these across regressions to see how they change</p></li>
+<li><p>Fit improves with more variables</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="tabular-presentation-of-results-2" class="slide level2">
+<h2>Tabular Presentation of Results</h2>
+<ul>
+<li><p>Other notable features of this table</p>
+<ul>
+<li><p>Standard errors are in brackets under estimate</p></li>
+<li><p>Stars indicate statistical significance</p>
+<ul>
+<li><p>* is significant at 5% level</p></li>
+<li><p>** is significant at 1% level</p></li>
+</ul></li>
+<li><p>Footnote at bottom describes important details</p>
+<ul>
+<li><p>Heteroskedasticity-robust standard errors used</p></li>
+<li><p>Short description of data</p></li>
+</ul></li>
+</ul></li>
+<li><p>Main point of table is to present key information in easy to read format</p></li>
+</ul>
+</section>
+<section id="discussion-of-results" class="slide level2">
+<h2>Discussion of Results</h2>
+<ul>
+<li><p>Controlling for student background matters</p>
+<ul>
+<li>Effect of class size on test scores falls by half</li>
+</ul></li>
+<li><p>Class size is statistically significant at 5% level in all regressions</p>
+<ul>
+<li>We reject null that it is zero</li>
+</ul></li>
+<li><p>The set of control variables does not matter much</p>
+<ul>
+<li>A slight difference in class size effect when we measure background with free/reduced lunch vs income assistance</li>
+</ul></li>
+<li><p>The model fits the data well</p>
+<ul>
+<li>Adjusted <span class="math inline">\(R^2\)</span> high when controls are added</li>
+</ul></li>
+</ul>
+</section>
+<section id="example-with-stata-18" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<ul>
+<li><p>Here we repeat the above with the birthweight example</p></li>
+<li><p>Key variable of interest is packs</p>
+<ul>
+<li>Want unbiased estimate of effect of smoking on birthweight</li>
+</ul></li>
+<li><p>Control variables are education and income</p>
+<ul>
+<li><p>Controls for their direct effects</p></li>
+<li><p>And other factors related, like socio-economic status and health care use</p></li>
+</ul></li>
+<li><p>First examine effect of scaling education variable</p></li>
+<li><p>Then present base and alternative specifications</p></li>
+</ul>
+</section>
+<section id="example-with-stata-19" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<div class="cell" data-layout-align="center" data-collectcode="true">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb19-1"><a href="#cb19-1"></a><span class="kw">regress</span> bwghtlbs packs motheduc fatheduc faminc, <span class="kw">robust</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear regression                               Number of obs     =      1,191
+                                                F(4, 1186)        =      11.47
+                                                Prob &gt; F          =     0.0000
+                                                R-squared         =     0.0328
+                                                Root MSE          =     1.2401
+
+------------------------------------------------------------------------------
+             |               Robust
+    bwghtlbs | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       packs |  -.7368692   .1303338    -5.65   0.000    -.9925797   -.4811587
+    motheduc |  -.0273702   .0184606    -1.48   0.138    -.0635892    .0088488
+    fatheduc |   .0308543   .0165627     1.86   0.063     -.001641    .0633497
+      faminc |   .0033641    .002215     1.52   0.129    -.0009817    .0077099
+       _cons |   7.379629   .1995718    36.98   0.000     6.988075    7.771182
+------------------------------------------------------------------------------</code></pre>
+</div>
+</div>
+</section>
+<section id="example-with-stata-20" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<div class="cell" data-layout-align="center" data-collectcode="true">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb21-1"><a href="#cb21-1"></a><span class="kw">gen</span> motheduc2 = motheduc/10</span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="kw">regress</span> bwghtlbs packs motheduc2 fatheduc faminc, <span class="kw">robust</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(1 missing value generated)
+
+
+Linear regression                               Number of obs     =      1,191
+                                                F(4, 1186)        =      11.47
+                                                Prob &gt; F          =     0.0000
+                                                R-squared         =     0.0328
+                                                Root MSE          =     1.2401
+
+------------------------------------------------------------------------------
+             |               Robust
+    bwghtlbs | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       packs |  -.7368692   .1303338    -5.65   0.000    -.9925797   -.4811587
+   motheduc2 |  -.2737022   .1846057    -1.48   0.138    -.6358924     .088488
+    fatheduc |   .0308543   .0165627     1.86   0.063     -.001641    .0633497
+      faminc |   .0033641    .002215     1.52   0.129    -.0009817    .0077099
+       _cons |   7.379629   .1995718    36.98   0.000     6.988075    7.771182
+------------------------------------------------------------------------------</code></pre>
+</div>
+</div>
+</section>
+<section id="example-with-stata-21" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<div class="cell" data-layout-align="center" data-collectcode="true">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb23-1"><a href="#cb23-1"></a><span class="kw">qui</span> <span class="kw">regress</span> bwghtlbs packs, <span class="kw">robust</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="kw">qui</span> <span class="kw">estimates</span> <span class="kw">store</span> base</span>
+<span id="cb23-3"><a href="#cb23-3"></a><span class="kw">qui</span> <span class="kw">regress</span> bwghtlbs packs motheduc fatheduc , <span class="kw">robust</span></span>
+<span id="cb23-4"><a href="#cb23-4"></a><span class="kw">qui</span> <span class="kw">estimates</span> <span class="kw">store</span> alt1</span>
+<span id="cb23-5"><a href="#cb23-5"></a><span class="kw">qui</span> <span class="kw">regress</span> bwghtlbs packs motheduc fatheduc faminc, <span class="kw">robust</span></span>
+<span id="cb23-6"><a href="#cb23-6"></a><span class="kw">qui</span> <span class="kw">estimates</span> <span class="kw">store</span> alt2</span>
+<span id="cb23-7"><a href="#cb23-7"></a>            </span>
+<span id="cb23-8"><a href="#cb23-8"></a>estout base alt1 alt2, cells(b(<span class="kw">star</span> fmt(3)) se(par fmt(3))) starlevels(* 0.05 ** 0.01 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     base           alt1           alt2  
+                     b/se           b/se           b/se  
+---------------------------------------------------------
+packs              -0.642**       -0.749**       -0.737**
+                  (0.110)        (0.131)        (0.130)  
+motheduc                          -0.022         -0.027  
+                                 (0.018)        (0.018)  
+fatheduc                           0.037*         0.031  
+                                 (0.016)        (0.017)  
+faminc                                            0.003  
+                                                (0.002)  
+_cons               7.486**        7.330**        7.380**
+                  (0.036)        (0.198)        (0.200)  
+---------------------------------------------------------</code></pre>
+</div>
+</div>
+<div class="footer footer-default">
+
+</div>
+</section></section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="MLRhypo_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="MLRhypo_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="MLRhypo_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="MLRhypo_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="MLRhypo_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="MLRhypo_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="MLRhypo_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="MLRhypo_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="MLRhypo_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="MLRhypo_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="MLRhypo_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'smaller': true,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true,"theme":"whiteboard","src":"drawings.json"},
+'smaller': true,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          // dispatch for htmlwidgets
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for reveal
+        if (window.Reveal) {
+          window.Reveal.addEventListener("slidechanged", function(event) {
+            fireSlideChanged(event.previousSlide, event.currentSlide);
+          });
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const clipboard = new window.ClipboardJS('.code-copy-button', {
+        target: function(trigger) {
+          return trigger.previousElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        setTimeout(function() {
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      });
+      function tippyHover(el, contentFn) {
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto-reveal',
+          placement: 'bottom-start'
+        };
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          return note.innerHTML;
+        });
+      }
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+        tippyHover(ref, function() {
+          var popup = window.document.createElement('div');
+          cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    });
+    </script>
+    
+
+</body></html>
