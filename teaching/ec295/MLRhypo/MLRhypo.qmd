@@ -68,11 +68,9 @@ knitr::opts_chunk$set(
 set.seed(9810078)
 ```
 
-
 ## Introduction
 
--   Recall that we can use estimates to test hypotheses about slope
-    parameters
+-   Recall that we can use estimates to test hypotheses about slope parameters
 
 -   In this section, we learn how to do this in a multiple regression
 
@@ -100,30 +98,25 @@ set.seed(9810078)
 
     -   Choosing which variables to include in the regression
 
-    -   In many situations, we are interested in an unbiased estimate of
-        a single parameter
+    -   In many situations, we are interested in an unbiased estimate of a single parameter
 
         -   e.g. effect of class size on test scores
 
-    -   In that case, other variables are added to "control" omitted
-        variables bias
+    -   In that case, other variables are added to "control" omitted variables bias
 
         -   Control variables are not object of interest
 
         -   Added to model to get unbiased estimate of main parameter
 
-    -   We will learn how to get causal estimate of key parameter even
-        when control variables are related to the error
+    -   We will learn how to get causal estimate of key parameter even when control variables are related to the error
 
         -   Change assumption about how error is related to x
-
 
 # Testing Hypotheses about Single Parameters
 
 ## Hypothesis Tests for a Single Parameters
 
--   Tests about single parameters in multiple regression follows same
-    process as single regression
+-   Tests about single parameters in multiple regression follows same process as single regression
 
 -   Use a t-test
 
@@ -133,8 +126,7 @@ set.seed(9810078)
 
     3.  Derive a decision rule
 
-    4.  Use sample data to compute the observed value of the test
-        statistic and confront it with the decision rule
+    4.  Use sample data to compute the observed value of the test statistic and confront it with the decision rule
 
 -   Or, use p-value in place of 3 and 4
 
@@ -143,7 +135,6 @@ set.seed(9810078)
     -   $H_{0}:\beta_{j} = \beta_{j,0}$
 
     -   $H_{1}: \beta_{j} \ne \beta_{j,0}$
-
 
 ## Hypothesis Tests for a Single Parameters
 
@@ -155,8 +146,7 @@ set.seed(9810078)
 
 -   Decision rule
 
-    -   Reject null if estimate $\hat{\beta}_{j}$ is too far away from
-        the claim
+    -   Reject null if estimate $\hat{\beta}_{j}$ is too far away from the claim
 
     -   Set by the significance level, and associated critical value
 
@@ -164,11 +154,9 @@ set.seed(9810078)
 
     -   For 2-sided test p-value $= 2Pr(t > |t^{act}|)$
 
-
 ## Standard Errors for OLS Estimators
 
--   Recall the standard error is the estimate of the standard deviation
-    of $\hat{\beta}_{j}$
+-   Recall the standard error is the estimate of the standard deviation of $\hat{\beta}_{j}$
 
 -   Necessary to compute the t-statistic
 
@@ -178,40 +166,29 @@ set.seed(9810078)
 
 -   In multiple regression, formulas are more complex
 
-    -   Under homoskedasticity
-        $$\hat{Var}[\hat{\beta}_{j}|X_{1i},X_{2i},...,X_{ki}] = \frac{\frac{1}{n-k-1}\sum_{i=1}^{n}\hat{u}_{i}^2 }{(\sum_{i=1}^{n}(X_{ji} - \bar{X}_{j})^2)(1-R^2_{j})}$$
+    -   Under homoskedasticity $$\hat{Var}[\hat{\beta}_{j}|X_{1i},X_{2i},...,X_{ki}] = \frac{\frac{1}{n-k-1}\sum_{i=1}^{n}\hat{u}_{i}^2 }{(\sum_{i=1}^{n}(X_{ji} - \bar{X}_{j})^2)(1-R^2_{j})}$$
 
     -   Under heteroskedasticity formula is messier, but same intuition
 
 ## Standard Errors for OLS Estimators
 
+-   For testing hypotheses, $se(\hat{\beta}_{j})$ are computed using software
 
--   For testing hypotheses, $se(\hat{\beta}_{j})$ are computed using
-    software
-
-    -   Remember: in Stata, use "robust" option to get
-        heteroskedasticity-robust standard errors
+    -   Remember: in Stata, use "robust" option to get heteroskedasticity-robust standard errors
 
 -   Use these in exactly the same way we did before
 
 ## Confidence Intervals for Single Coefficients
 
+-   A confidence interval for $\beta_{j}$ is computed as $$\hat{\beta}_{j} \pm t^c \times se(\hat{\beta}_{j})$$
 
-
--   A confidence interval for $\beta_{j}$ is computed as
-    $$\hat{\beta}_{j} \pm t^c \times se(\hat{\beta}_{j})$$
-
-    -   Recall that if computing $(1-\alpha)\%$ interval, then $t^c$ is
-        critical value from 2-sided $\alpha\%$ hypothesis test
+    -   Recall that if computing $(1-\alpha)\%$ interval, then $t^c$ is critical value from 2-sided $\alpha\%$ hypothesis test
 
 -   Constructing this interval is the same as for simple regression
 
-
-
 ## Example with Stata {background-color="#d9edc2"}
 
--   **Research Question**: What are the factors that determine birth
-    weight?
+-   **Research Question**: What are the factors that determine birth weight?
 
 -   Low birth weight is linked to many negative future outcomes
 
@@ -221,34 +198,25 @@ set.seed(9810078)
 
     -   Economic
 
--   Smoking while pregnant is identified as a major cause of low birth
-    weight
+-   Smoking while pregnant is identified as a major cause of low birth weight
 
 -   It is therefore important to curb maternal smoking
 
-
 ## Example with Stata {background-color="#d9edc2"}
 
--   Suppose the model explaining birth weight is
-    $$bwghtlbs= \beta_{0} + \beta_{1}packs +  \beta_{2}motheduc + \beta_{3} fatheduc + \beta_{4} faminc+ u$$
+-   Suppose the model explaining birth weight is $$bwghtlbs= \beta_{0} + \beta_{1}packs +  \beta_{2}motheduc + \beta_{3} fatheduc + \beta_{4} faminc+ u$$
 
-    -   $\beta_{1}$ is ceteris paribus effect of one extra pack of
-        cigarettes smoked by the mother per day
+    -   $\beta_{1}$ is ceteris paribus effect of one extra pack of cigarettes smoked by the mother per day
 
-    -   $\beta_{2}$ is ceteris paribus effect of a 1-year increase in
-        father education
+    -   $\beta_{2}$ is ceteris paribus effect of a 1-year increase in father education
 
-    -   $\beta_{3}$ is ceteris paribus effect of a 1-year increase in
-        mother education
+    -   $\beta_{3}$ is ceteris paribus effect of a 1-year increase in mother education
 
-    -   $\beta_{4}$ is ceteris paribus effect of a 1000 increase in
-        family income
+    -   $\beta_{4}$ is ceteris paribus effect of a 1000 increase in family income
 
-    -   $\beta_{0}$ is birth weight when all variables and the error are
-        zero
+    -   $\beta_{0}$ is birth weight when all variables and the error are zero
 
     -   $u$ are unobserved factors that explain birth weight
-
 
 ## Example with Stata {background-color="#d9edc2"}
 
@@ -270,24 +238,21 @@ set.seed(9810078)
 
     -   Dofile: **EC295 Inference Example**
 
-
 ## Example with Stata {background-color="#d9edc2"}
 
-
-
-```{stata, echo=TRUE, collectcode=TRUE}
+```{stata, echo=1:3, collectcode=TRUE}
 use "bwght.dta", clear
 keep bwghtlbs packs motheduc fatheduc faminc
 sum bwghtlbs packs motheduc fatheduc faminc
+drop if fatheduc == .
+drop if motheduc == .
 ```
-
 
 -   There are some missing values for motheduc and fatheduc
 
     -   We will drop these
 
 -   Note that famic is measured in thousands
-
 
 ## Example with Stata {background-color="#d9edc2"}
 
@@ -305,12 +270,9 @@ regress bwghtlbs packs motheduc fatheduc faminc, robust
 
 -   All else equal, family income has a small effect
 
-
 ## Example with Stata {background-color="#d9edc2"}
 
-
--   Without any more calculation, we can test $H_{0}: \beta_{j} = 0$ vs
-    $H_{1}: \beta_{j} \neq 0$
+-   Without any more calculation, we can test $H_{0}: \beta_{j} = 0$ vs $H_{1}: \beta_{j} \neq 0$
 
     -   Stata automatically reports this beside slope estimates
 
@@ -318,25 +280,21 @@ regress bwghtlbs packs motheduc fatheduc faminc, robust
 
     -   packs is statistically significant
 
-    -   All other variables are not statistically significant at that
-        level
+    -   All other variables are not statistically significant at that level
 
     -   Recall that to reject the null, p-value $\le \alpha$
 
 -   We test other null hypotheses also, but we need to do calculations
 
-
 ## Example with Stata {background-color="#d9edc2"}
 
--   Suppose we want to test $H_{0}: \beta_{1} = -1$ vs
-    $H_{1}: \beta_{1} \neq -1$
+-   Suppose we want to test $H_{0}: \beta_{1} = -1$ vs $H_{1}: \beta_{1} \neq -1$
 
     -   The observed value of the test statistic is
 
         $$t = \frac{\hat{\beta}_{j} - \beta_{j,0}}{se(\hat{\beta}_{j})}  = \frac{ -.736892 + 1}{.1303338} = 2.0187$$
 
-    -   $\hat{\beta}_{j}$ is 2.0187 standard deviations above
-        hypothesized value
+    -   $\hat{\beta}_{j}$ is 2.0187 standard deviations above hypothesized value
 
     -   The critical value at the 5% level is $1.96$
 
@@ -352,51 +310,39 @@ regress bwghtlbs packs motheduc fatheduc faminc, robust
 
         -   Reject if $\alpha \ge 0.0437$
 
-
 ## Example with Stata {background-color="#d9edc2"}
 
-
--   Regression table has 95% confidence intervals for each
-    $\hat{\beta}_{j}$
+-   Regression table has 95% confidence intervals for each $\hat{\beta}_{j}$
 
     -   For packs, accept any $H_{0}$ between -.9925797 and -.4811587
 
-    -   Any confidence interval that includes 0 means $\hat{\beta}_{j}$
-        is statistically insignificant
-
+    -   Any confidence interval that includes 0 means $\hat{\beta}_{j}$ is statistically insignificant
 
 # Tests of Joint Hypotheses
 
 ## Introduction
 
--   So far, we have only tested single hypotheses involving one
-    parameter
+-   So far, we have only tested single hypotheses involving one parameter
 
     -   e.g. is $\beta_{j}$ statistically different from zero?
 
--   In a multiple regression, we might be interested in more than one
-    test at a time
+-   In a multiple regression, we might be interested in more than one test at a time
 
-    -   Ex: are $\beta_{1}$ and $\beta_{2}$ both statistically different
-        from zero?
+    -   Ex: are $\beta_{1}$ and $\beta_{2}$ both statistically different from zero?
 
-    -   Ex: are $\beta_{1}$ and $\beta_{2}$ both statistically different
-        from each other?
+    -   Ex: are $\beta_{1}$ and $\beta_{2}$ both statistically different from each other?
 
     -   Ex: are all parameters in the regression different from zero?
 
--   When testing more than one hypothesis at a time, we need to alter
-    the procedure slightly
+-   When testing more than one hypothesis at a time, we need to alter the procedure slightly
 
 -   Biggest change is we use a different test statistic
 
     -   Use F-statistic for these tests
 
-
 ## Hypotheses about Two or More Parameters
 
--   Suppose we are interested in the test score regression
-    $$TestScore_{i} = \beta_{0} + \beta_{1}STR_{i} + \beta_{2}Expn_{i} + \beta_{3}PctEL_{i} + u_{i}$$
+-   Suppose we are interested in the test score regression $$TestScore_{i} = \beta_{0} + \beta_{1}STR_{i} + \beta_{2}Expn_{i} + \beta_{3}PctEL_{i} + u_{i}$$
 
     -   STR is student-teacher ratio
 
@@ -404,16 +350,11 @@ regress bwghtlbs packs motheduc fatheduc faminc, robust
 
     -   PctEL is fraction in ESL
 
--   Test whether class size and student expenditures have an effect on
-    test scores
+-   Test whether class size and student expenditures have an effect on test scores
 
--   We can test this with a joint null hypothesis
-    $$H_{0}: \beta_{1}=0 \text{ and } \beta_{2}=0$$
-    $$H_{1}: \beta_{1}\neq 0 \text{ and/or } \beta_{2}\neq 0$$
-
+-   We can test this with a joint null hypothesis $$H_{0}: \beta_{1}=0 \text{ and } \beta_{2}=0$$ $$H_{1}: \beta_{1}\neq 0 \text{ and/or } \beta_{2}\neq 0$$
 
 ## Hypotheses about Two or More Parameters
-
 
 -   Null is that *both* parameters are zero
 
@@ -423,35 +364,27 @@ regress bwghtlbs packs motheduc fatheduc faminc, robust
 
 -   Alternative is [one or both]{.underline} parameters are non-zero
 
-    -   Null and alternative hypotheses have to account for all possible
-        values of parameters
+    -   Null and alternative hypotheses have to account for all possible values of parameters
 
     -   Opposite to both parameters being zero is one or both not zero
 
--   In a more general model
-    $$Y_{i} = \beta_{0} + \beta_{1}X_{1i} + \beta_{2}X_{2i}+ ... + \beta_{k}X_{ki} + u_{i}$$
+-   In a more general model $$Y_{i} = \beta_{0} + \beta_{1}X_{1i} + \beta_{2}X_{2i}+ ... + \beta_{k}X_{ki} + u_{i}$$
 
 -   Imagine we want to test two or more restrictions (hypotheses)
 
     -   Call the number of restrictions $q$
 
-
 ## Hypotheses about Two or More Parameters
 
-
--   A **joint hypothesis** tests $q$ restrictions on the parameters
-    $$H_{0}: \beta_{j}=\beta_{j,0},\beta_{m}=\beta_{m,0}, ... \text{ for a total of q restrictions }$$
-    $$H_{1}:\text{ One or more of the q restrictions under } H_{0} \text { does not hold}$$
+-   A **joint hypothesis** tests $q$ restrictions on the parameters $$H_{0}: \beta_{j}=\beta_{j,0},\beta_{m}=\beta_{m,0}, ... \text{ for a total of q restrictions }$$ $$H_{1}:\text{ One or more of the q restrictions under } H_{0} \text { does not hold}$$
 
 -   Examples
 
-    -   $H_{0}: \beta_{1} = 0,  \beta_{2} = 0,  \beta_{4} = 0$; $H_{1}:$
-        one or all is not zero
+    -   $H_{0}: \beta_{1} = 0, \beta_{2} = 0, \beta_{4} = 0$; $H_{1}:$ one or all is not zero
 
         -   Testing $q=3$ total hypotheses
 
-    -   $H_{0}: \beta_{2} = 4, \beta_{5} = -2$; $H_{1}:$ one or both not
-        those values
+    -   $H_{0}: \beta_{2} = 4, \beta_{5} = -2$; $H_{1}:$ one or both not those values
 
         -   Testing $q=2$ total hypotheses
 
@@ -459,18 +392,13 @@ regress bwghtlbs packs motheduc fatheduc faminc, robust
 
     -   We cover this statistic in detail below
 
-
 ## Why not test hypotheses individually?
 
--   Suppose again that model is
-    $$TestScore_{i} = \beta_{0} + \beta_{1}STR_{i} + \beta_{2}Expn_{i} + \beta_{3}PctEL_{i} + u_{i}$$
+-   Suppose again that model is $$TestScore_{i} = \beta_{0} + \beta_{1}STR_{i} + \beta_{2}Expn_{i} + \beta_{3}PctEL_{i} + u_{i}$$
 
--   Test whether class size and student expenditures have an effect on
-    test scores
+-   Test whether class size and student expenditures have an effect on test scores
 
--   The null and alternative hypotheses are
-    $$H_{0}: \beta_{1}=0 \text{ and } \beta_{2}=0$$
-    $$H_{1}: \beta_{1}\neq 0 \text{ and/or } \beta_{2}\neq 0$$
+-   The null and alternative hypotheses are $$H_{0}: \beta_{1}=0 \text{ and } \beta_{2}=0$$ $$H_{1}: \beta_{1}\neq 0 \text{ and/or } \beta_{2}\neq 0$$
 
 -   Suppose we test this hypothesis with individual t-tests
 
@@ -480,9 +408,7 @@ regress bwghtlbs packs motheduc fatheduc faminc, robust
 
 ## Why not test hypotheses individually?
 
-
--   Strategy is reject $H_{0}$ if either $t_{1}$ or $t_{2}$ exceeds
-    critical value
+-   Strategy is reject $H_{0}$ if either $t_{1}$ or $t_{2}$ exceeds critical value
 
 -   Suppose we want 5% significance level
 
@@ -490,34 +416,25 @@ regress bwghtlbs packs motheduc fatheduc faminc, robust
 
     -   Critical value is 1.96 with large sample
 
--   Problem with strategy above is it produces Type I error rate larger
-    than $5\%$
+-   Problem with strategy above is it produces Type I error rate larger than $5\%$
 
--   To see this, assume estimators of $\beta_{1}$ and $\beta_{2 }$ are
-    unrelated
+-   To see this, assume estimators of $\beta_{1}$ and $\beta_{2 }$ are unrelated
 
     -   Accept $H_{0}$ when $t_{1} < 1.96$ and $t_{2} < 1.96$
 
-    -   The likelihood of this happening when $H_{0}$ is true is
-        $$Pr[t_{1} < 1.96, t_{2} < 1.96] = Pr[t_{1} < 1.96] \times Pr[t_{2} < 1.96]$$
-        $$= 0.95 \times 0.95 = 0.9025$$
-
+    -   The likelihood of this happening when $H_{0}$ is true is $$Pr[t_{1} < 1.96, t_{2} < 1.96] = Pr[t_{1} < 1.96] \times Pr[t_{2} < 1.96]$$ $$= 0.95 \times 0.95 = 0.9025$$
 
 ## Why not test hypotheses individually?
 
+-   The probability of *rejecting* $H_{0}$ when it is true is therefore $$1 - Pr[t_{1} < 1.96, t_{2} < 1.96] =1-0.9025 = 0.0975$$
 
--   The probability of *rejecting* $H_{0}$ when it is true is therefore
-    $$1 - Pr[t_{1} < 1.96, t_{2} < 1.96] =1-0.9025 = 0.0975$$
-
--   So with individual t-test strategy, Type I error rate is actually
-    9.75%
+-   So with individual t-test strategy, Type I error rate is actually 9.75%
 
 -   Why?
 
     -   You get multiple opportunities to reject null
 
-        -   If don't reject using first t-test, you can reject using
-            second
+        -   If don't reject using first t-test, you can reject using second
 
         -   Effectively, you get two "kicks at the can"
 
@@ -525,16 +442,13 @@ regress bwghtlbs packs motheduc fatheduc faminc, robust
 
 -   For this reason, we cannot use individual testing approach
 
-
 ## The F-Statistic with 2 Restrictions
 
--   The appropriate statistic for testing multiple hypotheses is the
-    F-statistic
+-   The appropriate statistic for testing multiple hypotheses is the F-statistic
 
     -   When testing with F-statistic, we call it an F-test
 
--   [With only 2 restrictions]{.underline} and testing
-    $H_{0}: \beta_{1}=0 \text{ and } \beta_{2}=0$
+-   [With only 2 restrictions]{.underline} and testing $H_{0}: \beta_{1}=0 \text{ and } \beta_{2}=0$
 
     $$F = \frac{1}{2} \left (  \frac{t_{1}^2 + t_{2}^2 - 2\hat{\rho}_{t_{1},t_{2}}t_{1}t_{2}}{1-\hat{\rho}_{t_{1},t_{2}}^2} \right )$$
 
@@ -544,14 +458,11 @@ regress bwghtlbs packs motheduc fatheduc faminc, robust
 
     -   $t_{2}$ is the t-statistic for testing $\beta_{2} = 0$
 
-    -   $\hat{\rho}_{t_{1},t_{2}}$ is the correlation between the two
-        t-statistics
+    -   $\hat{\rho}_{t_{1},t_{2}}$ is the correlation between the two t-statistics
 
 -   Formula valid for heteroskedastic or homoskedastic errors
 
-
 ## The F-Statistic with 2 Restrictions
-
 
 -   In the F-test, we will reject $H_{0}$ when the F-statistic is large
 
@@ -567,16 +478,13 @@ regress bwghtlbs packs motheduc fatheduc faminc, robust
 
     -   This will lead us to reject the null that both slopes are zero
 
-    -   More complicated intuition when
-        $\hat{\rho}_{t_{1},t_{2}} \neq 0$
+    -   More complicated intuition when $\hat{\rho}_{t_{1},t_{2}} \neq 0$
 
 -   Whether the F-statistic is large enough is determined by
 
     -   The sampling distribution of the F-statistic
 
     -   The significance level of the test
-
-
 
 ## The F-Statistic with 2 Restrictions
 
@@ -592,16 +500,11 @@ regress bwghtlbs packs motheduc fatheduc faminc, robust
 
         -   $n-k-1$, the model degrees of freedom
 
-    -   Graph on next slide shows F distribution with different numbers
-        of restrictions and 1000 model degrees of freedom
+    -   Graph on next slide shows F distribution with different numbers of restrictions and 1000 model degrees of freedom
 
--   Use this distribution to get critical values, p-values for the
-    F-test
+-   Use this distribution to get critical values, p-values for the F-test
 
-    -   Analogous to t-testing, with different test statistic and
-        sampling distribution
-
-
+    -   Analogous to t-testing, with different test statistic and sampling distribution
 
 ## Testing Multiple Linear Restrictions
 
@@ -627,8 +530,7 @@ ex1<- ggplot() +
 
 ## The F-Statistic with q Restrictions
 
--   With more than 2 restrictions, heteroskedasticity-robust formula is
-    more complicated
+-   With more than 2 restrictions, heteroskedasticity-robust formula is more complicated
 
     -   Cannot write it down easily without matrix algebra
 
@@ -636,23 +538,19 @@ ex1<- ggplot() +
 
 -   Intuition is the same
 
-    -   F-statistic has an F-distribution with q, n-k-1 degrees of
-        freedom
+    -   F-statistic has an F-distribution with q, n-k-1 degrees of freedom
 
     -   Reject $H_{0}$ when F-stat is large
 
-    -   With significance level, obtain critical value from
-        F-distribution
+    -   With significance level, obtain critical value from F-distribution
 
     -   Or compute p-values based on F-statistic
-
 
 ## P-values in an F-test
 
 -   Like in t-testing, we can compute a p-value for F-tests
 
--   It is probability of getting F-stat larger than the one we observe
-    $$p-value = Pr[F_{q,n-k-1} > F^{act}]$$
+-   It is probability of getting F-stat larger than the one we observe $$p-value = Pr[F_{q,n-k-1} > F^{act}]$$
 
 -   Like before, we need Stata to compute this p-value
 
@@ -662,17 +560,13 @@ ex1<- ggplot() +
 
     -   Reject $H_{0}$ for all $\alpha$ larger than p-value
 
-
 ## F-test of Overall Significance
 
--   Common to test whether *any* variable in the regression is
-    significant
+-   Common to test whether *any* variable in the regression is significant
 
-    $$H_{0}: \beta_{1}=0, \beta_{2}=0,..., \beta_{k}=0$$
-    $$H_{1}: \text{Any one or more of } \beta_{1}, \beta_{2}, ...,\beta_{k}  \text{ is not zero}$$
+    $$H_{0}: \beta_{1}=0, \beta_{2}=0,..., \beta_{k}=0$$ $$H_{1}: \text{Any one or more of } \beta_{1}, \beta_{2}, ...,\beta_{k}  \text{ is not zero}$$
 
--   Called test of overall significance because we are testing whether
-    any variable matters
+-   Called test of overall significance because we are testing whether any variable matters
 
     -   Accepting null means none of them matter
 
@@ -681,8 +575,6 @@ ex1<- ggplot() +
 -   This test statistic is automatically reported in regression output
 
     -   In top right corner of Stata regression table
-
-
 
 ## The F-Statistic with 1 Restriction
 
@@ -694,31 +586,25 @@ ex1<- ggplot() +
 
     $$F =  t^2$$
 
--   An F-test and t-test with one restriction will produce identical
-    conclusions
+-   An F-test and t-test with one restriction will produce identical conclusions
 
     -   Given direct link between the test statistics
 
     -   So, you can use either one
 
-
 ## Example with Stata {background-color="#d9edc2"}
 
 -   Recall the birthweight example
 
--   The regression model we are estimating is
-    $$bwghtlbs= \beta_{0} + \beta_{1}packs +  \beta_{2}motheduc + \beta_{3} fatheduc + \beta_{4} faminc+ u$$
+-   The regression model we are estimating is $$bwghtlbs= \beta_{0} + \beta_{1}packs +  \beta_{2}motheduc + \beta_{3} fatheduc + \beta_{4} faminc+ u$$
 
--   Suppose we want to test the joint hypotheses
-    $$H_{0}: \beta_{2}= 0, \beta_{3}=0, \beta_{4}=0$$
-    $$H_{1}: \mbox{Any one or more of } \beta_{2}, \beta_{3}, \beta_{4} \mbox{ is not zero}$$
+-   Suppose we want to test the joint hypotheses $$H_{0}: \beta_{2}= 0, \beta_{3}=0, \beta_{4}=0$$ $$H_{1}: \mbox{Any one or more of } \beta_{2}, \beta_{3}, \beta_{4} \mbox{ is not zero}$$
 
 -   In this example we have q=3 restrictions
 
 -   To get the heteroskedasticity-robust F-statistic, we need Stata
 
 -   The command for F-tests following regression is "test"
-
 
 ## Example with Stata {background-color="#d9edc2"}
 
@@ -727,9 +613,7 @@ regress bwghtlbs packs motheduc fatheduc faminc, robust
 test motheduc fatheduc faminc
 ```
 
-                
 ## Example with Stata {background-color="#d9edc2"}
-
 
 -   The test command does the F-test for multiple restrictions
 
@@ -743,11 +627,9 @@ test motheduc fatheduc faminc
 
     -   The p-value for the F-test
 
--   If you use the robust option in your regression, the F-stat in
-    "test" will be heteroskedasticity-robust
+-   If you use the robust option in your regression, the F-stat in "test" will be heteroskedasticity-robust
 
-    -   If you [do not]{.underline} use the robust option, it will
-        report the homoskedasticity-only F-stat
+    -   If you [do not]{.underline} use the robust option, it will report the homoskedasticity-only F-stat
 
 -   Critical value from F(3,1186) distribution and $\alpha = 0.05$
 
@@ -755,32 +637,23 @@ test motheduc fatheduc faminc
 
     -   $F^c = 2.61$
 
-
 ## Homoskedasticity-only F-statistic
 
 -   The F-statistics discussed above are robust to heteroskedasticity
 
-    -   You can use them with both heteroskedastic and homoskedastic
-        errors
+    -   You can use them with both heteroskedastic and homoskedastic errors
 
--   If you are sure your errors are homoskedastic, we can use alternate
-    formula
+-   If you are sure your errors are homoskedastic, we can use alternate formula
 
--   This formula is based on the sum of squared residuals (SSR) from two
-    regressions
+-   This formula is based on the sum of squared residuals (SSR) from two regressions
 
-    1.  **Unrestricted model**: the original regression model estimated
-        with all variables
+    1.  **Unrestricted model**: the original regression model estimated with all variables
 
-    2.  **Restricted model**: the model after restrictions in $H_{0}$
-        are imposed
-
+    2.  **Restricted model**: the model after restrictions in $H_{0}$ are imposed
 
 ## Homoskedasticity-only F-statistic
 
-
--   The homoskedasticity-only F-statistic is
-    $$F = \frac{(SSR_{r} - SSR_{ur})/q }{SSR_{ur}/(n-k-1)}$$
+-   The homoskedasticity-only F-statistic is $$F = \frac{(SSR_{r} - SSR_{ur})/q }{SSR_{ur}/(n-k-1)}$$
 
 -   Test is based on changes in SSR when we impose restrictions
 
@@ -790,23 +663,17 @@ test motheduc fatheduc faminc
 
         -   With fewer variables in model, more variation in residual
 
-    -   The F-test is based on *how much* SSR increases when we exclude
-        variables
+    -   The F-test is based on *how much* SSR increases when we exclude variables
 
-    -   F-stat will be large when $SSR_{r}$ is much higher than
-        $SSR_{ur}$
+    -   F-stat will be large when $SSR_{r}$ is much higher than $SSR_{ur}$
 
-        -   Happens if imposing restriction significantly worsens model
-            fit
+        -   Happens if imposing restriction significantly worsens model fit
 
         -   This will lead us to reject the restrictions in $H_{0}$
 
 ## Homoskedasticity-only F-statistic
 
-
--   You can also express the homoskedasticity-only F-statistic in terms
-    of $R^2$
-    $$F = \frac{(R^2_{ur} - R^2_{r})/q }{(1-R^2_{ur})/(n-k-1)}$$
+-   You can also express the homoskedasticity-only F-statistic in terms of $R^2$ $$F = \frac{(R^2_{ur} - R^2_{r})/q }{(1-R^2_{ur})/(n-k-1)}$$
 
 -   We learned previously that $R^2$ rises with more variables
 
@@ -814,8 +681,7 @@ test motheduc fatheduc faminc
 
     -   Model with more variables has higher $R^2$ than model with less
 
--   F-stat will be large if $R^2$ rises a lot when we remove
-    restrictions
+-   F-stat will be large if $R^2$ rises a lot when we remove restrictions
 
     -   Happens when adding variables significantly increases fit
 
@@ -825,21 +691,15 @@ test motheduc fatheduc faminc
 
     -   If restrictions significantly worsen fit, we reject them
 
-
 ## Homoskedasticity-only F-statistic
-
 
 -   Return again to birthweight example
 
--   Unrestricted model is
-    $$bwghtlbs= \beta_{0} + \beta_{1}packs +  \beta_{2}motheduc + \beta_{3} fatheduc + \beta_{4} faminc+ u$$
+-   Unrestricted model is $$bwghtlbs= \beta_{0} + \beta_{1}packs +  \beta_{2}motheduc + \beta_{3} fatheduc + \beta_{4} faminc+ u$$
 
--   Hypotheses $$H_{0}: \beta_{2}= 0, \beta_{3}=0, \beta_{4}=0$$
-    $$H_{1}: \mbox{Any one of } \beta_{2}, \beta_{3}, \beta_{4} \mbox{ is not zero}$$
+-   Hypotheses $$H_{0}: \beta_{2}= 0, \beta_{3}=0, \beta_{4}=0$$ $$H_{1}: \mbox{Any one of } \beta_{2}, \beta_{3}, \beta_{4} \mbox{ is not zero}$$
 
--   Restricted model (when we impose restrictions in $H_{0}$)
-    $$bwghtlbs= \beta_{0} + \beta_{1}packs + u$$
-
+-   Restricted model (when we impose restrictions in $H_{0}$) $$bwghtlbs= \beta_{0} + \beta_{1}packs + u$$
 
 ## Example with Stata {background-color="#d9edc2"}
 
@@ -848,21 +708,19 @@ test motheduc fatheduc faminc
 regress bwghtlbs packs motheduc fatheduc faminc
 ```
 
-
 ## Example with Stata {background-color="#d9edc2"}
 
 ```{stata, echo=TRUE, collectcode=TRUE}
-*restricted model;
+*restricted model
 regress bwghtlbs packs
 ```
 
 ```{stata, echo=TRUE, collectcode=TRUE}
-*Critical value;
+*Critical value
 display invFtail(3,1186,0.05)
 ```
 
 ## Example with Stata {background-color="#d9edc2"}
-
 
 -   From the output, we can obtain
 
@@ -874,8 +732,7 @@ display invFtail(3,1186,0.05)
 
     -   $n-k-1 = 1186$
 
--   Bringing this together
-    $$F = \frac{(SSR_{r} - SSR_{ur})/q}{SSR_{ur}/(n-k-1)} =\frac{(1834.65173 - 1823.90247)/3}{1823.90247/1186} = 2.33$$
+-   Bringing this together $$F = \frac{(SSR_{r} - SSR_{ur})/q}{SSR_{ur}/(n-k-1)} =\frac{(1834.65173 - 1823.90247)/3}{1823.90247/1186} = 2.33$$
 
 -   Critical value from F(3,1186) distribution and $\alpha = 0.05$
 
@@ -883,9 +740,7 @@ display invFtail(3,1186,0.05)
 
     -   $F^c = 2.61$
 
-
 ## Example with Stata {background-color="#d9edc2"}
-
 
 -   Using the $R^2$ version of the formula
 
@@ -897,8 +752,7 @@ display invFtail(3,1186,0.05)
 
     -   $n-k-1 = 1186$
 
--   Bringing this together
-    $$F =  \frac{(R^2_{ur} - R^2_{r})/q }{(1-R^2_{ur})/(n-k-1)} =\frac{(0.0328- 0.0271)/3}{(1-0.0328)/1186} = 2.33$$
+-   Bringing this together $$F =  \frac{(R^2_{ur} - R^2_{r})/q }{(1-R^2_{ur})/(n-k-1)} =\frac{(0.0328- 0.0271)/3}{(1-0.0328)/1186} = 2.33$$
 
 -   Critical value from F(3,1186) distribution and $\alpha = 0.05$
 
@@ -906,9 +760,7 @@ display invFtail(3,1186,0.05)
 
     -   $F^c = 2.61$
 
-
 ## Example with Stata {background-color="#d9edc2"}
-
 
 -   Can also just use "test" command
 
@@ -920,8 +772,6 @@ display invFtail(3,1186,0.05)
 regress bwghtlbs packs motheduc fatheduc faminc
 test motheduc fatheduc faminc
 ```
-
-
 
 # Testing Hypotheses About Combinations of Parameters
 
@@ -935,11 +785,9 @@ test motheduc fatheduc faminc
 
 -   You can also test hypotheses involving multiple parameters
 
--   Suppose again the model explaining birth weight is
-    $$bwghtlbs= \beta_{0} + \beta_{1}packs +  \beta_{2}motheduc + \beta_{3} fatheduc + \beta_{4} faminc+ u$$
+-   Suppose again the model explaining birth weight is $$bwghtlbs= \beta_{0} + \beta_{1}packs +  \beta_{2}motheduc + \beta_{3} fatheduc + \beta_{4} faminc+ u$$
 
--   And we want to know whether mother and father education have the
-    same effect on birth weight
+-   And we want to know whether mother and father education have the same effect on birth weight
 
 -   The null and alternative hypotheses are
 
@@ -947,14 +795,11 @@ test motheduc fatheduc faminc
 
     -   $H_{1}: \beta_{2} \neq \beta_{3}$
 
-
 ## Introduction
-
 
 -   Reject if there is a big *difference* in education effects
 
-    -   Equivalently, reject if difference is much higher or much lower
-        than zero
+    -   Equivalently, reject if difference is much higher or much lower than zero
 
     -   Can rewrite null and alternative hypotheses as
 
@@ -963,7 +808,6 @@ test motheduc fatheduc faminc
         -   $H_{1}: \beta_{2} - \beta_{3}\neq 0$
 
 -   How do we conduct this test?
-
 
 ## Approach 1: Use t-or F-test
 
@@ -977,20 +821,14 @@ test motheduc fatheduc faminc
 
 -   It is difficult to compute $se(\hat{\beta}_{3} - \hat{\beta}_{2})$
 
-    -   Remember rules of variance
-        $$Var(\hat{\beta}_{3} - \hat{\beta}_{2}) = Var(\hat{\beta}_{3}) + Var(\hat{\beta}_{2}) - 2Cov(\hat{\beta}_{3}, \hat{\beta}_{2})$$
-        $$se(\hat{\beta}_{3} - \hat{\beta}_{2}) = \sqrt{se(\hat{\beta}_{3})^2 + se(\hat{\beta}_{2})^2 -2Cov(\hat{\beta}_{3}, \hat{\beta}_{2})}$$
-
-
-
+    -   Remember rules of variance $$Var(\hat{\beta}_{3} - \hat{\beta}_{2}) = Var(\hat{\beta}_{3}) + Var(\hat{\beta}_{2}) - 2Cov(\hat{\beta}_{3}, \hat{\beta}_{2})$$ $$se(\hat{\beta}_{3} - \hat{\beta}_{2}) = \sqrt{se(\hat{\beta}_{3})^2 + se(\hat{\beta}_{2})^2 -2Cov(\hat{\beta}_{3}, \hat{\beta}_{2})}$$
 
 ## Approach 1: Use t-or F-test
 
--   We do not usually have $Cov(\hat{\beta}_{3}, \hat{\beta}_{2})$
-    available
+-   We do not usually have $Cov(\hat{\beta}_{3}, \hat{\beta}_{2})$ available
 
     -   Need Stata or other software to compute this
-    
+
 -   You can also use an F-test
 
     -   This is a situation with q=1 restrictions
@@ -999,13 +837,11 @@ test motheduc fatheduc faminc
 
 ## Example with Stata {background-color="#d9edc2"}
 
-
 ```{stata, echo=TRUE, collectcode=TRUE}
 regress bwghtlbs packs motheduc fatheduc faminc, robust
 test motheduc= fatheduc
 ```
-  
- 
+
 ## Approach 2: Use modified regression
 
 -   We can also implement the test with a modified regression
@@ -1022,38 +858,25 @@ test motheduc= fatheduc
 
 -   We just need to find a way to estimate $\theta$
 
--   First, rearrange the $\theta$ equation as
-    $$\beta_{3} = \beta_{2} + \theta$$
-
+-   First, rearrange the $\theta$ equation as $$\beta_{3} = \beta_{2} + \theta$$
 
 ## Approach 2: Use modified regression
 
+-   Then substitute into the regression $$bwghtlbs= \beta_{0} + \beta_{1}packs +  \beta_{2}motheduc$$ $$+  (\beta_{2} + \theta) fatheduc + \beta_{4} faminc+ u$$
 
--   Then substitute into the regression
-    $$bwghtlbs= \beta_{0} + \beta_{1}packs +  \beta_{2}motheduc$$
-    $$+  (\beta_{2} + \theta) fatheduc + \beta_{4} faminc+ u$$
+-   Rearranging $$bwghtlbs= \beta_{0} + \beta_{1}packs +  \beta_{2}(motheduc + fatheduc)$$ $$+ \theta fatheduc + \beta_{4} faminc+ u$$
 
--   Rearranging
-    $$bwghtlbs= \beta_{0} + \beta_{1}packs +  \beta_{2}(motheduc + fatheduc)$$
-    $$+ \theta fatheduc + \beta_{4} faminc+ u$$
-
--   Based on this, we can estimate $\theta$ by estimating
-    $$bwghtlbs= \beta_{0} + \beta_{1}packs +  \beta_{2}toteduc + \theta fatheduc + \beta_{4} faminc+ u$$
+-   Based on this, we can estimate $\theta$ by estimating $$bwghtlbs= \beta_{0} + \beta_{1}packs +  \beta_{2}toteduc + \theta fatheduc + \beta_{4} faminc+ u$$
 
     -   where $toteduc =motheduc + fatheduc$
 
-    -   You need to create the variable $toteduc$ before estimating the
-        regression
-
+    -   You need to create the variable $toteduc$ before estimating the regression
 
 ## Approach 2: Use modified regression
 
+-   When you estimate the regression above, it will produce the estimate $$\hat{\theta} = \hat{\beta}_{3} - \hat{\beta}_{2}$$
 
--   When you estimate the regression above, it will produce the estimate
-    $$\hat{\theta} = \hat{\beta}_{3} - \hat{\beta}_{2}$$
-
--   The standard error estimate for $\hat{\theta}$ will therefore
-    measure $$se(\hat{\theta}) = se(\hat{\beta}_{3} - \hat{\beta}_{2})$$
+-   The standard error estimate for $\hat{\theta}$ will therefore measure $$se(\hat{\theta}) = se(\hat{\beta}_{3} - \hat{\beta}_{2})$$
 
 -   You can then do a regular t-test of $H_{0} : \theta = 0$
 
@@ -1063,7 +886,6 @@ test motheduc= fatheduc
 
 -   Next slide implements this test with our Stata example
 
-
 ## Example with Stata {background-color="#d9edc2"}
 
 ```{stata, echo=TRUE, collectcode=TRUE}
@@ -1071,68 +893,53 @@ gen toteduc = motheduc + fatheduc
 regress bwghtlbs packs toteduc fatheduc faminc, robust
 ```
 
-
 # Confidence Sets for Multiple Coefficients
 
 ## Confidence Sets
 
--   We have learned several times about confidence intervals for single
-    parameters
+-   We have learned several times about confidence intervals for single parameters
 
     -   An interval estimate for a parameter
 
     -   Parameter is inside interval in $(1-\alpha)\%$ of samples
 
-    -   Values inside interval are accepted in 2-sided t-test at
-        $\alpha\%$ level
+    -   Values inside interval are accepted in 2-sided t-test at $\alpha\%$ level
 
 -   The concept for multiple parameters is the confidence set
 
-    -   **Confidence Set**: the set that contains the parameters in
-        $(1-\alpha)\%$ of repeated samples
+    -   **Confidence Set**: the set that contains the parameters in $(1-\alpha)\%$ of repeated samples
 
--   This is a generalization of the confidence interval for 2 or more
-    parameters
+-   This is a generalization of the confidence interval for 2 or more parameters
 
 -   Formula is more complicated, so we will not show it
 
     -   It is based on the F-statistic we learned previously
 
-
 ## Confidence Sets
-
 
 -   Like before, we can use confidence sets for hypothesis testing
 
     -   Suppose we construct a $(1-\alpha)\%$ confidence set
 
-    -   Any combination of parameter values in set is accepted in an
-        F-test at $\alpha\%$ level
+    -   Any combination of parameter values in set is accepted in an F-test at $\alpha\%$ level
 
     -   Any combination outside the set is rejected
 
--   Ex: Suppose we are again estimating the regression
-    $$TestScore_{i} = \beta_{0} + \beta_{1}STR_{i} + \beta_{2}Expn_{i} + \beta_{3}PctEL_{i} + u_{i}$$
+-   Ex: Suppose we are again estimating the regression $$TestScore_{i} = \beta_{0} + \beta_{1}STR_{i} + \beta_{2}Expn_{i} + \beta_{3}PctEL_{i} + u_{i}$$
 
--   A 95% confidence set for the parameters $\beta_{1}$ and $\beta_{2}$
-    is shown on next slide
+-   A 95% confidence set for the parameters $\beta_{1}$ and $\beta_{2}$ is shown on next slide
 
     -   Graphs $\beta_{2}$ against $\beta_{1}$
 
     -   Shaded ellipse shows confidence set
 
-    -   Center of set is estimates $\hat{\beta}_{1}$ and
-        $\hat{\beta}_{2}$
-
+    -   Center of set is estimates $\hat{\beta}_{1}$ and $\hat{\beta}_{2}$
 
 ## Confidence Sets
-
 
 ![](ellipse.jpg){width="4.25in"}
 
-
 ## Confidence Sets
-
 
 -   Any parameter combination inside ellipse is accepted
 
@@ -1140,22 +947,19 @@ regress bwghtlbs packs toteduc fatheduc faminc, robust
 
     -   Cannot plot graph with $>2$ parameters
 
--   Ellipse tilts rightward because $\hat{\beta}_{1}$ and
-    $\hat{\beta}_{2}$ positively correlated
+-   Ellipse tilts rightward because $\hat{\beta}_{1}$ and $\hat{\beta}_{2}$ positively correlated
 
     -   If negatively correlated, it would tilt leftward
 
     -   If uncorrelated, it would not tilt
 
-    -   Correlations between $\hat{\beta}_{1}$ and $\hat{\beta}_{2}$
-        driven by correlations in underlying variables
+    -   Correlations between $\hat{\beta}_{1}$ and $\hat{\beta}_{2}$ driven by correlations in underlying variables
 
 -   Higher standard errors make ellipse taller, wider
 
     -   Sampling variation in $\hat{\beta}_{1}$ makes it wider
 
     -   Sampling variation in $\hat{\beta}_{2}$ makes it taller
-
 
 # Model Specification
 
@@ -1165,60 +969,47 @@ regress bwghtlbs packs toteduc fatheduc faminc, robust
 
 -   This is trickiest aspect of applied econometrics
 
--   Main goal of many econometric analyses is the unbiased effect of a
-    single independent variable on $Y$
+-   Main goal of many econometric analyses is the unbiased effect of a single independent variable on $Y$
 
     -   Effect of class size on test scores
 
     -   Effect of education on wages
 
--   In this case, additional variables only added to model to avoid
-    omitted variables bias
+-   In this case, additional variables only added to model to avoid omitted variables bias
 
     -   Include variable if related to $Y$ and main $X$ of interest
 
     -   These variables are called "control variables"
 
--   So a good starting point for model specification is avoidance of
-    omitted variables bias
-
+-   So a good starting point for model specification is avoidance of omitted variables bias
 
 ## Introduction
-
 
 -   Requires giving thought to determinants of $Y$
 
     -   Some background knowledge of research question is important
 
-    -   E.g. need to know that wealthier school districts have smaller
-        classes and do better on tests
+    -   E.g. need to know that wealthier school districts have smaller classes and do better on tests
 
--   You should avoid using only statistical measures of fit as reason to
-    add/remove variable
+-   You should avoid using only statistical measures of fit as reason to add/remove variable
 
     -   Sometimes people use $R^2$ or $\bar{R}^2$
 
-    -   They say only whether $X$ variables are good at explaining $Y$
-        in sample at hand
+    -   They say only whether $X$ variables are good at explaining $Y$ in sample at hand
 
     -   It is uninformative about causality or omitted variables
 
     -   Can have high $R^2$ but biased estimates
 
-
 ## Control Variables in Multiple Regression
 
--   As mentioned above, many econometric analyses seek an unbiased
-    effect of a single independent variable on $Y$
+-   As mentioned above, many econometric analyses seek an unbiased effect of a single independent variable on $Y$
 
 -   So we differentiate between two types of independent variables
 
-    -   **Variable of interest**: regressor for which we want to
-        estimate a causal effect
+    -   **Variable of interest**: regressor for which we want to estimate a causal effect
 
-    -   **Control variable**: regressor included to hold constant
-        factors that would lead to omitted variables bias if neglected.
-        Not the object of interest
+    -   **Control variable**: regressor included to hold constant factors that would lead to omitted variables bias if neglected. Not the object of interest
 
 -   Our initial OLS assumptions did not make this distinction
 
@@ -1226,16 +1017,13 @@ regress bwghtlbs packs toteduc fatheduc faminc, robust
 
     -   So we assumed that all $X$ variables were uncorrelated with $u$
 
-
 ## Control Variables in Multiple Regression
 
--   Most of the time, we do not need an unbiased estimate for control
-    variables
+-   Most of the time, we do not need an unbiased estimate for control variables
 
 -   This means we can loosen OLS assumptions
 
--   Suppose regression model is
-    $$Y_{i} = \beta_{0} + \beta_{1}X_{1i} + \beta_{2}X_{2i}  + u_{i}$$
+-   Suppose regression model is $$Y_{i} = \beta_{0} + \beta_{1}X_{1i} + \beta_{2}X_{2i}  + u_{i}$$
 
 -   Imagine $X_{1i}$ is variable of interest
 
@@ -1245,41 +1033,29 @@ regress bwghtlbs packs toteduc fatheduc faminc, robust
 
     -   We do not need an unbiased estimate of $\beta_{2}$
 
--   In this scenario, we [do not]{.underline} have to assume
-    $E[u_{i}|X_{1i}, X_{2i}] = 0$
+-   In this scenario, we [do not]{.underline} have to assume $E[u_{i}|X_{1i}, X_{2i}] = 0$
 
     -   Do not need both variables to be unrelated to $u_{i}$
 
-
 ## Control Variables in Multiple Regression
-
 
 -   Instead, we can assume conditional mean independence
 
-    -   **Conditional Mean Independence**: when control variables are
-        added to the model, unobserved factors are no longer related to
-        variable of interest
+    -   **Conditional Mean Independence**: when control variables are added to the model, unobserved factors are no longer related to variable of interest
 
--   Mathematically, assumption is
-    $E[u_{i}|X_{1i}, X_{2i}] = E[u_{i}|X_{2i}]$
+-   Mathematically, assumption is $E[u_{i}|X_{1i}, X_{2i}] = E[u_{i}|X_{2i}]$
 
-    -   When you control for $X_{2i}$, average of unobserved factors do
-        not depend on $X_{1i}$
+    -   When you control for $X_{2i}$, average of unobserved factors do not depend on $X_{1i}$
 
--   Including $X_{2i}$ breaks the correlation between $X_{1i}$ and
-    $u_{i}$
+-   Including $X_{2i}$ breaks the correlation between $X_{1i}$ and $u_{i}$
 
     -   We allow $X_{2i}$ to be correlated with error term
 
-    -   Through its correlation with the error, $X_{2i}$ holds constant
-        itself *and any related unobserved factor*
+    -   Through its correlation with the error, $X_{2i}$ holds constant itself *and any related unobserved factor*
 
-    -   Estimate of $\beta_{1}$ is unbiased if no other relevant
-        unobserved factors are related to $X_{1i}$
-
+    -   Estimate of $\beta_{1}$ is unbiased if no other relevant unobserved factors are related to $X_{1i}$
 
 ## Control Variables in Multiple Regression
-
 
 -   Estimate of $\beta_{2}$ is *not* necessarily unbiased
 
@@ -1291,8 +1067,7 @@ regress bwghtlbs packs toteduc fatheduc faminc, robust
 
     -   Key is that estimate of $\beta_{1}$ is unbiased
 
--   Ex: Effect of class size on test scores
-    $$TestScore_{i} = \beta_{0} + \beta_{1}STR_{i} + \beta_{2}PctEL_{i} + \beta_{3}LchPct_{i} + u_{i}$$
+-   Ex: Effect of class size on test scores $$TestScore_{i} = \beta_{0} + \beta_{1}STR_{i} + \beta_{2}PctEL_{i} + \beta_{3}LchPct_{i} + u_{i}$$
 
 -   Variable of interest is $STR_{i}$
 
@@ -1300,44 +1075,33 @@ regress bwghtlbs packs toteduc fatheduc faminc, robust
 
     -   e.g., unobserved student economic background
 
-    -   Without controlling for economic background, we have omitted
-        variables bias in $\hat{\beta}_{1}$
-
+    -   Without controlling for economic background, we have omitted variables bias in $\hat{\beta}_{1}$
 
 ## Control Variables in Multiple Regression
 
-
--   To control for economic background, include $PctEL_{i}$ and
-    $LchPct_{i}$ as control variables
+-   To control for economic background, include $PctEL_{i}$ and $LchPct_{i}$ as control variables
 
     -   Holds constant direct effects of $PctEL_{i}$ and $LchPct_{i}$
 
     -   Also holds constant other related economic background factors
 
--   If conditional independence assumption holds, $\hat{\beta}_{1}$ is
-    unbiased
+-   If conditional independence assumption holds, $\hat{\beta}_{1}$ is unbiased
 
-    -   With $PctEL_{i}$ and $LchPct_{i}$ in model, $STR_{i}$ is not
-        related to unobserved factors
+    -   With $PctEL_{i}$ and $LchPct_{i}$ in model, $STR_{i}$ is not related to unobserved factors
 
--   Note that $\hat{\beta}_{2}$ and $\hat{\beta}_{3}$ are in general
-    biased
+-   Note that $\hat{\beta}_{2}$ and $\hat{\beta}_{3}$ are in general biased
 
-    -   $PctEL_{i}$ and $LchPct_{i}$ are related to relevant unobserved
-        factors
+    -   $PctEL_{i}$ and $LchPct_{i}$ are related to relevant unobserved factors
 
         -   They control for those unobserved factors
 
         -   This is what makes them good control variables
 
-    -   Relationship with unobserved factors means their slope estimates
-        are biased
-
+    -   Relationship with unobserved factors means their slope estimates are biased
 
 ## Conditional Mean Independence
 
--   Suppose regression model is
-    $$Y_{i} = \beta_{0} + \beta_{1}X_{1i} + \beta_{2}X_{2i}  + u_{i}$$
+-   Suppose regression model is $$Y_{i} = \beta_{0} + \beta_{1}X_{1i} + \beta_{2}X_{2i}  + u_{i}$$
 
 -   For this model, imagine $E[u_{i}|X_{1i}, X_{2i}] = 0$ is not true
 
@@ -1345,50 +1109,35 @@ regress bwghtlbs packs toteduc fatheduc faminc, robust
 
 -   But we can assume $E[u_{i}|X_{1i}, X_{2i}] = E[u_{i}|X_{2i}]$
 
-    -   With $X_{2i}$ in the model, $X_{1i}$ is not related to
-        unobserved factors
+    -   With $X_{2i}$ in the model, $X_{1i}$ is not related to unobserved factors
 
         -   But, $X_{2i}$ can be related to them
 
--   If second assumption is true, we can get unbiased estimate of
-    $\beta_{1}$, but not $\beta_{2}$
-
+-   If second assumption is true, we can get unbiased estimate of $\beta_{1}$, but not $\beta_{2}$
 
 ## Conditional Mean Independence
 
+-   Imagine the error is linearly related to $X_{1i}$ and $X_{2i}$ $$u_{i} = \gamma_{0} +\gamma_{1}X_{1i}+ \gamma_{2}X_{2i} + v_{i}$$
 
--   Imagine the error is linearly related to $X_{1i}$ and $X_{2i}$
-    $$u_{i} = \gamma_{0} +\gamma_{1}X_{1i}+ \gamma_{2}X_{2i} + v_{i}$$
-
-    -   Assume error in this equation $v_{i}$ is unrelated to $X_{1i}$
-        and $X_{2i}$
+    -   Assume error in this equation $v_{i}$ is unrelated to $X_{1i}$ and $X_{2i}$
 
 -   Conditional mean independence is equivalent to $\gamma_{1}=0$
 
-
--   The error equation under this assumption is
-    $$u_{i} = \gamma_{0} + \gamma_{2}X_{2i} + v_{i}$$
+-   The error equation under this assumption is $$u_{i} = \gamma_{0} + \gamma_{2}X_{2i} + v_{i}$$
 
 -   From this you can see $E[u_{i}| X_{1i},X_{2i}] = E[u_{i}|X_{2i}]$
 
-    -   The expected value of $u_{i}$ given $X_{1i}$ and $X_{2i}$ is
-        $$E[u_{i}| X_{1i},X_{2i}]= \gamma_{0} + \gamma_{2}X_{2i}$$
+    -   The expected value of $u_{i}$ given $X_{1i}$ and $X_{2i}$ is $$E[u_{i}| X_{1i},X_{2i}]= \gamma_{0} + \gamma_{2}X_{2i}$$
 
-    -   Because $X_{1i}$ is not in the equation, this is the same as
-        $$E[u_{i}|X_{2i}]= \gamma_{0} + \gamma_{2}X_{2i}$$
-
+    -   Because $X_{1i}$ is not in the equation, this is the same as $$E[u_{i}|X_{2i}]= \gamma_{0} + \gamma_{2}X_{2i}$$
 
 ## Conditional Mean Independence
 
+-   Substitute $u_{i}$ equation into original regression $$Y_{i} = \beta_{0} + \beta_{1}X_{1i} + \beta_{2}X_{2i}  +\gamma_{0} + \gamma_{2}X_{2i} + v_{i}$$
 
--   Substitute $u_{i}$ equation into original regression
-    $$Y_{i} = \beta_{0} + \beta_{1}X_{1i} + \beta_{2}X_{2i}  +\gamma_{0} + \gamma_{2}X_{2i} + v_{i}$$
+-   Collecting terms, $$Y_{i} = (\beta_{0}+ \gamma_{0}) + \beta_{1}X_{1i} + (\beta_{2} + \gamma_{2})X_{2i}  + v_{i}$$
 
--   Collecting terms,
-    $$Y_{i} = (\beta_{0}+ \gamma_{0}) + \beta_{1}X_{1i} + (\beta_{2} + \gamma_{2})X_{2i}  + v_{i}$$
-
--   Equivalently,
-    $$Y_{i} = \delta_{0} + \beta_{1}X_{1i} + \delta_{2} X_{2i}  + v_{i}$$
+-   Equivalently, $$Y_{i} = \delta_{0} + \beta_{1}X_{1i} + \delta_{2} X_{2i}  + v_{i}$$
 
 -   This model satisfies the 4 OLS assumptions
 
@@ -1398,102 +1147,77 @@ regress bwghtlbs packs toteduc fatheduc faminc, robust
 
     -   And unbiased estimate of $\delta_{2}$
 
-        -   Because $\delta_{2}=\beta_{2} + \gamma_{2}$, this is not
-            unbiased for $\beta_{2}$
-
+        -   Because $\delta_{2}=\beta_{2} + \gamma_{2}$, this is not unbiased for $\beta_{2}$
 
 ## Model Specification in Practice
 
--   Main reason to add variables to a regression is to control omitted
-    variables bias
+-   Main reason to add variables to a regression is to control omitted variables bias
 
 -   Requires knowing what factors determine $Y$ that relate to $X$
 
-    -   Obtaining background knowledge on the economic question is
-        crucial
+    -   Obtaining background knowledge on the economic question is crucial
 
 -   Even with some background knowledge, judgement calls are necessary
 
     -   Experts often disagree on appropriate control variables
 
-    -   And in the end, conditional independence is an unverifiable
-        assumption
-
+    -   And in the end, conditional independence is an unverifiable assumption
 
 ## Model Specification in Practice
 
+-   In practice, researchers present results from several model specifications
 
--   In practice, researchers present results from several model
-    specifications
+    -   **Base specification**: basic regression containing variables of interest and control variables suggested by theory and judgement
 
-    -   **Base specification**: basic regression containing variables of
-        interest and control variables suggested by theory and judgement
+    -   **Alternative specification**: regressions with alternative sets of regressors, often the ones in base specification plus more
 
-    -   **Alternative specification**: regressions with alternative sets
-        of regressors, often the ones in base specification plus more
+-   If slope estimate on variable of interest is unchanged across specifications, that is evidence that it is unbiased
 
--   If slope estimate on variable of interest is unchanged across
-    specifications, that is evidence that it is unbiased
-
-    -   Big changes in main estimate would be signal of omitted
-        variables bias
+    -   Big changes in main estimate would be signal of omitted variables bias
 
 -   However, it is not indisputable proof of unbiased estimates
 
     -   There could still be omitted variables
 
-
 ## Interpreting $R^2$ and $\bar{R}^2$ in Practice
 
--   $R^2$ and $\bar{R}^2$ are not useful for deciding to add/drop
-    variables
+-   $R^2$ and $\bar{R}^2$ are not useful for deciding to add/drop variables
 
 -   There are several pitfalls when using these measures
 
-1.  Increases in $R^2$ and $\bar{R}^2$ do not mean a variable is
-    significant
+1.  Increases in $R^2$ and $\bar{R}^2$ do not mean a variable is significant
 
     -   $R^2$ always increases with an additional regressor
 
-    -   $\bar{R}^2$ sometimes increases when regressor overcomes
-        "penalty"
+    -   $\bar{R}^2$ sometimes increases when regressor overcomes "penalty"
 
     -   Neither mean new variable is statistically significant
 
-2.  A high $R^2$ or $\bar{R}^2$ does not mean regressors cause changes
-    in dependent variable
+2.  A high $R^2$ or $\bar{R}^2$ does not mean regressors cause changes in dependent variable
 
     -   $R^2$ and $\bar{R}^2$ measure only how model fits the sample
 
-    -   Causality is related to relationship between regressors and
-        error
+    -   Causality is related to relationship between regressors and error
 
     -   These are independent concepts
 
-
 ## Interpreting $R^2$ and $\bar{R}^2$ in Practice
 
-3.  A high $R^2$ or $\bar{R}^2$ does not mean there is no omitted
-    variables bias
+3.  A high $R^2$ or $\bar{R}^2$ does not mean there is no omitted variables bias
 
-    -   Again, $R^2$ and $\bar{R}^2$ measure only how model fits the
-        sample
+    -   Again, $R^2$ and $\bar{R}^2$ measure only how model fits the sample
 
-    -   Omitted variables bias is related to relationship between error
-        and X
+    -   Omitted variables bias is related to relationship between error and X
 
     -   These concepts are not directly related
 
-4.  A high $R^2$ or $\bar{R}^2$ does not mean you have the most
-    appropriate set of regressors
+4.  A high $R^2$ or $\bar{R}^2$ does not mean you have the most appropriate set of regressors
 
     -   The "right" set of regressors is a difficult concept
 
     -   There are varying opinions on what should be in a model
 
-    -   Partly it is driven by fit, partly by data availability, partly
-        by theory
-
+    -   Partly it is driven by fit, partly by data availability, partly by theory
 
 # Analysis of Test Score Data
 
@@ -1501,8 +1225,7 @@ regress bwghtlbs packs toteduc fatheduc faminc, robust
 
 -   Here we demonstrate the model specification lessons with an example
 
--   As in the past, we examine the relationship between class size and
-    test scores
+-   As in the past, we examine the relationship between class size and test scores
 
 -   Also learn some practical advice for reporting regression results
 
@@ -1511,7 +1234,6 @@ regress bwghtlbs packs toteduc fatheduc faminc, robust
     -   Also how researchers typically structure output in a table
 
     -   And how to present graphs
-
 
 ## Base and Alternative Specifications
 
@@ -1527,8 +1249,7 @@ regress bwghtlbs packs toteduc fatheduc faminc, robust
 
     -   So variable of interest is class size
 
--   Control variables added to hold constant relevant factors related to
-    class size
+-   Control variables added to hold constant relevant factors related to class size
 
     -   Many factors affect test scores and are related to class size
 
@@ -1538,7 +1259,6 @@ regress bwghtlbs packs toteduc fatheduc faminc, robust
 
 ## Base and Alternative Specifications
 
-
 -   As control variables, we have the following
 
     -   Percent of students ESL
@@ -1547,27 +1267,21 @@ regress bwghtlbs packs toteduc fatheduc faminc, robust
 
     -   Percent who qualify for income assistance
 
--   These variables control for their direct effects and related
-    unobserved factors
+-   These variables control for their direct effects and related unobserved factors
 
     -   Economic background
 
     -   Measures of economic disadvantage
 
--   Estimate of class size effect unbiased when conditional independence
-    is true
+-   Estimate of class size effect unbiased when conditional independence is true
 
-    -   If adding variables above breaks link between error and class
-        size, conditional independence is satisfied
+    -   If adding variables above breaks link between error and class size, conditional independence is satisfied
 
     -   Control variables hold constant omitted factors
 
-
 ## Base and Alternative Specifications
 
-
--   Base specification will be regression of test score on
-    student-teacher ratio
+-   Base specification will be regression of test score on student-teacher ratio
 
 -   Alternatives will add different sets of control variables
 
@@ -1577,7 +1291,6 @@ regress bwghtlbs packs toteduc fatheduc faminc, robust
 
     -   No changes suggest the opposite
 
-
 ## Scale of the Regressors
 
 -   All regressors are measured on a particular scale
@@ -1586,9 +1299,7 @@ regress bwghtlbs packs toteduc fatheduc faminc, robust
 
 -   In practice you can change the scale for easier interpretation
 
-
 ## Scale of the Regressors
-
 
 -   Example: percentage points vs fraction
 
@@ -1598,24 +1309,19 @@ regress bwghtlbs packs toteduc fatheduc faminc, robust
 
     -   Decimal fraction equals percentage divided by 100
 
-        -   Ex: if half of people get free/reduced lunch, then
-            percentage is 50 and fraction is 0.5
+        -   Ex: if half of people get free/reduced lunch, then percentage is 50 and fraction is 0.5
 
 -   Changing scale alters interpretation of regression slope
 
 -   Slope always measures effect of 1-unit change in $X$ on $Y$
 
-    -   If free lunch measured as *percent*, one unit is 1 percentage
-        point
+    -   If free lunch measured as *percent*, one unit is 1 percentage point
 
-    -   If free lunch measured as *fraction*, one unit is 100 percentage
-        points
+    -   If free lunch measured as *fraction*, one unit is 100 percentage points
 
         -   Moving fraction from 0 to 1 is a 100 percentage point change
 
-
 ## Scale of the Regressors
-
 
 -   Common to change scale for $X$ variables like income
 
@@ -1625,8 +1331,7 @@ regress bwghtlbs packs toteduc fatheduc faminc, robust
 
         -   \$1 change is usually not policy relevant
 
-    -   If you divide income by \$1000, it is measured in *thousands of
-        dollars*
+    -   If you divide income by \$1000, it is measured in *thousands of dollars*
 
     -   In this case slope measures effect of \$1000 change
 
@@ -1638,14 +1343,11 @@ regress bwghtlbs packs toteduc fatheduc faminc, robust
 
     -   A matter of personal preference which scale to use
 
-
 ## Graphical Presentation of Data
 
 ![](testgraph.jpg){width="3.5in"}
 
-
 ## Graphical Presentation of Data
-
 
 -   Previous slide shows three scatterplots
 
@@ -1659,8 +1361,7 @@ regress bwghtlbs packs toteduc fatheduc faminc, robust
 
     -   Shows correlation of each variable with test scores
 
--   Based on this, we expect all variables are negatively related to
-    test scores
+-   Based on this, we expect all variables are negatively related to test scores
 
     -   Clearest relationship is with free/reduced lunch
 
@@ -1670,14 +1371,11 @@ regress bwghtlbs packs toteduc fatheduc faminc, robust
 
     -   Nothing is held constant when producing these plots
 
-
 ## Tabular Presentation of Results
 
 ![](tabreg.jpg){width="4in"}
 
-
 ## Tabular Presentation of Results
-
 
 -   Previous slide is typical of how regression results are presented
 
@@ -1687,8 +1385,7 @@ regress bwghtlbs packs toteduc fatheduc faminc, robust
 
     -   Other four are alternative specifications
 
--   To evaluate omitted variables bias, look at estimate on
-    student-teacher ratio across columns
+-   To evaluate omitted variables bias, look at estimate on student-teacher ratio across columns
 
     -   Big drop in estimate when control variables added
 
@@ -1702,9 +1399,7 @@ regress bwghtlbs packs toteduc fatheduc faminc, robust
 
     -   Fit improves with more variables
 
-
 ## Tabular Presentation of Results
-
 
 -   Other notable features of this table
 
@@ -1722,9 +1417,7 @@ regress bwghtlbs packs toteduc fatheduc faminc, robust
 
         -   Short description of data
 
--   Main point of table is to present key information in easy to read
-    format
-
+-   Main point of table is to present key information in easy to read format
 
 ## Discussion of Results
 
@@ -1732,23 +1425,19 @@ regress bwghtlbs packs toteduc fatheduc faminc, robust
 
     -   Effect of class size on test scores falls by half
 
--   Class size is statistically significant at 5% level in all
-    regressions
+-   Class size is statistically significant at 5% level in all regressions
 
     -   We reject null that it is zero
 
 -   The set of control variables does not matter much
 
-    -   A slight difference in class size effect when we measure
-        background with free/reduced lunch vs income assistance
+    -   A slight difference in class size effect when we measure background with free/reduced lunch vs income assistance
 
 -   The model fits the data well
 
     -   Adjusted $R^2$ high when controls are added
 
-
 ## Example with Stata {background-color="#d9edc2"}
-
 
 -   Here we repeat the above with the birthweight example
 
@@ -1760,13 +1449,11 @@ regress bwghtlbs packs toteduc fatheduc faminc, robust
 
     -   Controls for their direct effects
 
-    -   And other factors related, like socio-economic status and health
-        care use
+    -   And other factors related, like socio-economic status and health care use
 
 -   First examine effect of scaling education variable
 
 -   Then present base and alternative specifications
-
 
 ## Example with Stata {background-color="#d9edc2"}
 
@@ -1774,15 +1461,12 @@ regress bwghtlbs packs toteduc fatheduc faminc, robust
 regress bwghtlbs packs motheduc fatheduc faminc, robust
 ```
 
-
-
 ## Example with Stata {background-color="#d9edc2"}
 
 ```{stata, echo=TRUE, collectcode=TRUE}
 gen motheduc2 = motheduc/10
 regress bwghtlbs packs motheduc2 fatheduc faminc, robust
 ```
-
 
 ## Example with Stata {background-color="#d9edc2"}
 
@@ -1796,4 +1480,3 @@ qui estimates store alt2
     		
 estout base alt1 alt2, cells(b(star fmt(3)) se(par fmt(3))) starlevels(* 0.05 ** 0.01 )
 ```
-

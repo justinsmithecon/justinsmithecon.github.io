@@ -586,7 +586,11 @@
        packs |      1,388    .1043588    .2986344          0        2.5
     motheduc |      1,387    12.93583    2.376728          2         18
     fatheduc |      1,192    13.18624    2.745985          1         18
-      faminc |      1,388    29.02666    18.73928         .5         65</code></pre>
+      faminc |      1,388    29.02666    18.73928         .5         65
+
+(196 observations deleted)
+
+(1 observation deleted)</code></pre>
 </div>
 </div>
 <ul>
@@ -1094,26 +1098,26 @@
 <section id="example-with-stata-12" class="slide level2" data-background-color="#d9edc2">
 <h2>Example with Stata</h2>
 <div class="cell" data-layout-align="center" data-collectcode="true">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb9-1"><a href="#cb9-1"></a>*restricted <span class="kw">model</span>;</span>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb9-1"><a href="#cb9-1"></a>*restricted <span class="kw">model</span></span>
 <span id="cb9-2"><a href="#cb9-2"></a><span class="kw">regress</span> bwghtlbs packs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      Source |       SS           df       MS      Number of obs   =     1,388
--------------+----------------------------------   F(1, 1386)      =     32.24
-       Model |  51.0172634         1  51.0172634   Prob &gt; F        =    0.0000
-    Residual |  2193.55977     1,386  1.58265495   R-squared       =    0.0227
--------------+----------------------------------   Adj R-squared   =    0.0220
-       Total |  2244.57703     1,387  1.61829634   Root MSE        =     1.258
+<pre><code>      Source |       SS           df       MS      Number of obs   =     1,191
+-------------+----------------------------------   F(1, 1189)      =     33.10
+       Model |  51.0775373         1  51.0775373   Prob &gt; F        =    0.0000
+    Residual |  1834.65173     1,189   1.5430208   R-squared       =    0.0271
+-------------+----------------------------------   Adj R-squared   =    0.0263
+       Total |  1885.72927     1,190  1.58464644   Root MSE        =    1.2422
 
 ------------------------------------------------------------------------------
     bwghtlbs | Coefficient  Std. err.      t    P&gt;|t|     [95% conf. interval]
 -------------+----------------------------------------------------------------
-       packs |  -.6422151   .1131137    -5.68   0.000    -.8641076   -.4203226
-       _cons |   7.485744   .0357713   209.27   0.000     7.415572    7.555915
+       packs |  -.7753962   .1347704    -5.75   0.000    -1.039811   -.5109819
+       _cons |   7.539201   .0379168   198.84   0.000     7.464809    7.613592
 ------------------------------------------------------------------------------</code></pre>
 </div>
 </div>
 <div class="cell" data-layout-align="center" data-collectcode="true">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb11-1"><a href="#cb11-1"></a>*Critical <span class="ot">value</span>;</span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb11-1"><a href="#cb11-1"></a>*Critical <span class="ot">value</span></span>
 <span id="cb11-2"><a href="#cb11-2"></a><span class="kw">display</span> <span class="fu">invFtail</span>(3,1186,0.05)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>2.6124063</code></pre>
@@ -1338,10 +1342,7 @@
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw">gen</span> toteduc = motheduc + fatheduc</span>
 <span id="cb17-2"><a href="#cb17-2"></a><span class="kw">regress</span> bwghtlbs packs toteduc fatheduc faminc, <span class="kw">robust</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>(197 missing values generated)
-
-
-Linear regression                               Number of obs     =      1,191
+<pre><code>Linear regression                               Number of obs     =      1,191
                                                 F(4, 1186)        =      11.47
                                                 Prob &gt; F          =     0.0000
                                                 R-squared         =     0.0328
@@ -1961,10 +1962,7 @@ Linear regression                               Number of obs     =      1,191
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource stata number-lines code-with-copy"><code class="sourceCode stata"><span id="cb21-1"><a href="#cb21-1"></a><span class="kw">gen</span> motheduc2 = motheduc/10</span>
 <span id="cb21-2"><a href="#cb21-2"></a><span class="kw">regress</span> bwghtlbs packs motheduc2 fatheduc faminc, <span class="kw">robust</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>(1 missing value generated)
-
-
-Linear regression                               Number of obs     =      1,191
+<pre><code>Linear regression                               Number of obs     =      1,191
                                                 F(4, 1186)        =      11.47
                                                 Prob &gt; F          =     0.0000
                                                 R-squared         =     0.0328
@@ -1998,16 +1996,16 @@ Linear regression                               Number of obs     =      1,191
 <pre><code>                     base           alt1           alt2  
                      b/se           b/se           b/se  
 ---------------------------------------------------------
-packs              -0.642**       -0.749**       -0.737**
-                  (0.110)        (0.131)        (0.130)  
+packs              -0.775**       -0.749**       -0.737**
+                  (0.128)        (0.131)        (0.130)  
 motheduc                          -0.022         -0.027  
                                  (0.018)        (0.018)  
 fatheduc                           0.037*         0.031  
                                  (0.016)        (0.017)  
 faminc                                            0.003  
                                                 (0.002)  
-_cons               7.486**        7.330**        7.380**
-                  (0.036)        (0.198)        (0.200)  
+_cons               7.539**        7.330**        7.380**
+                  (0.038)        (0.198)        (0.200)  
 ---------------------------------------------------------</code></pre>
 </div>
 </div>
