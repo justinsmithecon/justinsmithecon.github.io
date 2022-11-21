@@ -16,3 +16,5 @@ show_date: false
 - <a href="https://justinsmithecon.github.io/teaching/ec295/MLR/MLR.html">Linear Regression Model with Multiple Regressors</a>
 
 - <a href="https://justinsmithecon.github.io/teaching/ec295/MLRhypo/MLRhypo.html">Multiple Regression Model - Hypothesis Testing</a>
+
+- <a href="https://justinsmithecon.github.io/teaching/ec295/Nonlinear/Nonlinear.html">Nonlinear Regression Models</a>
