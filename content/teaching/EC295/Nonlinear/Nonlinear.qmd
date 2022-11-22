@@ -8,7 +8,9 @@ format:
   revealjs:
     theme: [default, hygge.scss]
     smaller: true
-    slide-number: true
+    slide-number: true    
+    width: 1280
+    height: 720
     chalkboard:
       theme: whiteboard
       src: drawings.json
@@ -18,10 +20,10 @@ title-slide-attributes:
 ---
 
 
+#Introduction
 
 
-::: frame
-### Introduction
+## Introduction
 
 -   In all models we have studied, the regression slope is constant
 
@@ -44,10 +46,8 @@ title-slide-attributes:
         -   Might be bigger for larger houses
 
 -   In this section we extend the model to allow nonlinearities
-:::
 
-::: frame
-### Introduction
+## Introduction
 
 -   All models we have examined are linear in the $X$ variables
 
@@ -69,19 +69,14 @@ title-slide-attributes:
         -   Slope is steep at low income, flatter at high income
 
 -   We can extend the regression to allow curvature in the line
-:::
 
-::: frame
-### The Simple Regression Model
+## Introduction
 
 ![](districtincome.jpg){fig-align="center" width="7in"}
-:::
 
-::: frame
-### Nonlinear Functions of a Single Independent Variable
+# Nonlinear Functions of a Single Independent Variable
 
-::: block
-Quadratic Functions
+## Quadratic Functions
 
 -   Recall graph on previous slide
 
@@ -99,11 +94,10 @@ Quadratic Functions
 
 -   A quadratic relationship between test scores and income is
     $$TestScore_{i} = \beta_{0} + \beta_{1}Income_{i} + \beta_{2}Income_{i}^2 + u_{i}$$
-:::
-:::
 
-::: frame
-### Nonlinear Functions of a Single Independent Variable
+
+## Quadratic Functions
+
 
 -   The population regression function in this model is
     $$E[TestScore_{i}|Income_{i}] = \beta_{0} + \beta_{1}Income_{i} + \beta_{2}Income_{i}^2$$
@@ -116,10 +110,10 @@ Quadratic Functions
 
 -   Divide both sides by $\Delta Income_{i}$
     $$\frac{ \Delta E[TestScore_{i}|Income_{i}]}{\Delta Income_{i}} = \beta_{1}+ \beta_{2}\frac{\Delta Income_{i}^2}{\Delta Income_{i}}$$
-:::
 
-::: frame
-### Nonlinear Functions of a Single Independent Variable
+
+## Quadratic Functions
+
 
 -   When $\Delta Income_{i}$ is small, we can approximate
     $\frac{\Delta Income_{i}^2}{\Delta Income_{i}}$
@@ -134,10 +128,10 @@ Quadratic Functions
         $Income_{i} = 0$
 
     -   $2\beta_{2}Income_{i}$, how the effect depends on income
-:::
 
-::: frame
-### Nonlinear Functions of a Single Independent Variable
+
+## Quadratic Functions
+
 
 -   The signs of $\beta_{1}$ and $\beta_{2}$ determine shape of function
 
@@ -159,20 +153,20 @@ Quadratic Functions
 
 -   Estimated effect of income on test scores is
     $$\frac{\Delta \hat{TestScore}_{i}}{\Delta Income_{i}} = \hat{\beta}_{1}+ 2\hat{\beta}_{2}Income_{i}$$
-:::
 
-::: frame
-### Nonlinear Functions of a Single Independent Variable
+
+## Quadratic Functions
+
 
 -   Ex: estimated quadratic regression function
     $$\hat{TestScore}_{i} = 607.3 + 3.85 Income - 0.0423 Income^2$$
 
 -   Estimated effect of income on test scores is
     $$\frac{\Delta\hat{TestScore}_{i}}{\Delta Income_{i}} = 3.85- 2(0.0423)Income_{i}$$
-:::
 
-::: frame
-### Nonlinear Functions of a Single Independent Variable
+
+## Quadratic Functions
+
 
 -   Note how effect depends on level of income
 
@@ -184,10 +178,10 @@ Quadratic Functions
 
     -   If income = 60,000
         $$\frac{\Delta \hat{TestScore}_{i}}{\Delta Income_{i}} = 3.85- 2(0.0423)(60) = -1.226$$
-:::
 
-::: frame
-### Nonlinear Functions of a Single Independent Variable
+
+## Quadratic Functions
+
 
 -   Slope is high at low values of income, then falls as income grows
     larger
@@ -212,19 +206,15 @@ Quadratic Functions
         -   Especially at the ends
 
         -   Likely $R^2$ would be higher in this regression
-:::
 
-::: frame
-### The Simple Regression Model
+
+## Quadratic Functions
+
 
 ![](quad2.jpg){fig-align="center" width="7in"}
-:::
 
-::: frame
-### Nonlinear Functions of a Single Independent Variable
 
-::: block
-Polynomial Functions
+## Polynomial Functions
 
 -   We can allow for more flexibility in function with higher powers of
     $X$
@@ -247,11 +237,10 @@ Polynomial Functions
     -   Can help fit data better
 
 -   Effect of $X$ on $Y$ is more complicated with higher polynomials
-:::
-:::
 
-::: frame
-### Nonlinear Functions of a Single Independent Variable
+
+## Polynomial Functions
+
 
 -   Computing effect can be more difficult with higher powers
 
@@ -264,19 +253,15 @@ Polynomial Functions
     $$\frac{\Delta \hat{Y}_{i}}{\Delta X_{i}} = \hat{\beta}_{1}+ 2\hat{\beta}_{2}X_{i} + 3\hat{\beta}_{3}X_{i}^2$$
 
 -   and so on
-:::
 
-::: frame
-### The Simple Regression Model
+## Polynomial Functions
+
 
 ![](poly.jpg){fig-align="center" width="7in"}
-:::
 
-::: frame
-### Nonlinear Functions of a Single Independent Variable
 
-::: block
-Testing the Null that the Regression Function is Linear
+## Testing Null that the Regression is Linear
+
 
 -   We can test between polynomial and linear functions
 
@@ -294,14 +279,9 @@ Testing the Null that the Regression Function is Linear
 -   Accepting null means function is linear
 
 -   Rejecting means it is nonlinear in some way
-:::
-:::
 
-::: frame
-### Nonlinear Functions of a Single Independent Variable
 
-::: block
-Choosing the Degree of Polynomial
+## Choosing the Degree of Polynomial
 
 -   Higher order polynomials increase flexibility of the regression
 
@@ -323,14 +303,9 @@ Choosing the Degree of Polynomial
     4.  Repeat 2-3 until you reject null hypothesis in 2
 
 -   This is sequentially pruning model to get right specification
-:::
-:::
 
-::: frame
-### Nonlinear Functions of a Single Independent Variable
 
-::: block
-Logarithms
+## Logarithms
 
 -   Common way to include nonlinearities is with logarithms
 
@@ -348,11 +323,10 @@ Logarithms
     -   10 is a common base, but it can be any number
 
     -   Ex: Richter scale (for earthquakes) is a base-10 log scale
-:::
-:::
 
-::: frame
-### Nonlinear Functions of a Single Independent Variable
+
+## Logarithms
+
 
   --------------- --- ---- ----- ------ ------- --------
   x                1   10   100   1000   10000   100000
@@ -373,10 +347,10 @@ Logarithms
 
     -   Small changes in $ln(x)$ approximate a percentage change
         $$100 \times (ln(x +\Delta x) - ln(x)) =100 \times \Delta ln(x)  \approx 100\times \left ( \frac{\Delta x}{x} \right )$$
-:::
 
-::: frame
-### Nonlinear Functions of a Single Independent Variable
+
+## Logarithms
+
 
 -   Ex: let $x = 100$ and $\Delta x = 1$
 
@@ -398,13 +372,9 @@ Logarithms
     $$x = e^{ln(x)}$$
 
     -   This will become useful in some situations
-:::
 
-::: frame
-### Nonlinear Functions of a Single Independent Variable
 
-::: block
-Log-Linear Model
+## Log-Linear Model
 
 -   A **log-linear** model is when $Y$ is in logs, but $X$ is not
     $$ln(Y_{i}) = \beta_{0}+\beta_{1}X_{i} + u_{i}$$
@@ -419,11 +389,10 @@ Log-Linear Model
 
 -   Remember that $100\times \Delta ln(wage)$ is roughly equal to %
     change in wage
-:::
-:::
 
-::: frame
-### Nonlinear Functions of a Single Independent Variable
+
+## Log-Linear Model
+
 
 -   So if we multiply $\beta_{1}$ by 100 then
     $$100\times \beta_{1} \approx \frac{\% \Delta wage}{\Delta educ}$$
@@ -438,13 +407,9 @@ Log-Linear Model
 
 -   In the general model
     $$100\times \beta_{1} \approx \frac{\% \Delta Y_{i}}{\Delta X_{i}}$$
-:::
 
-::: frame
-### Nonlinear Functions of a Single Independent Variable
 
-::: block
-Linear-Log Model
+## Linear-Log Model
 
 -   A **linear-log** model is when $X$ is in logs, but $Y$ is not
     $$Y_{i} = \beta_{0}+\beta_{1}ln(X_{i}) + u_{i}$$
@@ -459,11 +424,10 @@ Linear-Log Model
         expectancy as countries get richer
 
     $$\beta_{1} = \frac{\Delta expectancy}{\Delta ln(GDP)}$$
-:::
-:::
 
-::: frame
-### Nonlinear Functions of a Single Independent Variable
+
+## Linear-Log Model
+
 
 -   If we divide $\beta_{1}$ by 100
     $$\frac{\beta_{1}}{100} = \frac{\Delta expectancy}{100 \times \Delta ln(GDP)} = \frac{\Delta expectancy}{\% \Delta GDP}$$
@@ -475,13 +439,9 @@ Linear-Log Model
     $$\frac{\beta_{1}}{100} = \frac{\Delta Y_{i}}{\% \Delta X_{i}}$$
 
 -   It is relatively rare to see this model in practice
-:::
 
-::: frame
-### Nonlinear Functions of a Single Independent Variable
 
-::: block
-Log-Log Model
+## Log-Log Model
 
 -   A **log-log** model is when both $Y$ and $X$ are in logs
     $$ln(Y_{i}) = \beta_{0}+\beta_{1}ln(X_{i}) + u_{i}$$
@@ -493,11 +453,10 @@ Log-Log Model
 
 -   In this case
     $$\beta_{1} = \frac{\Delta ln(sales)}{\Delta ln(price)}$$
-:::
-:::
 
-::: frame
-### Nonlinear Functions of a Single Independent Variable
+
+## Log-Log Model
+
 
 -   If we multiply and divide $\beta_{1}$ by 100
     $$\beta_{1} = \frac{100\times \Delta ln(sales)}{100 \times \Delta ln(price)} =  \frac{\% \Delta sales}{\% \Delta price}$$
@@ -511,46 +470,39 @@ Log-Log Model
     $$\beta_{1} =  \frac{\% \Delta Y_{i}}{\% \Delta X_{i}}$$
 
 -   Note that you do not need to alter $\beta_{1}$ before interpreting
-:::
 
-::: frame
-### Nonlinear Functions of a Single Independent Variable
+
+## Visualizing Nonlinear Models
 
 ![](matrix.jpg){fig-align="center" width="7in"}
-:::
 
-::: frame
-### Nonlinear Functions of a Single Independent Variable
+## Visualizing Nonlinear Models
+
 
 ![](loglinear.jpg){fig-align="center" width="7in"}
-:::
 
-::: frame
-### Nonlinear Functions of a Single Independent Variable
+## Visualizing Nonlinear Models
+
 
 ![](linearlog.jpg){fig-align="center" width="7in"}
-:::
 
-::: frame
-### Nonlinear Functions of a Single Independent Variable
+## Visualizing Nonlinear Models
+
 
 ![](linearlog2.jpg){fig-align="center" width="7in"}
-:::
 
-::: frame
-### Nonlinear Functions of a Single Independent Variable
+## Visualizing Nonlinear Models
+
 
 ![](loglog.jpg){fig-align="center" width="7in"}
-:::
 
-::: frame
-### Nonlinear Functions of a Single Independent Variable
+## Visualizing Nonlinear Models
+
 
 ![](comparelog.jpg){fig-align="center" width="7in"}
-:::
 
-::: frame
-### Worked Example with Stata
+
+## Example with Stata {background-color="#d9edc2"}
 
 -   We continue above with the relationship between test scores and
     district income
@@ -572,10 +524,10 @@ Log-Log Model
         $ln(TestScore_{i})= \beta_{0} + \beta_{1}ln(Income_{i}) +  u_{i}$
 
 -   We will interpret coefficients in each
-:::
 
-::: frame
-### Worked Example with Stata
+
+## Example with Stata {background-color="#d9edc2" .r-fit-text}
+
 
 -   First, create necessary variables
 
@@ -607,10 +559,9 @@ Log-Log Model
     		
     	regress lntestscr lnavginc;
     		estimates store loglog;
-:::
 
-::: frame
-### Worked Example with Stata
+
+## Example with Stata {background-color="#d9edc2" .r-fit-text}
 
 -   Export results in easy to read table
 
@@ -638,10 +589,10 @@ Log-Log Model
     rmse               13.387         12.724         12.618          0.021          0.019  
     N                     420            420            420            420            420  
     ---------------------------------------------------------------------------------------
-:::
 
-::: frame
-### Worked Example with Stata
+
+## Example with Stata {background-color="#d9edc2"}
+
 
 -   Linear model
 
@@ -667,10 +618,9 @@ Log-Log Model
     -   $\frac{\beta_{1}}{100} = \frac{36.420}{100} = 0.364$
 
     -   Income increases by 1%, test scores rise by 0.364 points
-:::
 
-::: frame
-### Worked Example with Stata
+## Example with Stata {background-color="#d9edc2"}
+
 
 -   Log Linear model
 
@@ -689,13 +639,11 @@ Log-Log Model
     -   Income increases by 1%, test scores rise by 0.055%
 
     -   This is the elasticity of test scores with respect to income
-:::
 
-::: frame
-### Interactions Between Variables
 
-::: block
-Introduction
+# Interactions Between Variables
+
+## Introduction
 
 -   Quadratics allowed effect of $X$ on $Y$ to depend on $X$
 
@@ -717,14 +665,9 @@ Introduction
     -   Between dummies and continuous variables
 
     -   Also between continuous variables
-:::
-:::
 
-::: frame
-### Interactions Between Variables
 
-::: block
-Model with Multiple Dummy Variables
+## Model with Multiple Dummy Variables
 
 -   First, we examine a model with two dummy variables but no
     interaction
@@ -740,11 +683,10 @@ Model with Multiple Dummy Variables
     -   $marr_{i}=1$ if married, and zero otherwise
 
 -   How do we interpret the parameters of this model?
-:::
-:::
 
-::: frame
-### Interactions Between Variables
+
+## Model with Multiple Dummy Variables
+
 
 -   As before, look at population regression function
 
@@ -759,10 +701,10 @@ Model with Multiple Dummy Variables
 
     -   When $fem_{i} =0$ and $marr_{i} = 0$
         $$E[wage_{i}|fem_{i}=0,marr_{i}=0] =  \beta_{0}$$
-:::
 
-::: frame
-### Interactions Between Variables
+
+## Model with Multiple Dummy Variables
+
 
 -   $\beta_{0}$ is average wage when male, unmarried
     $$E[wage_{i}|fem_{i}=0,marr_{i}=0] =  \beta_{0}$$
@@ -776,10 +718,10 @@ Model with Multiple Dummy Variables
     $$E[wage_{i}|fem_{i}=1,marr_{i}=1]  - E[wage_{i}|fem_{i}=0,marr_{i}=1]$$
     $$=  \beta_{0} + \beta_{1}+ \beta_{2} - (\beta_{0} + \beta_{2})$$
     $$= \beta_{1}$$
-:::
 
-::: frame
-### Interactions Between Variables
+
+## Model with Multiple Dummy Variables
+
 
 -   Model imposes that female-male difference does not depend on
     marriage
@@ -795,10 +737,9 @@ Model with Multiple Dummy Variables
     $$E[wage_{i}|fem_{i}=1,marr_{i}=1] - E[wage_{i}|fem_{i}=1,marr_{i}=0]$$
     $$=  \beta_{0} + \beta_{1}+ \beta_{2} - (\beta_{0} + \beta_{1})$$
     $$=  \beta_{2}$$
-:::
 
-::: frame
-### Interactions Between Variables
+
+## Model with Multiple Dummy Variables
 
 -   In total model has four intercepts
 
@@ -817,10 +758,10 @@ Model with Multiple Dummy Variables
 -   Both of these restrictions are specific to this model
 
     -   We can relax them with interaction terms
-:::
 
-::: frame
-### Worked Example with Stata
+
+## Example with Stata {background-color="#d9edc2"}
+
 
 -   As an example, we study the determinants of wages
 
@@ -845,10 +786,10 @@ Model with Multiple Dummy Variables
     -   Datafile: **slid.dta**
 
     -   Dofile: **EC295 nonlinear regression part 2.do**
-:::
 
-::: frame
-### Worked Example with Stata
+
+## Example with Stata {background-color="#d9edc2"}
+
 
 -   Suppose we regress wages on a female and married dummy
     $$wage_{i} = \beta_{0} + \beta_{1}fem_{i}+ \beta_{2}marr_{i} + u_{i}$$
@@ -874,10 +815,10 @@ Model with Multiple Dummy Variables
          married |   5.093432   .2080484    24.48   0.000     4.685633    5.501231
            _cons |   25.74684   .1798452   143.16   0.000     25.39432    26.09935
     ------------------------------------------------------------------------------
-:::
 
-::: frame
-### Worked Example with Stata
+
+## Example with Stata {background-color="#d9edc2"}
+
 
 -   Based on these estimates
 
@@ -902,13 +843,9 @@ Model with Multiple Dummy Variables
         status
 
     -   Also married/unmarried difference is $5.09$ regardless of gender
-:::
 
-::: frame
-### Interactions Between Variables
 
-::: block
-Interactions Among Dummy Variables
+## Interactions Among Dummy Variables
 
 -   Recall the model
     $$wage_{i} = \beta_{0} + \beta_{1}fem_{i} +\beta_{2}marr_{i} + u_{i}$$
@@ -924,11 +861,10 @@ Interactions Among Dummy Variables
     -   The married-unmarried difference did not depend on gender
 
 -   Interacting the two variables changes that interpretation
-:::
-:::
 
-::: frame
-### Interactions Between Variables
+
+## Interactions Among Dummy Variables
+
 
 -   Suppose we add an interaction between $fem_{i}$ and $marr_{i}$
     $$wage_{i} = \beta_{0} + \beta_{1}fem_{i} +\beta_{2}marr_{i} +\beta_{3}(fem_{i}\times marr_{i}) + u_{i}$$
@@ -943,10 +879,10 @@ Interactions Among Dummy Variables
 -   Now, the female-male gap *depends* on the marital status
 
     -   The gap is different depending on value of $marr_{i}$
-:::
 
-::: frame
-### Interactions Between Variables
+
+## Interactions Among Dummy Variables
+
 
 -   To see this, compute the female-male gap for unmarried and married
 
@@ -958,15 +894,15 @@ Interactions Among Dummy Variables
         $$E[wage_{i}|fem_{i}=1,marr_{i}=1]  - E[wage_{i}|fem_{i}=0,marr_{i}=1]$$
         $$=  \beta_{0} + \beta_{1}+ \beta_{2} + \beta_{3} - (\beta_{0} + \beta_{2})$$
         $$= \beta_{1} + \beta_{3}$$
-:::
 
-::: frame
-### Interactions Between Variables
+
+## Interactions Among Dummy Variables {.r-fit-text}
+
 
 -   Likewise, married unmarried gap depends on gender
     $$E[wage_{i}|marr_{i} = 1 , fem_{i} ]  - E[wage_{i}|marr_{i}=0 , fem_{i}]$$
-    $$=( \beta_{0} + \beta_{1}fem_{i} + \beta_{2} +\beta_{3}fem_{i} )$$
-    $$-  (\beta_{0}  + \beta_{1}fem_{i}  )$$
+    $$=( \beta_{0} + \beta_{1}fem_{i} + \beta_{2} +\beta_{3}fem_{i} )  -  (\beta_{0}  + \beta_{1}fem_{i}  )$$
+   
     $$=  \beta_{2}+\beta_{3}fem_{i}$$
 
     -   marriage gap for men is
@@ -976,10 +912,9 @@ Interactions Among Dummy Variables
     -   Marriage gap for women is
         $$E[wage_{i}|marr_{i} = 1 , fem_{i} = 1 ]  - E[wage_{i}|marr_{i}=0 , fem_{i} = 1]$$
         $$=  \beta_{2} + \beta_{3}$$
-:::
 
-::: frame
-### Interactions Between Variables
+
+## Interactions Among Dummy Variables
 
 -   To summarize, interacting dummies allows for
 
@@ -996,10 +931,10 @@ Interactions Among Dummy Variables
     -   Married men: $\beta_{0} + \beta_{2}$
 
     -   Married women: $\beta_{0} + \beta_{1} + \beta_{2}+ \beta_{3}$
-:::
 
-::: frame
-### Interactions Between Variables
+
+## Interactions Among Dummy Variables
+
 
 -   The interpretations for each are as follows
 
@@ -1019,10 +954,10 @@ Interactions Among Dummy Variables
             marriage gap depends on gender
 
         -   It is sometimes called the **difference in differences**
-:::
 
-::: frame
-### Worked Example with Stata
+
+## Example with Stata {background-color="#d9edc2"}
+
 
 -   Suppose we interact female and married
     $$wage_{i} = \beta_{0} + \beta_{1}fem_{i} +\beta_{2}marr_{i} +\beta_{3}(fem_{i}\times marr_{i}) + u_{i}$$
@@ -1049,10 +984,9 @@ Interactions Among Dummy Variables
     female_married |  -4.143398    .412491   -10.04   0.000    -4.951927   -3.334868
              _cons |   24.57583   .2062195   119.17   0.000     24.17162    24.98005
     --------------------------------------------------------------------------------
-:::
 
-::: frame
-### Worked Example with Stata
+
+## Example with Stata {background-color="#d9edc2"}
 
 -   In this model,
 
@@ -1076,13 +1010,9 @@ Interactions Among Dummy Variables
 
 -   Note how $\beta_{3}$ measures change in gender gap for married, and
     also change in marriage gap for women
-:::
 
-::: frame
-### Interactions Between Variables
 
-::: block
-Models with Dummy and Continuous Variables
+## Models with Dummy and Continuous Variables
 
 -   Suppose we are interested in estimating
 
@@ -1098,11 +1028,10 @@ Models with Dummy and Continuous Variables
 
 -   To understand interpretation of $\beta_{1}$, take expected value
     $$E[wage_{i}|fem_{i},educ_{i}] = \beta_{0} + \beta_{1}fem_{i} + \beta_{2}educ_{i}$$
-:::
-:::
 
-::: frame
-### Interactions Between Variables
+
+## Models with Dummy and Continuous Variables
+
 
 -   When $fem_{i}$ = 1
     $$E[wage_{i}|fem_{i} = 1,educ_{i}] = \beta_{0} + \beta_{1}+ \beta_{2}educ_{i}$$
@@ -1116,10 +1045,10 @@ Models with Dummy and Continuous Variables
 
 -   $\beta_{1}$ is difference in average wage between women and men
     $$\beta_{1} = E[wage_{i}|fem_{i} = 1,educ_{i}]  - E[wage_{i}|fem_{i} = 0,educ_{i}]$$
-:::
 
-::: frame
-### Interactions Between Variables
+
+## Models with Dummy and Continuous Variables
+
 
 -   Notice that in expectation, we are holding education constant
 
@@ -1144,19 +1073,15 @@ Models with Dummy and Continuous Variables
         changes between women and men
 
         -   This allows different intercepts between men and women
-:::
 
-::: frame
-### Interactions Between Variables
+
+## Models with Dummy and Continuous Variables
+
 
 ![](interceptshift.jpg){fig-align="center" width="7in"}
-:::
 
-::: frame
-### Interactions Between Variables
 
-::: block
-Interactions Between Continuous and Dummy Variables
+## Interactions Between Continuous and Dummy Variables
 
 -   We just saw how to allow for intercepts between groups
 
@@ -1171,11 +1096,10 @@ Interactions Between Continuous and Dummy Variables
     measured by
 
     $$\frac{\Delta E[wage_{i}|fem_{i},educ_{i}] }{\Delta educ_{i}} =  \beta_{2} + \beta_{3}fem_{i}$$
-:::
-:::
 
-::: frame
-### Interactions Between Variables
+
+## Interactions Between Continuous and Dummy Variables
+
 
 -   In this setup
 
@@ -1200,16 +1124,15 @@ Interactions Between Continuous and Dummy Variables
     -   Dummy allows for different intercept
 
     -   Interaction with dummy allows for different slope
-:::
 
-::: frame
-### Interactions Between Variables
+
+## Interactions Between Continuous and Dummy Variables
+
 
 ![](slopeinterceptshift.jpg){fig-align="center" width="7in"}
-:::
 
-::: frame
-### Interactions Between Variables
+
+## Interactions Between Continuous and Dummy Variables
 
 -   In rare cases, you can also estimate a model with the same
     intercept, but different slopes
@@ -1228,16 +1151,16 @@ Interactions Between Continuous and Dummy Variables
     -   $\beta_{2}+\beta_{3}$ measures slope on $educ_{i}$ for women
 
     -   $\beta_{3}$ is *difference* in slope between women and men
-:::
 
-::: frame
-### Interactions Between Variables
+
+## Interactions Between Continuous and Dummy Variables
+
 
 ![](slopeshift.jpg){fig-align="center" width="7in"}
-:::
 
-::: frame
-### Worked Example with Stata
+
+## Example with Stata {background-color="#d9edc2"}
+
 
 -   A model with intercept shift but same slopes would be
     $$wage_{i} = \beta_{0} + \beta_{1}fem_{i} + \beta_{2}educ_{i} + u_{i}$$
@@ -1261,10 +1184,10 @@ Interactions Between Continuous and Dummy Variables
         yrschl18 |   2.078491   .0424539    48.96   0.000     1.995277    2.161706
            _cons |   .3170835   .5522942     0.57   0.566    -.7654761    1.399643
     ------------------------------------------------------------------------------
-:::
 
-::: frame
-### Worked Example with Stata
+
+## Example with Stata {background-color="#d9edc2"}
+
 
 -   A model with intercept shift and different slopes is
     $$wage_{i} = \beta_{0} + \beta_{1}fem_{i} + \beta_{2}educ_{i} +\beta_{3}(fem_{i} \times educ_{i})+ u_{i}$$
@@ -1290,10 +1213,10 @@ Interactions Between Continuous and Dummy Variables
     female_yrschl18 |   .0088005   .0830051     0.11   0.916     -.153899    .1715001
               _cons |   .3703632    .813796     0.46   0.649     -1.22477    1.965496
     ---------------------------------------------------------------------------------
-:::
 
-::: frame
-### Worked Example with Stata
+
+## Example with Stata {background-color="#d9edc2"}
+
 
 -   A model with same intercepts but different slopes is
     $$wage_{i} = \beta_{0} + \beta_{1}fem_{i} + \beta_{2}educ_{i} +\beta_{3}(fem_{i} \times educ_{i})+ u_{i}$$
@@ -1317,13 +1240,10 @@ Interactions Between Continuous and Dummy Variables
     female_yrschl18 |  -.3678847   .0152029   -24.20   0.000    -.3976841   -.3380852
               _cons |  -1.966818   .5616236    -3.50   0.000    -3.067664   -.8659719
     ---------------------------------------------------------------------------------
-:::
 
-::: frame
-### Interactions Between Variables
 
-::: block
-Interactions Between Continuous Variables
+
+## Interactions Between Continuous Variables
 
 -   The final type of interaction is between two continuous variables
 
@@ -1339,11 +1259,10 @@ Interactions Between Continuous Variables
 -   This model allows effect of experience to depend on education
 
     -   Also effect of education to depend on experience
-:::
-:::
 
-::: frame
-### Interactions Between Variables
+
+## Interactions Between Continuous Variables
+
 
 -   To see this, compute change in wage with experience
     $$\frac{\Delta E[wage_{i}|exper_{i},educ_{i}] }{\Delta exper_{i}} =  \beta_{1} + \beta_{3}educ_{i}$$
@@ -1364,10 +1283,10 @@ Interactions Between Continuous Variables
 
     -   $\beta_{3}$: change in the effect with each additional year of
         experience
-:::
 
-::: frame
-### Worked Example with Stata
+
+## Example with Stata {background-color="#d9edc2"}
+
 
 -   A model with interactions between experience and earnings is
     $$wage_{i} = \beta_{0} + \beta_{1}exper_{i} + \beta_{2}educ_{i}+  \beta_{3}(exper_{i} \times educ_{i}) + u_{i}$$
@@ -1393,10 +1312,10 @@ Interactions Between Continuous Variables
     yrxfte11_yrschl18 |    .033486   .0036474     9.18   0.000     .0263366    .0406355
                 _cons |  -.5684791   .9001661    -0.63   0.528    -2.332907    1.195949
     -----------------------------------------------------------------------------------
-:::
 
-::: frame
-### Worked Example with Stata
+
+## Example with Stata {background-color="#d9edc2"}
+
 
 -   Here are all the results from the regressions together
 
@@ -1432,13 +1351,12 @@ Interactions Between Continuous Variables
     rmse               13.432         13.393         12.448         12.449         12.459         12.179  
     N                   15817          15817          15817          15817          15817          15817  
     ------------------------------------------------------------------------------------------------------
-:::
 
-::: frame
-### Nonlinear Effects of Student Teacher Ratio on Test Scores
 
-::: block
-Introduction
+# Nonlinear Effects of Student Teacher Ratio on Test Scores
+
+
+## Introduction
 
 -   We end the chapter by revisiting the effect of class size and test
     scores
@@ -1462,34 +1380,25 @@ Introduction
         -   Lets class size effect depend on class size
 
 -   Example also uses hypothesis testing techniques learned earlier
-:::
-:::
 
-::: frame
-### Nonlinear Effects of Student Teacher Ratio on Test Scores
+
+## Introduction
+
 
 ![](table831.jpg){fig-align="center" width="7in"}
-:::
 
-::: frame
-### Nonlinear Effects of Student Teacher Ratio on Test Scores
+## Introduction
+
 
 ![](table832.jpg){fig-align="center" width="7in"}
-:::
 
-::: frame
-### Nonlinear Effects of Student Teacher Ratio on Test Scores
+## Introduction
+
 
 ![](table833.jpg){fig-align="center" width="7in"}
-:::
 
 
-
-::: frame
-### Nonlinear Effects of Student Teacher Ratio on Test Scores
-
-::: block
-Base Specification
+## Base Specification
 
 -   Column 1 contains the base specification
 
@@ -1504,14 +1413,9 @@ Base Specification
     -   One more student per teacher lowers test scores by one point
 
     -   Significant at the 1% level
-:::
-:::
 
-::: frame
-### Nonlinear Effects of Student Teacher Ratio on Test Scores
 
-::: block
-Alternative Specification with Income Control
+## Alternative Specification with Income Control
 
 -   Column 2 adds log district income to the base specification
 
@@ -1531,14 +1435,9 @@ Alternative Specification with Income Control
     -   Statistically significant at 1% level
 
     -   It is a relatively small coefficient
-:::
-:::
 
-::: frame
-### Nonlinear Effects of Student Teacher Ratio on Test Scores
 
-::: block
-Interaction with High Fraction ESL
+## Interaction with High Fraction ESL
 
 -   Columns 3-4 explore interaction terms with $HiEL_{i}$
 
@@ -1559,11 +1458,10 @@ Interaction with High Fraction ESL
 
         -   This is slope on $STR_{i}$ for districts where
             $HiEL_{i} = 0$
-:::
-:::
 
-::: frame
-### Nonlinear Effects of Student Teacher Ratio on Test Scores
+
+## Interaction with High Fraction ESL
+
 
 -   Coefficient on $HiEL_{i} \times STR_{i}$ is *difference* in slope
     for high ESL districts
@@ -1591,13 +1489,9 @@ Interaction with High Fraction ESL
     -   Slope on $STR_{i}$ when $HiEL_{i} = 1$ is $-0.53 - 0.58 = -1.11$
 
     -   Upward intercept shift when $HiEL_{i} = 1$ is about the same
-:::
 
-::: frame
-### Nonlinear Effects of Student Teacher Ratio on Test Scores
 
-::: block
-Nonlinearities in Test Score Effect
+## Nonlinearities in Test Score Effect
 
 -   Columns 5-7 explore nonlinearities in the class size effect
 
@@ -1621,11 +1515,10 @@ Nonlinearities in Test Score Effect
             $\frac{\Delta \hat{TestScore}_{i}}{\Delta STR_{i}} = 64.33 + 2(-3.42)(20) +  3(0.059)(20)^2 = -1.67$
 
     -   Also note intecept shift downward for high ESL districts
-:::
-:::
 
-::: frame
-### Nonlinear Effects of Student Teacher Ratio on Test Scores
+
+## Nonlinearities in Test Score Effect
+
 
 -   Column 7 reports very similar specification
 
@@ -1646,25 +1539,21 @@ Nonlinearities in Test Score Effect
 
         -   Also, reject null that interaction terms are jointly zero at
             5% level
-:::
 
-::: frame
-### Nonlinear Effects of Student Teacher Ratio on Test Scores
+
+## Nonlinearities in Test Score Effect
+
 
 ![](nonlineartestscore.jpg){fig-align="center" width="7in"}
-:::
 
-::: frame
-### Nonlinear Effects of Student Teacher Ratio on Test Scores
+
+## Nonlinearities in Test Score Effect
+
 
 ![](interacttestscore.jpg){fig-align="center" width="7in"}
-:::
 
-::: frame
-### Nonlinear Effects of Student Teacher Ratio on Test Scores
 
-::: block
-Summary
+## Summary
 
 -   Table 8.3 in text presents many specifications
 
@@ -1690,5 +1579,4 @@ Summary
 
         -   However, in column 6, differences in slope are significant
             when we allow nonlinearities
-:::
-:::
+
