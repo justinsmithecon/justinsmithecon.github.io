@@ -335,8 +335,10 @@
 
 <section class="slide level2">
 
-<section id="introduction" class="frame">
-<h3>Introduction</h3>
+<p>#Introduction</p>
+</section>
+<section id="introduction" class="slide level2">
+<h2>Introduction</h2>
 <ul>
 <li><p>In all models we have studied, the regression slope is constant</p>
 <ul>
@@ -357,8 +359,8 @@
 <li><p>In this section we extend the model to allow nonlinearities</p></li>
 </ul>
 </section>
-<section id="introduction-1" class="frame">
-<h3>Introduction</h3>
+<section id="introduction-1" class="slide level2">
+<h2>Introduction</h2>
 <ul>
 <li><p>All models we have examined are linear in the <span class="math inline">\(X\)</span> variables</p></li>
 <li><p>Sometimes this produces a bad fit to the data</p></li>
@@ -376,18 +378,17 @@
 <li><p>We can extend the regression to allow curvature in the line</p></li>
 </ul>
 </section>
-<section id="the-simple-regression-model" class="frame">
-<h3>The Simple Regression Model</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="districtincome.jpg" style="width:7in"></p>
-</figure>
-</div>
+<section id="introduction-2" class="slide level2">
+<h2>Introduction</h2>
+
+<img data-src="districtincome.jpg" style="width:7in" class="r-stretch quarto-figure-center"></section>
+<section>
+<section id="nonlinear-functions-of-a-single-independent-variable" class="title-slide slide level1 center">
+<h1>Nonlinear Functions of a Single Independent Variable</h1>
+
 </section>
-<section id="nonlinear-functions-of-a-single-independent-variable" class="frame">
-<h3>Nonlinear Functions of a Single Independent Variable</h3>
-<div class="block">
-<p>Quadratic Functions</p>
+<section id="quadratic-functions" class="slide level2">
+<h2>Quadratic Functions</h2>
 <ul>
 <li><p>Recall graph on previous slide</p></li>
 <li><p>That line would fit better if curved</p>
@@ -402,10 +403,9 @@
 <li><p>The easiest way to allow curvature is a quadratic function</p></li>
 <li><p>A quadratic relationship between test scores and income is <span class="math display">\[TestScore_{i} = \beta_{0} + \beta_{1}Income_{i} + \beta_{2}Income_{i}^2 + u_{i}\]</span></p></li>
 </ul>
-</div>
 </section>
-<section id="nonlinear-functions-of-a-single-independent-variable-1" class="frame">
-<h3>Nonlinear Functions of a Single Independent Variable</h3>
+<section id="quadratic-functions-1" class="slide level2">
+<h2>Quadratic Functions</h2>
 <ul>
 <li><p>The population regression function in this model is <span class="math display">\[E[TestScore_{i}|Income_{i}] = \beta_{0} + \beta_{1}Income_{i} + \beta_{2}Income_{i}^2\]</span></p></li>
 <li><p>This specification allows effect of income on test scores to depend on income</p></li>
@@ -413,8 +413,8 @@
 <li><p>Divide both sides by <span class="math inline">\(\Delta Income_{i}\)</span> <span class="math display">\[\frac{ \Delta E[TestScore_{i}|Income_{i}]}{\Delta Income_{i}} = \beta_{1}+ \beta_{2}\frac{\Delta Income_{i}^2}{\Delta Income_{i}}\]</span></p></li>
 </ul>
 </section>
-<section id="nonlinear-functions-of-a-single-independent-variable-2" class="frame">
-<h3>Nonlinear Functions of a Single Independent Variable</h3>
+<section id="quadratic-functions-2" class="slide level2">
+<h2>Quadratic Functions</h2>
 <ul>
 <li><p>When <span class="math inline">\(\Delta Income_{i}\)</span> is small, we can approximate <span class="math inline">\(\frac{\Delta Income_{i}^2}{\Delta Income_{i}}\)</span> <span class="math display">\[\frac{\Delta Income_{i}^2}{\Delta Income_{i}} \approx 2Income_{i}\]</span></p></li>
 <li><p>Plugging into the main equation <span class="math display">\[\frac{E[TestScore_{i}|Income_{i}]}{\Delta Income_{i}} = \beta_{1}+ 2\beta_{2}Income_{i}\]</span></p></li>
@@ -425,8 +425,8 @@
 </ul></li>
 </ul>
 </section>
-<section id="nonlinear-functions-of-a-single-independent-variable-3" class="frame">
-<h3>Nonlinear Functions of a Single Independent Variable</h3>
+<section id="quadratic-functions-3" class="slide level2">
+<h2>Quadratic Functions</h2>
 <ul>
 <li><p>The signs of <span class="math inline">\(\beta_{1}\)</span> and <span class="math inline">\(\beta_{2}\)</span> determine shape of function</p>
 <ul>
@@ -445,15 +445,15 @@
 <li><p>Estimated effect of income on test scores is <span class="math display">\[\frac{\Delta \hat{TestScore}_{i}}{\Delta Income_{i}} = \hat{\beta}_{1}+ 2\hat{\beta}_{2}Income_{i}\]</span></p></li>
 </ul>
 </section>
-<section id="nonlinear-functions-of-a-single-independent-variable-4" class="frame">
-<h3>Nonlinear Functions of a Single Independent Variable</h3>
+<section id="quadratic-functions-4" class="slide level2">
+<h2>Quadratic Functions</h2>
 <ul>
 <li><p>Ex: estimated quadratic regression function <span class="math display">\[\hat{TestScore}_{i} = 607.3 + 3.85 Income - 0.0423 Income^2\]</span></p></li>
 <li><p>Estimated effect of income on test scores is <span class="math display">\[\frac{\Delta\hat{TestScore}_{i}}{\Delta Income_{i}} = 3.85- 2(0.0423)Income_{i}\]</span></p></li>
 </ul>
 </section>
-<section id="nonlinear-functions-of-a-single-independent-variable-5" class="frame">
-<h3>Nonlinear Functions of a Single Independent Variable</h3>
+<section id="quadratic-functions-5" class="slide level2">
+<h2>Quadratic Functions</h2>
 <ul>
 <li><p>Note how effect depends on level of income</p>
 <ul>
@@ -463,8 +463,8 @@
 </ul></li>
 </ul>
 </section>
-<section id="nonlinear-functions-of-a-single-independent-variable-6" class="frame">
-<h3>Nonlinear Functions of a Single Independent Variable</h3>
+<section id="quadratic-functions-6" class="slide level2">
+<h2>Quadratic Functions</h2>
 <ul>
 <li><p>Slope is high at low values of income, then falls as income grows larger</p>
 <ul>
@@ -487,18 +487,12 @@
 </ul></li>
 </ul>
 </section>
-<section id="the-simple-regression-model-1" class="frame">
-<h3>The Simple Regression Model</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="quad2.jpg" style="width:7in"></p>
-</figure>
-</div>
-</section>
-<section id="nonlinear-functions-of-a-single-independent-variable-7" class="frame">
-<h3>Nonlinear Functions of a Single Independent Variable</h3>
-<div class="block">
-<p>Polynomial Functions</p>
+<section id="quadratic-functions-7" class="slide level2">
+<h2>Quadratic Functions</h2>
+
+<img data-src="quad2.jpg" style="width:7in" class="r-stretch quarto-figure-center"></section>
+<section id="polynomial-functions" class="slide level2">
+<h2>Polynomial Functions</h2>
 <ul>
 <li><p>We can allow for more flexibility in function with higher powers of <span class="math inline">\(X\)</span></p>
 <ul>
@@ -517,10 +511,9 @@
 </ul></li>
 <li><p>Effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span> is more complicated with higher polynomials</p></li>
 </ul>
-</div>
 </section>
-<section id="nonlinear-functions-of-a-single-independent-variable-8" class="frame">
-<h3>Nonlinear Functions of a Single Independent Variable</h3>
+<section id="polynomial-functions-1" class="slide level2">
+<h2>Polynomial Functions</h2>
 <ul>
 <li><p>Computing effect can be more difficult with higher powers</p></li>
 <li><p>Ex: estimated quadratic function <span class="math display">\[\hat{Y}_{i} = \hat{\beta}_{0} + \hat{\beta}_{1}X_{i} + \hat{\beta}_{2}X_{i}^2\]</span> <span class="math display">\[\frac{\Delta \hat{Y}_{i}}{\Delta X_{i}} = \hat{\beta}_{1}+ 2\hat{\beta}_{2}X_{i}\]</span></p></li>
@@ -528,18 +521,12 @@
 <li><p>and so on</p></li>
 </ul>
 </section>
-<section id="the-simple-regression-model-2" class="frame">
-<h3>The Simple Regression Model</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="poly.jpg" style="width:7in"></p>
-</figure>
-</div>
-</section>
-<section id="nonlinear-functions-of-a-single-independent-variable-9" class="frame">
-<h3>Nonlinear Functions of a Single Independent Variable</h3>
-<div class="block">
-<p>Testing the Null that the Regression Function is Linear</p>
+<section id="polynomial-functions-2" class="slide level2">
+<h2>Polynomial Functions</h2>
+
+<img data-src="poly.jpg" style="width:7in" class="r-stretch quarto-figure-center"></section>
+<section id="testing-null-that-the-regression-is-linear" class="slide level2">
+<h2>Testing Null that the Regression is Linear</h2>
 <ul>
 <li><p>We can test between polynomial and linear functions</p></li>
 <li><p>Procedure is to use an <span class="math inline">\(F\)</span>-test as discussed last chapter</p></li>
@@ -552,12 +539,9 @@
 <li><p>Accepting null means function is linear</p></li>
 <li><p>Rejecting means it is nonlinear in some way</p></li>
 </ul>
-</div>
 </section>
-<section id="nonlinear-functions-of-a-single-independent-variable-10" class="frame">
-<h3>Nonlinear Functions of a Single Independent Variable</h3>
-<div class="block">
-<p>Choosing the Degree of Polynomial</p>
+<section id="choosing-the-degree-of-polynomial" class="slide level2">
+<h2>Choosing the Degree of Polynomial</h2>
 <ul>
 <li><p>Higher order polynomials increase flexibility of the regression</p></li>
 <li><p>But, if irrelevant can increase standard errors</p>
@@ -574,12 +558,9 @@
 </ol></li>
 <li><p>This is sequentially pruning model to get right specification</p></li>
 </ul>
-</div>
 </section>
-<section id="nonlinear-functions-of-a-single-independent-variable-11" class="frame">
-<h3>Nonlinear Functions of a Single Independent Variable</h3>
-<div class="block">
-<p>Logarithms</p>
+<section id="logarithms" class="slide level2">
+<h2>Logarithms</h2>
 <ul>
 <li><p>Common way to include nonlinearities is with logarithms</p></li>
 <li><p>What is a logarithm?</p>
@@ -591,10 +572,9 @@
 <li><p>Ex: Richter scale (for earthquakes) is a base-10 log scale</p></li>
 </ul></li>
 </ul>
-</div>
 </section>
-<section id="nonlinear-functions-of-a-single-independent-variable-12" class="frame">
-<h3>Nonlinear Functions of a Single Independent Variable</h3>
+<section id="logarithms-1" class="slide level2">
+<h2>Logarithms</h2>
 <table>
 <caption>Base 10 Logarithm</caption>
 <tbody>
@@ -631,8 +611,8 @@
 </ul></li>
 </ul>
 </section>
-<section id="nonlinear-functions-of-a-single-independent-variable-13" class="frame">
-<h3>Nonlinear Functions of a Single Independent Variable</h3>
+<section id="logarithms-2" class="slide level2">
+<h2>Logarithms</h2>
 <ul>
 <li><p>Ex: let <span class="math inline">\(x = 100\)</span> and <span class="math inline">\(\Delta x = 1\)</span></p>
 <ul>
@@ -651,10 +631,8 @@
 </ul></li>
 </ul>
 </section>
-<section id="nonlinear-functions-of-a-single-independent-variable-14" class="frame">
-<h3>Nonlinear Functions of a Single Independent Variable</h3>
-<div class="block">
-<p>Log-Linear Model</p>
+<section id="log-linear-model" class="slide level2">
+<h2>Log-Linear Model</h2>
 <ul>
 <li><p>A <strong>log-linear</strong> model is when <span class="math inline">\(Y\)</span> is in logs, but <span class="math inline">\(X\)</span> is not <span class="math display">\[ln(Y_{i}) = \beta_{0}+\beta_{1}X_{i} + u_{i}\]</span></p></li>
 <li><p>Often used when measuring the return to education</p></li>
@@ -662,10 +640,9 @@
 <li><p>The interpretation of <span class="math inline">\(\beta_{1}\)</span> is <span class="math display">\[\beta_{1} = \frac{\Delta ln(wage)}{\Delta educ}\]</span></p></li>
 <li><p>Remember that <span class="math inline">\(100\times \Delta ln(wage)\)</span> is roughly equal to % change in wage</p></li>
 </ul>
-</div>
 </section>
-<section id="nonlinear-functions-of-a-single-independent-variable-15" class="frame">
-<h3>Nonlinear Functions of a Single Independent Variable</h3>
+<section id="log-linear-model-1" class="slide level2">
+<h2>Log-Linear Model</h2>
 <ul>
 <li><p>So if we multiply <span class="math inline">\(\beta_{1}\)</span> by 100 then <span class="math display">\[100\times \beta_{1} \approx \frac{\% \Delta wage}{\Delta educ}\]</span></p>
 <ul>
@@ -678,10 +655,8 @@
 <li><p>In the general model <span class="math display">\[100\times \beta_{1} \approx \frac{\% \Delta Y_{i}}{\Delta X_{i}}\]</span></p></li>
 </ul>
 </section>
-<section id="nonlinear-functions-of-a-single-independent-variable-16" class="frame">
-<h3>Nonlinear Functions of a Single Independent Variable</h3>
-<div class="block">
-<p>Linear-Log Model</p>
+<section id="linear-log-model" class="slide level2">
+<h2>Linear-Log Model</h2>
 <ul>
 <li><p>A <strong>linear-log</strong> model is when <span class="math inline">\(X\)</span> is in logs, but <span class="math inline">\(Y\)</span> is not <span class="math display">\[Y_{i} = \beta_{0}+\beta_{1}ln(X_{i}) + u_{i}\]</span></p></li>
 <li><p>One application is the effect of GDP on life expectancy <span class="math display">\[expectancy= \beta_{0} + \beta_{1}ln(GDP) + u\]</span></p>
@@ -691,10 +666,9 @@
 </ul>
 <p><span class="math display">\[\beta_{1} = \frac{\Delta expectancy}{\Delta ln(GDP)}\]</span></p></li>
 </ul>
-</div>
 </section>
-<section id="nonlinear-functions-of-a-single-independent-variable-17" class="frame">
-<h3>Nonlinear Functions of a Single Independent Variable</h3>
+<section id="linear-log-model-1" class="slide level2">
+<h2>Linear-Log Model</h2>
 <ul>
 <li><p>If we divide <span class="math inline">\(\beta_{1}\)</span> by 100 <span class="math display">\[\frac{\beta_{1}}{100} = \frac{\Delta expectancy}{100 \times \Delta ln(GDP)} = \frac{\Delta expectancy}{\% \Delta GDP}\]</span></p></li>
 <li><p><span class="math inline">\(\frac{\beta_{1}}{100}\)</span> measures effect of 1% change in GDP on expectancy</p></li>
@@ -702,20 +676,17 @@
 <li><p>It is relatively rare to see this model in practice</p></li>
 </ul>
 </section>
-<section id="nonlinear-functions-of-a-single-independent-variable-18" class="frame">
-<h3>Nonlinear Functions of a Single Independent Variable</h3>
-<div class="block">
-<p>Log-Log Model</p>
+<section id="log-log-model" class="slide level2">
+<h2>Log-Log Model</h2>
 <ul>
 <li><p>A <strong>log-log</strong> model is when both <span class="math inline">\(Y\)</span> and <span class="math inline">\(X\)</span> are in logs <span class="math display">\[ln(Y_{i}) = \beta_{0}+\beta_{1}ln(X_{i}) + u_{i}\]</span></p></li>
 <li><p>This is used to estimate the <em>elasticity</em> between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span></p></li>
 <li><p>Suppose you want to know price elasticity of demand for ticket sales <span class="math display">\[ln(sales)= \beta_{0} + \beta_{1}ln(price) + u\]</span></p></li>
 <li><p>In this case <span class="math display">\[\beta_{1} = \frac{\Delta ln(sales)}{\Delta ln(price)}\]</span></p></li>
 </ul>
-</div>
 </section>
-<section id="nonlinear-functions-of-a-single-independent-variable-19" class="frame">
-<h3>Nonlinear Functions of a Single Independent Variable</h3>
+<section id="log-log-model-1" class="slide level2">
+<h2>Log-Log Model</h2>
 <ul>
 <li><p>If we multiply and divide <span class="math inline">\(\beta_{1}\)</span> by 100 <span class="math display">\[\beta_{1} = \frac{100\times \Delta ln(sales)}{100 \times \Delta ln(price)} =  \frac{\% \Delta sales}{\% \Delta price}\]</span></p></li>
 <li><p><span class="math inline">\(\beta_{1}\)</span> measures percent effect on ticket sales from a 1% increase in price</p>
@@ -726,56 +697,32 @@
 <li><p>Note that you do not need to alter <span class="math inline">\(\beta_{1}\)</span> before interpreting</p></li>
 </ul>
 </section>
-<section id="nonlinear-functions-of-a-single-independent-variable-20" class="frame">
-<h3>Nonlinear Functions of a Single Independent Variable</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="matrix.jpg" style="width:7in"></p>
-</figure>
-</div>
-</section>
-<section id="nonlinear-functions-of-a-single-independent-variable-21" class="frame">
-<h3>Nonlinear Functions of a Single Independent Variable</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="loglinear.jpg" style="width:7in"></p>
-</figure>
-</div>
-</section>
-<section id="nonlinear-functions-of-a-single-independent-variable-22" class="frame">
-<h3>Nonlinear Functions of a Single Independent Variable</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="linearlog.jpg" style="width:7in"></p>
-</figure>
-</div>
-</section>
-<section id="nonlinear-functions-of-a-single-independent-variable-23" class="frame">
-<h3>Nonlinear Functions of a Single Independent Variable</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="linearlog2.jpg" style="width:7in"></p>
-</figure>
-</div>
-</section>
-<section id="nonlinear-functions-of-a-single-independent-variable-24" class="frame">
-<h3>Nonlinear Functions of a Single Independent Variable</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="loglog.jpg" style="width:7in"></p>
-</figure>
-</div>
-</section>
-<section id="nonlinear-functions-of-a-single-independent-variable-25" class="frame">
-<h3>Nonlinear Functions of a Single Independent Variable</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="comparelog.jpg" style="width:7in"></p>
-</figure>
-</div>
-</section>
-<section id="worked-example-with-stata" class="frame">
-<h3>Worked Example with Stata</h3>
+<section id="visualizing-nonlinear-models" class="slide level2">
+<h2>Visualizing Nonlinear Models</h2>
+
+<img data-src="matrix.jpg" style="width:7in" class="r-stretch quarto-figure-center"></section>
+<section id="visualizing-nonlinear-models-1" class="slide level2">
+<h2>Visualizing Nonlinear Models</h2>
+
+<img data-src="loglinear.jpg" style="width:7in" class="r-stretch quarto-figure-center"></section>
+<section id="visualizing-nonlinear-models-2" class="slide level2">
+<h2>Visualizing Nonlinear Models</h2>
+
+<img data-src="linearlog.jpg" style="width:7in" class="r-stretch quarto-figure-center"></section>
+<section id="visualizing-nonlinear-models-3" class="slide level2">
+<h2>Visualizing Nonlinear Models</h2>
+
+<img data-src="linearlog2.jpg" style="width:7in" class="r-stretch quarto-figure-center"></section>
+<section id="visualizing-nonlinear-models-4" class="slide level2">
+<h2>Visualizing Nonlinear Models</h2>
+
+<img data-src="loglog.jpg" style="width:7in" class="r-stretch quarto-figure-center"></section>
+<section id="visualizing-nonlinear-models-5" class="slide level2">
+<h2>Visualizing Nonlinear Models</h2>
+
+<img data-src="comparelog.jpg" style="width:7in" class="r-stretch quarto-figure-center"></section>
+<section id="example-with-stata" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
 <ul>
 <li><p>We continue above with the relationship between test scores and district income</p></li>
 <li><p>Below we estimate various nonlinear functions of income</p>
@@ -789,8 +736,8 @@
 <li><p>We will interpret coefficients in each</p></li>
 </ul>
 </section>
-<section id="worked-example-with-stata-1" class="frame">
-<h3>Worked Example with Stata</h3>
+<section id="example-with-stata-1" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
 <ul>
 <li><p>First, create necessary variables</p></li>
 <li><p>Then estimate regressions</p></li>
@@ -820,8 +767,8 @@
     regress lntestscr lnavginc;
         estimates store loglog;</code></pre>
 </section>
-<section id="worked-example-with-stata-2" class="frame">
-<h3>Worked Example with Stata</h3>
+<section id="example-with-stata-2" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
 <ul>
 <li>Export results in easy to read table</li>
 </ul>
@@ -848,8 +795,8 @@ rmse               13.387         12.724         12.618          0.021          
 N                     420            420            420            420            420  
 ---------------------------------------------------------------------------------------</code></pre>
 </section>
-<section id="worked-example-with-stata-3" class="frame">
-<h3>Worked Example with Stata</h3>
+<section id="example-with-stata-3" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
 <ul>
 <li><p>Linear model</p>
 <ul>
@@ -870,8 +817,8 @@ N                     420            420            420            420          
 </ul></li>
 </ul>
 </section>
-<section id="worked-example-with-stata-4" class="frame">
-<h3>Worked Example with Stata</h3>
+<section id="example-with-stata-4" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
 <ul>
 <li><p>Log Linear model</p>
 <ul>
@@ -887,11 +834,14 @@ N                     420            420            420            420          
 <li><p>This is the elasticity of test scores with respect to income</p></li>
 </ul></li>
 </ul>
+</section></section>
+<section>
+<section id="interactions-between-variables" class="title-slide slide level1 center">
+<h1>Interactions Between Variables</h1>
+
 </section>
-<section id="interactions-between-variables" class="frame">
-<h3>Interactions Between Variables</h3>
-<div class="block">
-<p>Introduction</p>
+<section id="introduction-3" class="slide level2">
+<h2>Introduction</h2>
 <ul>
 <li><p>Quadratics allowed effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span> to depend on <span class="math inline">\(X\)</span></p>
 <ul>
@@ -912,12 +862,9 @@ N                     420            420            420            420          
 <li><p>Also between continuous variables</p></li>
 </ul></li>
 </ul>
-</div>
 </section>
-<section id="interactions-between-variables-1" class="frame">
-<h3>Interactions Between Variables</h3>
-<div class="block">
-<p>Model with Multiple Dummy Variables</p>
+<section id="model-with-multiple-dummy-variables" class="slide level2">
+<h2>Model with Multiple Dummy Variables</h2>
 <ul>
 <li><p>First, we examine a model with two dummy variables but no interaction</p></li>
 <li><p>Suppose we are interested in the effect of gender and marriage on wages <span class="math display">\[wage_{i} = \beta_{0} + \beta_{1}fem_{i} + \beta_{2}marr_{i} + u_{i}\]</span></p></li>
@@ -928,10 +875,9 @@ N                     420            420            420            420          
 </ul></li>
 <li><p>How do we interpret the parameters of this model?</p></li>
 </ul>
-</div>
 </section>
-<section id="interactions-between-variables-2" class="frame">
-<h3>Interactions Between Variables</h3>
+<section id="model-with-multiple-dummy-variables-1" class="slide level2">
+<h2>Model with Multiple Dummy Variables</h2>
 <ul>
 <li><p>As before, look at population regression function</p>
 <ul>
@@ -942,16 +888,16 @@ N                     420            420            420            420          
 </ul></li>
 </ul>
 </section>
-<section id="interactions-between-variables-3" class="frame">
-<h3>Interactions Between Variables</h3>
+<section id="model-with-multiple-dummy-variables-2" class="slide level2">
+<h2>Model with Multiple Dummy Variables</h2>
 <ul>
 <li><p><span class="math inline">\(\beta_{0}\)</span> is average wage when male, unmarried <span class="math display">\[E[wage_{i}|fem_{i}=0,marr_{i}=0] =  \beta_{0}\]</span></p></li>
 <li><p><span class="math inline">\(\beta_{1}\)</span> is difference between unmarried woman and unmarried man <span class="math display">\[E[wage_{i}|fem_{i}=1,marr_{i}=0]  - E[wage_{i}|fem_{i}=0,marr_{i}=0]\]</span> <span class="math display">\[= \beta_{0} + \beta_{1} -  \beta_{0}\]</span> <span class="math display">\[= \beta_{1}\]</span></p></li>
 <li><p><span class="math inline">\(\beta_{1}\)</span> <u>also</u> difference between married woman and married man <span class="math display">\[E[wage_{i}|fem_{i}=1,marr_{i}=1]  - E[wage_{i}|fem_{i}=0,marr_{i}=1]\]</span> <span class="math display">\[=  \beta_{0} + \beta_{1}+ \beta_{2} - (\beta_{0} + \beta_{2})\]</span> <span class="math display">\[= \beta_{1}\]</span></p></li>
 </ul>
 </section>
-<section id="interactions-between-variables-4" class="frame">
-<h3>Interactions Between Variables</h3>
+<section id="model-with-multiple-dummy-variables-3" class="slide level2">
+<h2>Model with Multiple Dummy Variables</h2>
 <ul>
 <li><p>Model imposes that female-male difference does not depend on marriage</p>
 <ul>
@@ -964,8 +910,8 @@ N                     420            420            420            420          
 <p><span class="math display">\[E[wage_{i}|fem_{i}=0,marr_{i}=1] - E[wage_{i}|fem_{i}=0,marr_{i}=0]\]</span> <span class="math display">\[=  \beta_{0} + \beta_{2} -  \beta_{0}\]</span> <span class="math display">\[=  \beta_{2}\]</span> <span class="math display">\[E[wage_{i}|fem_{i}=1,marr_{i}=1] - E[wage_{i}|fem_{i}=1,marr_{i}=0]\]</span> <span class="math display">\[=  \beta_{0} + \beta_{1}+ \beta_{2} - (\beta_{0} + \beta_{1})\]</span> <span class="math display">\[=  \beta_{2}\]</span></p></li>
 </ul>
 </section>
-<section id="interactions-between-variables-5" class="frame">
-<h3>Interactions Between Variables</h3>
+<section id="model-with-multiple-dummy-variables-4" class="slide level2">
+<h2>Model with Multiple Dummy Variables</h2>
 <ul>
 <li><p>In total model has four intercepts</p>
 <ul>
@@ -982,8 +928,8 @@ N                     420            420            420            420          
 </ul></li>
 </ul>
 </section>
-<section id="worked-example-with-stata-5" class="frame">
-<h3>Worked Example with Stata</h3>
+<section id="example-with-stata-5" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
 <ul>
 <li><p>As an example, we study the determinants of wages</p></li>
 <li><p>We are using the 2011 Survey of Labour and Income Dynamics (SLID)</p>
@@ -1005,8 +951,8 @@ N                     420            420            420            420          
 </ul></li>
 </ul>
 </section>
-<section id="worked-example-with-stata-6" class="frame">
-<h3>Worked Example with Stata</h3>
+<section id="example-with-stata-6" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
 <ul>
 <li>Suppose we regress wages on a female and married dummy <span class="math display">\[wage_{i} = \beta_{0} + \beta_{1}fem_{i}+ \beta_{2}marr_{i} + u_{i}\]</span></li>
 </ul>
@@ -1026,8 +972,8 @@ N                     420            420            420            420          
        _cons |   25.74684   .1798452   143.16   0.000     25.39432    26.09935
 ------------------------------------------------------------------------------</code></pre>
 </section>
-<section id="worked-example-with-stata-7" class="frame">
-<h3>Worked Example with Stata</h3>
+<section id="example-with-stata-7" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
 <ul>
 <li><p>Based on these estimates</p>
 <ul>
@@ -1045,10 +991,8 @@ N                     420            420            420            420          
 </ul></li>
 </ul>
 </section>
-<section id="interactions-between-variables-6" class="frame">
-<h3>Interactions Between Variables</h3>
-<div class="block">
-<p>Interactions Among Dummy Variables</p>
+<section id="interactions-among-dummy-variables" class="slide level2">
+<h2>Interactions Among Dummy Variables</h2>
 <ul>
 <li><p>Recall the model <span class="math display">\[wage_{i} = \beta_{0} + \beta_{1}fem_{i} +\beta_{2}marr_{i} + u_{i}\]</span></p>
 <ul>
@@ -1062,10 +1006,9 @@ N                     420            420            420            420          
 </ul></li>
 <li><p>Interacting the two variables changes that interpretation</p></li>
 </ul>
-</div>
 </section>
-<section id="interactions-between-variables-7" class="frame">
-<h3>Interactions Between Variables</h3>
+<section id="interactions-among-dummy-variables-1" class="slide level2">
+<h2>Interactions Among Dummy Variables</h2>
 <ul>
 <li><p>Suppose we add an interaction between <span class="math inline">\(fem_{i}\)</span> and <span class="math inline">\(marr_{i}\)</span> <span class="math display">\[wage_{i} = \beta_{0} + \beta_{1}fem_{i} +\beta_{2}marr_{i} +\beta_{3}(fem_{i}\times marr_{i}) + u_{i}\]</span></p></li>
 <li><p>Now suppose we measure the female-male difference</p>
@@ -1076,8 +1019,8 @@ N                     420            420            420            420          
 </ul></li>
 </ul>
 </section>
-<section id="interactions-between-variables-8" class="frame">
-<h3>Interactions Between Variables</h3>
+<section id="interactions-among-dummy-variables-2" class="slide level2">
+<h2>Interactions Among Dummy Variables</h2>
 <ul>
 <li><p>To see this, compute the female-male gap for unmarried and married</p>
 <ul>
@@ -1086,18 +1029,19 @@ N                     420            420            420            420          
 </ul></li>
 </ul>
 </section>
-<section id="interactions-between-variables-9" class="frame">
-<h3>Interactions Between Variables</h3>
+<section id="interactions-among-dummy-variables-3" class="slide level2">
+<h2>Interactions Among Dummy Variables</h2>
 <ul>
-<li><p>Likewise, married unmarried gap depends on gender <span class="math display">\[E[wage_{i}|marr_{i} = 1 , fem_{i} ]  - E[wage_{i}|marr_{i}=0 , fem_{i}]\]</span> <span class="math display">\[=( \beta_{0} + \beta_{1}fem_{i} + \beta_{2} +\beta_{3}fem_{i} )\]</span> <span class="math display">\[-  (\beta_{0}  + \beta_{1}fem_{i}  )\]</span> <span class="math display">\[=  \beta_{2}+\beta_{3}fem_{i}\]</span></p>
+<li><p>Likewise, married unmarried gap depends on gender <span class="math display">\[E[wage_{i}|marr_{i} = 1 , fem_{i} ]  - E[wage_{i}|marr_{i}=0 , fem_{i}]\]</span> <span class="math display">\[=( \beta_{0} + \beta_{1}fem_{i} + \beta_{2} +\beta_{3}fem_{i} )  -  (\beta_{0}  + \beta_{1}fem_{i}  )\]</span></p>
+<p><span class="math display">\[=  \beta_{2}+\beta_{3}fem_{i}\]</span></p>
 <ul>
 <li><p>marriage gap for men is <span class="math display">\[E[wage_{i}|marr_{i} = 1 , fem_{i} = 0 ]  - E[wage_{i}|marr_{i}=0 , fem_{i} = 0]\]</span> <span class="math display">\[=  \beta_{2}\]</span></p></li>
 <li><p>Marriage gap for women is <span class="math display">\[E[wage_{i}|marr_{i} = 1 , fem_{i} = 1 ]  - E[wage_{i}|marr_{i}=0 , fem_{i} = 1]\]</span> <span class="math display">\[=  \beta_{2} + \beta_{3}\]</span></p></li>
 </ul></li>
 </ul>
 </section>
-<section id="interactions-between-variables-10" class="frame">
-<h3>Interactions Between Variables</h3>
+<section id="interactions-among-dummy-variables-4" class="slide level2">
+<h2>Interactions Among Dummy Variables</h2>
 <ul>
 <li><p>To summarize, interacting dummies allows for</p>
 <ul>
@@ -1113,8 +1057,8 @@ N                     420            420            420            420          
 </ul></li>
 </ul>
 </section>
-<section id="interactions-between-variables-11" class="frame">
-<h3>Interactions Between Variables</h3>
+<section id="interactions-among-dummy-variables-5" class="slide level2">
+<h2>Interactions Among Dummy Variables</h2>
 <ul>
 <li><p>The interpretations for each are as follows</p>
 <ul>
@@ -1130,8 +1074,8 @@ N                     420            420            420            420          
 </ul></li>
 </ul>
 </section>
-<section id="worked-example-with-stata-8" class="frame">
-<h3>Worked Example with Stata</h3>
+<section id="example-with-stata-8" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
 <ul>
 <li>Suppose we interact female and married <span class="math display">\[wage_{i} = \beta_{0} + \beta_{1}fem_{i} +\beta_{2}marr_{i} +\beta_{3}(fem_{i}\times marr_{i}) + u_{i}\]</span></li>
 </ul>
@@ -1156,8 +1100,8 @@ female_married |  -4.143398    .412491   -10.04   0.000    -4.951927   -3.334868
          _cons |   24.57583   .2062195   119.17   0.000     24.17162    24.98005
 --------------------------------------------------------------------------------</code></pre>
 </section>
-<section id="worked-example-with-stata-9" class="frame">
-<h3>Worked Example with Stata</h3>
+<section id="example-with-stata-9" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
 <ul>
 <li><p>In this model,</p>
 <ul>
@@ -1177,10 +1121,8 @@ female_married |  -4.143398    .412491   -10.04   0.000    -4.951927   -3.334868
 <li><p>Note how <span class="math inline">\(\beta_{3}\)</span> measures change in gender gap for married, and also change in marriage gap for women</p></li>
 </ul>
 </section>
-<section id="interactions-between-variables-12" class="frame">
-<h3>Interactions Between Variables</h3>
-<div class="block">
-<p>Models with Dummy and Continuous Variables</p>
+<section id="models-with-dummy-and-continuous-variables" class="slide level2">
+<h2>Models with Dummy and Continuous Variables</h2>
 <ul>
 <li><p>Suppose we are interested in estimating</p>
 <p><span class="math display">\[wage_{i} = \beta_{0} + \beta_{1}fem_{i} + \beta_{2}educ_{i} + u_{i}\]</span></p>
@@ -1192,10 +1134,9 @@ female_married |  -4.143398    .412491   -10.04   0.000    -4.951927   -3.334868
 <li><p>The model contains one dummy, one continuous independent variable</p></li>
 <li><p>To understand interpretation of <span class="math inline">\(\beta_{1}\)</span>, take expected value <span class="math display">\[E[wage_{i}|fem_{i},educ_{i}] = \beta_{0} + \beta_{1}fem_{i} + \beta_{2}educ_{i}\]</span></p></li>
 </ul>
-</div>
 </section>
-<section id="interactions-between-variables-13" class="frame">
-<h3>Interactions Between Variables</h3>
+<section id="models-with-dummy-and-continuous-variables-1" class="slide level2">
+<h2>Models with Dummy and Continuous Variables</h2>
 <ul>
 <li><p>When <span class="math inline">\(fem_{i}\)</span> = 1 <span class="math display">\[E[wage_{i}|fem_{i} = 1,educ_{i}] = \beta_{0} + \beta_{1}+ \beta_{2}educ_{i}\]</span></p></li>
 <li><p>When <span class="math inline">\(fem_{i}\)</span>= 0 <span class="math display">\[E[wage_{i}|fem_{i} = 0,educ_{i}] = \beta_{0}  + \beta_{2}educ_{i}\]</span></p></li>
@@ -1203,8 +1144,8 @@ female_married |  -4.143398    .412491   -10.04   0.000    -4.951927   -3.334868
 <li><p><span class="math inline">\(\beta_{1}\)</span> is difference in average wage between women and men <span class="math display">\[\beta_{1} = E[wage_{i}|fem_{i} = 1,educ_{i}]  - E[wage_{i}|fem_{i} = 0,educ_{i}]\]</span></p></li>
 </ul>
 </section>
-<section id="interactions-between-variables-14" class="frame">
-<h3>Interactions Between Variables</h3>
+<section id="models-with-dummy-and-continuous-variables-2" class="slide level2">
+<h2>Models with Dummy and Continuous Variables</h2>
 <ul>
 <li><p>Notice that in expectation, we are holding education constant</p>
 <ul>
@@ -1224,18 +1165,12 @@ female_married |  -4.143398    .412491   -10.04   0.000    -4.951927   -3.334868
 </ul></li>
 </ul>
 </section>
-<section id="interactions-between-variables-15" class="frame">
-<h3>Interactions Between Variables</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="interceptshift.jpg" style="width:7in"></p>
-</figure>
-</div>
-</section>
-<section id="interactions-between-variables-16" class="frame">
-<h3>Interactions Between Variables</h3>
-<div class="block">
-<p>Interactions Between Continuous and Dummy Variables</p>
+<section id="models-with-dummy-and-continuous-variables-3" class="slide level2">
+<h2>Models with Dummy and Continuous Variables</h2>
+
+<img data-src="interceptshift.jpg" style="width:7in" class="r-stretch quarto-figure-center"></section>
+<section id="interactions-between-continuous-and-dummy-variables" class="slide level2">
+<h2>Interactions Between Continuous and Dummy Variables</h2>
 <ul>
 <li><p>We just saw how to allow for intercepts between groups</p>
 <ul>
@@ -1246,10 +1181,9 @@ female_married |  -4.143398    .412491   -10.04   0.000    -4.951927   -3.334868
 <li><p>The effect of <span class="math inline">\(educ_{i}\)</span> on <span class="math inline">\(E[wage_{i}|fem_{i},educ_{i}]\)</span> is measured by</p>
 <p><span class="math display">\[\frac{\Delta E[wage_{i}|fem_{i},educ_{i}] }{\Delta educ_{i}} =  \beta_{2} + \beta_{3}fem_{i}\]</span></p></li>
 </ul>
-</div>
 </section>
-<section id="interactions-between-variables-17" class="frame">
-<h3>Interactions Between Variables</h3>
+<section id="interactions-between-continuous-and-dummy-variables-1" class="slide level2">
+<h2>Interactions Between Continuous and Dummy Variables</h2>
 <ul>
 <li><p>In this setup</p>
 <ul>
@@ -1271,16 +1205,12 @@ female_married |  -4.143398    .412491   -10.04   0.000    -4.951927   -3.334868
 </ul></li>
 </ul>
 </section>
-<section id="interactions-between-variables-18" class="frame">
-<h3>Interactions Between Variables</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="slopeinterceptshift.jpg" style="width:7in"></p>
-</figure>
-</div>
-</section>
-<section id="interactions-between-variables-19" class="frame">
-<h3>Interactions Between Variables</h3>
+<section id="interactions-between-continuous-and-dummy-variables-2" class="slide level2">
+<h2>Interactions Between Continuous and Dummy Variables</h2>
+
+<img data-src="slopeinterceptshift.jpg" style="width:7in" class="r-stretch quarto-figure-center"></section>
+<section id="interactions-between-continuous-and-dummy-variables-3" class="slide level2">
+<h2>Interactions Between Continuous and Dummy Variables</h2>
 <ul>
 <li><p>In rare cases, you can also estimate a model with the same intercept, but different slopes <span class="math display">\[wage_{i} = \beta_{0}  + \beta_{2}educ_{i} +\beta_{3}(fem_{i} \times educ_{i})+ u_{i}\]</span></p>
 <ul>
@@ -1296,16 +1226,12 @@ female_married |  -4.143398    .412491   -10.04   0.000    -4.951927   -3.334868
 </ul></li>
 </ul>
 </section>
-<section id="interactions-between-variables-20" class="frame">
-<h3>Interactions Between Variables</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="slopeshift.jpg" style="width:7in"></p>
-</figure>
-</div>
-</section>
-<section id="worked-example-with-stata-10" class="frame">
-<h3>Worked Example with Stata</h3>
+<section id="interactions-between-continuous-and-dummy-variables-4" class="slide level2">
+<h2>Interactions Between Continuous and Dummy Variables</h2>
+
+<img data-src="slopeshift.jpg" style="width:7in" class="r-stretch quarto-figure-center"></section>
+<section id="example-with-stata-10" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
 <ul>
 <li>A model with intercept shift but same slopes would be <span class="math display">\[wage_{i} = \beta_{0} + \beta_{1}fem_{i} + \beta_{2}educ_{i} + u_{i}\]</span></li>
 </ul>
@@ -1327,8 +1253,8 @@ Linear regression                               Number of obs     =     15,817
        _cons |   .3170835   .5522942     0.57   0.566    -.7654761    1.399643
 ------------------------------------------------------------------------------</code></pre>
 </section>
-<section id="worked-example-with-stata-11" class="frame">
-<h3>Worked Example with Stata</h3>
+<section id="example-with-stata-11" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
 <ul>
 <li>A model with intercept shift and different slopes is <span class="math display">\[wage_{i} = \beta_{0} + \beta_{1}fem_{i} + \beta_{2}educ_{i} +\beta_{3}(fem_{i} \times educ_{i})+ u_{i}\]</span></li>
 </ul>
@@ -1352,8 +1278,8 @@ female_yrschl18 |   .0088005   .0830051     0.11   0.916     -.153899    .171500
           _cons |   .3703632    .813796     0.46   0.649     -1.22477    1.965496
 ---------------------------------------------------------------------------------</code></pre>
 </section>
-<section id="worked-example-with-stata-12" class="frame">
-<h3>Worked Example with Stata</h3>
+<section id="example-with-stata-12" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
 <ul>
 <li>A model with same intercepts but different slopes is <span class="math display">\[wage_{i} = \beta_{0} + \beta_{1}fem_{i} + \beta_{2}educ_{i} +\beta_{3}(fem_{i} \times educ_{i})+ u_{i}\]</span></li>
 </ul>
@@ -1375,10 +1301,8 @@ female_yrschl18 |  -.3678847   .0152029   -24.20   0.000    -.3976841   -.338085
           _cons |  -1.966818   .5616236    -3.50   0.000    -3.067664   -.8659719
 ---------------------------------------------------------------------------------</code></pre>
 </section>
-<section id="interactions-between-variables-21" class="frame">
-<h3>Interactions Between Variables</h3>
-<div class="block">
-<p>Interactions Between Continuous Variables</p>
+<section id="interactions-between-continuous-variables" class="slide level2">
+<h2>Interactions Between Continuous Variables</h2>
 <ul>
 <li><p>The final type of interaction is between two continuous variables</p></li>
 <li><p>Suppose we are interested in <span class="math display">\[wage_{i} = \beta_{0} + \beta_{1}exper_{i} + \beta_{2}educ_{i}+  \beta_{3}(exper_{i} \times educ_{i}) + u_{i}\]</span></p>
@@ -1392,10 +1316,9 @@ female_yrschl18 |  -.3678847   .0152029   -24.20   0.000    -.3976841   -.338085
 <li>Also effect of education to depend on experience</li>
 </ul></li>
 </ul>
-</div>
 </section>
-<section id="interactions-between-variables-22" class="frame">
-<h3>Interactions Between Variables</h3>
+<section id="interactions-between-continuous-variables-1" class="slide level2">
+<h2>Interactions Between Continuous Variables</h2>
 <ul>
 <li><p>To see this, compute change in wage with experience <span class="math display">\[\frac{\Delta E[wage_{i}|exper_{i},educ_{i}] }{\Delta exper_{i}} =  \beta_{1} + \beta_{3}educ_{i}\]</span></p></li>
 <li><p>There are two components to the effect</p>
@@ -1410,8 +1333,8 @@ female_yrschl18 |  -.3678847   .0152029   -24.20   0.000    -.3976841   -.338085
 </ul></li>
 </ul>
 </section>
-<section id="worked-example-with-stata-13" class="frame">
-<h3>Worked Example with Stata</h3>
+<section id="example-with-stata-13" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
 <ul>
 <li>A model with interactions between experience and earnings is <span class="math display">\[wage_{i} = \beta_{0} + \beta_{1}exper_{i} + \beta_{2}educ_{i}+  \beta_{3}(exper_{i} \times educ_{i}) + u_{i}\]</span></li>
 </ul>
@@ -1435,8 +1358,8 @@ yrxfte11_yrschl18 |    .033486   .0036474     9.18   0.000     .0263366    .0406
             _cons |  -.5684791   .9001661    -0.63   0.528    -2.332907    1.195949
 -----------------------------------------------------------------------------------</code></pre>
 </section>
-<section id="worked-example-with-stata-14" class="frame">
-<h3>Worked Example with Stata</h3>
+<section id="example-with-stata-14" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
 <ul>
 <li>Here are all the results from the regressions together</li>
 </ul>
@@ -1470,11 +1393,14 @@ r2_a                0.059          0.064          0.192          0.192          
 rmse               13.432         13.393         12.448         12.449         12.459         12.179  
 N                   15817          15817          15817          15817          15817          15817  
 ------------------------------------------------------------------------------------------------------</code></pre>
+</section></section>
+<section>
+<section id="nonlinear-effects-of-student-teacher-ratio-on-test-scores" class="title-slide slide level1 center">
+<h1>Nonlinear Effects of Student Teacher Ratio on Test Scores</h1>
+
 </section>
-<section id="nonlinear-effects-of-student-teacher-ratio-on-test-scores" class="frame">
-<h3>Nonlinear Effects of Student Teacher Ratio on Test Scores</h3>
-<div class="block">
-<p>Introduction</p>
+<section id="introduction-4" class="slide level2">
+<h2>Introduction</h2>
 <ul>
 <li><p>We end the chapter by revisiting the effect of class size and test scores</p></li>
 <li><p>Our models until now have been linear</p>
@@ -1495,36 +1421,21 @@ N                   15817          15817          15817          15817          
 </ul></li>
 <li><p>Example also uses hypothesis testing techniques learned earlier</p></li>
 </ul>
-</div>
 </section>
-<section id="nonlinear-effects-of-student-teacher-ratio-on-test-scores-1" class="frame">
-<h3>Nonlinear Effects of Student Teacher Ratio on Test Scores</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="table831.jpg" style="width:7in"></p>
-</figure>
-</div>
-</section>
-<section id="nonlinear-effects-of-student-teacher-ratio-on-test-scores-2" class="frame">
-<h3>Nonlinear Effects of Student Teacher Ratio on Test Scores</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="table832.jpg" style="width:7in"></p>
-</figure>
-</div>
-</section>
-<section id="nonlinear-effects-of-student-teacher-ratio-on-test-scores-3" class="frame">
-<h3>Nonlinear Effects of Student Teacher Ratio on Test Scores</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="table833.jpg" style="width:7in"></p>
-</figure>
-</div>
-</section>
-<section id="nonlinear-effects-of-student-teacher-ratio-on-test-scores-4" class="frame">
-<h3>Nonlinear Effects of Student Teacher Ratio on Test Scores</h3>
-<div class="block">
-<p>Base Specification</p>
+<section id="introduction-5" class="slide level2">
+<h2>Introduction</h2>
+
+<img data-src="table831.jpg" style="width:7in" class="r-stretch quarto-figure-center"></section>
+<section id="introduction-6" class="slide level2">
+<h2>Introduction</h2>
+
+<img data-src="table832.jpg" style="width:7in" class="r-stretch quarto-figure-center"></section>
+<section id="introduction-7" class="slide level2">
+<h2>Introduction</h2>
+
+<img data-src="table833.jpg" style="width:7in" class="r-stretch quarto-figure-center"></section>
+<section id="base-specification" class="slide level2">
+<h2>Base Specification</h2>
 <ul>
 <li><p>Column 1 contains the base specification</p></li>
 <li><p>Model is linear in student teacher ratio, with small set of controls</p>
@@ -1538,12 +1449,9 @@ N                   15817          15817          15817          15817          
 <li><p>Significant at the 1% level</p></li>
 </ul></li>
 </ul>
-</div>
 </section>
-<section id="nonlinear-effects-of-student-teacher-ratio-on-test-scores-5" class="frame">
-<h3>Nonlinear Effects of Student Teacher Ratio on Test Scores</h3>
-<div class="block">
-<p>Alternative Specification with Income Control</p>
+<section id="alternative-specification-with-income-control" class="slide level2">
+<h2>Alternative Specification with Income Control</h2>
 <ul>
 <li><p>Column 2 adds log district income to the base specification</p></li>
 <li><p>Slope on class size falls compared to base</p>
@@ -1559,12 +1467,9 @@ N                   15817          15817          15817          15817          
 <li><p>It is a relatively small coefficient</p></li>
 </ul></li>
 </ul>
-</div>
 </section>
-<section id="nonlinear-effects-of-student-teacher-ratio-on-test-scores-6" class="frame">
-<h3>Nonlinear Effects of Student Teacher Ratio on Test Scores</h3>
-<div class="block">
-<p>Interaction with High Fraction ESL</p>
+<section id="interaction-with-high-fraction-esl" class="slide level2">
+<h2>Interaction with High Fraction ESL</h2>
 <ul>
 <li><p>Columns 3-4 explore interaction terms with <span class="math inline">\(HiEL_{i}\)</span></p>
 <ul>
@@ -1583,10 +1488,9 @@ N                   15817          15817          15817          15817          
 </ul></li>
 </ul></li>
 </ul>
-</div>
 </section>
-<section id="nonlinear-effects-of-student-teacher-ratio-on-test-scores-7" class="frame">
-<h3>Nonlinear Effects of Student Teacher Ratio on Test Scores</h3>
+<section id="interaction-with-high-fraction-esl-1" class="slide level2">
+<h2>Interaction with High Fraction ESL</h2>
 <ul>
 <li><p>Coefficient on <span class="math inline">\(HiEL_{i} \times STR_{i}\)</span> is <em>difference</em> in slope for high ESL districts</p>
 <ul>
@@ -1608,10 +1512,8 @@ N                   15817          15817          15817          15817          
 </ul></li>
 </ul>
 </section>
-<section id="nonlinear-effects-of-student-teacher-ratio-on-test-scores-8" class="frame">
-<h3>Nonlinear Effects of Student Teacher Ratio on Test Scores</h3>
-<div class="block">
-<p>Nonlinearities in Test Score Effect</p>
+<section id="nonlinearities-in-test-score-effect" class="slide level2">
+<h2>Nonlinearities in Test Score Effect</h2>
 <ul>
 <li><p>Columns 5-7 explore nonlinearities in the class size effect</p>
 <ul>
@@ -1632,10 +1534,9 @@ N                   15817          15817          15817          15817          
 <li><p>Also note intecept shift downward for high ESL districts</p></li>
 </ul></li>
 </ul>
-</div>
 </section>
-<section id="nonlinear-effects-of-student-teacher-ratio-on-test-scores-9" class="frame">
-<h3>Nonlinear Effects of Student Teacher Ratio on Test Scores</h3>
+<section id="nonlinearities-in-test-score-effect-1" class="slide level2">
+<h2>Nonlinearities in Test Score Effect</h2>
 <ul>
 <li><p>Column 7 reports very similar specification</p>
 <ul>
@@ -1653,26 +1554,16 @@ N                   15817          15817          15817          15817          
 </ul></li>
 </ul>
 </section>
-<section id="nonlinear-effects-of-student-teacher-ratio-on-test-scores-10" class="frame">
-<h3>Nonlinear Effects of Student Teacher Ratio on Test Scores</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="nonlineartestscore.jpg" style="width:7in"></p>
-</figure>
-</div>
-</section>
-<section id="nonlinear-effects-of-student-teacher-ratio-on-test-scores-11" class="frame">
-<h3>Nonlinear Effects of Student Teacher Ratio on Test Scores</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="interacttestscore.jpg" style="width:7in"></p>
-</figure>
-</div>
-</section>
-<section id="nonlinear-effects-of-student-teacher-ratio-on-test-scores-12" class="frame">
-<h3>Nonlinear Effects of Student Teacher Ratio on Test Scores</h3>
-<div class="block">
-<p>Summary</p>
+<section id="nonlinearities-in-test-score-effect-2" class="slide level2">
+<h2>Nonlinearities in Test Score Effect</h2>
+
+<img data-src="nonlineartestscore.jpg" style="width:7in" class="r-stretch quarto-figure-center"></section>
+<section id="nonlinearities-in-test-score-effect-3" class="slide level2">
+<h2>Nonlinearities in Test Score Effect</h2>
+
+<img data-src="interacttestscore.jpg" style="width:7in" class="r-stretch quarto-figure-center"></section>
+<section id="summary" class="slide level2">
+<h2>Summary</h2>
 <ul>
 <li><p>Table 8.3 in text presents many specifications</p></li>
 <li><p>Here are the main takeaways</p>
@@ -1693,12 +1584,10 @@ N                   15817          15817          15817          15817          
 </ul></li>
 </ul></li>
 </ul>
-</div>
-</section>
 <div class="footer footer-default">
 
 </div>
-</section>
+</section></section>
     </div>
   </div>
 
@@ -1878,9 +1767,9 @@ N                   15817          15817          15817          15817          
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1050,
+        width: 1280,
 
-        height: 700,
+        height: 720,
 
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
