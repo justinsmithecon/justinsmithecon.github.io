@@ -25,7 +25,7 @@ show_date: false
 
 - <a href="https://justinsmithecon.github.io/teaching/ec655/Did/Did.html">Difference in Differences</a> 
 
-- <a href="https://justinsmithecon.github.io/teaching/ec655/Panel/Panel.html">Panel Data</a> 
+- <a href="https://justinsmithecon.github.io/teaching/ec655/Panel/panel.html">Panel Data</a> 
 
 
 
