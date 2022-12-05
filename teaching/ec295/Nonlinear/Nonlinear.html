@@ -333,11 +333,12 @@
   <p class="date">Fall 2022</p>
 </section>
 
-<section class="slide level2">
+<section>
+<section id="introduction" class="title-slide slide level1 center">
+<h1>Introduction</h1>
 
-<p>#Introduction</p>
 </section>
-<section id="introduction" class="slide level2">
+<section id="introduction-1" class="slide level2">
 <h2>Introduction</h2>
 <ul>
 <li><p>In all models we have studied, the regression slope is constant</p>
@@ -359,7 +360,7 @@
 <li><p>In this section we extend the model to allow nonlinearities</p></li>
 </ul>
 </section>
-<section id="introduction-1" class="slide level2">
+<section id="introduction-2" class="slide level2">
 <h2>Introduction</h2>
 <ul>
 <li><p>All models we have examined are linear in the <span class="math inline">\(X\)</span> variables</p></li>
@@ -378,10 +379,10 @@
 <li><p>We can extend the regression to allow curvature in the line</p></li>
 </ul>
 </section>
-<section id="introduction-2" class="slide level2">
+<section id="introduction-3" class="slide level2">
 <h2>Introduction</h2>
 
-<img data-src="districtincome.jpg" style="width:7in" class="r-stretch quarto-figure-center"></section>
+<img data-src="districtincome.jpg" style="width:7in" class="r-stretch quarto-figure-center"></section></section>
 <section>
 <section id="nonlinear-functions-of-a-single-independent-variable" class="title-slide slide level1 center">
 <h1>Nonlinear Functions of a Single Independent Variable</h1>
@@ -840,7 +841,7 @@ N                     420            420            420            420          
 <h1>Interactions Between Variables</h1>
 
 </section>
-<section id="introduction-3" class="slide level2">
+<section id="introduction-4" class="slide level2">
 <h2>Introduction</h2>
 <ul>
 <li><p>Quadratics allowed effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span> to depend on <span class="math inline">\(X\)</span></p>
@@ -1393,13 +1394,53 @@ r2_a                0.059          0.064          0.192          0.192          
 rmse               13.432         13.393         12.448         12.449         12.459         12.179  
 N                   15817          15817          15817          15817          15817          15817  
 ------------------------------------------------------------------------------------------------------</code></pre>
+</section>
+<section id="example-with-stata-15" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<ul>
+<li><p><strong>Model 1</strong> allows for different intercepts for women and married people</p>
+<ul>
+<li><p>Gender gap does not depend on marriage; marriage premium does not depend on gender</p></li>
+<li><p>Women earn $4.25 less than men, married people earn $5.09 more than non-married people</p></li>
+</ul></li>
+<li><p><strong>Model 2</strong> allows gender gap to depend on marriage; marriage gap to depend on gender</p>
+<ul>
+<li><p>Gender gap for unmarried is -$1.91</p></li>
+<li><p>Gender gap for married people is wider, equal to $-1.91 - $4.14</p></li>
+</ul></li>
+<li><p><strong>Model 3</strong> estimates returns to schooling, allows intercept shift for women</p>
+<ul>
+<li><p>Wages for women are $5.43 lower regardless of schooling</p></li>
+<li><p>Return to schooling is $2.08 for women and men</p></li>
+</ul></li>
+<li><p><strong>Model 4</strong> allows intercept and slope to differ for women</p>
+<ul>
+<li><p>Wages for women are $5.31 lower regardless of schooling</p></li>
+<li><p>Return to schooling is $2.08 for men, $2.09 for women</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="example-with-stata-16" class="slide level2" data-background-color="#d9edc2">
+<h2>Example with Stata</h2>
+<ul>
+<li><p><strong>Model 5</strong> allows only slope to differ for women</p>
+<ul>
+<li><p>Intercept is the same for men and women</p></li>
+<li><p>Return to schooling is $2.24 for men, $1.87 for women</p></li>
+</ul></li>
+<li><p><strong>Model 6</strong> allows interaction in effects of experience and education</p>
+<ul>
+<li><p>Return to experience is increasing in education</p></li>
+<li><p>Return to education is increasing in experience</p></li>
+</ul></li>
+</ul>
 </section></section>
 <section>
 <section id="nonlinear-effects-of-student-teacher-ratio-on-test-scores" class="title-slide slide level1 center">
 <h1>Nonlinear Effects of Student Teacher Ratio on Test Scores</h1>
 
 </section>
-<section id="introduction-4" class="slide level2">
+<section id="introduction-5" class="slide level2">
 <h2>Introduction</h2>
 <ul>
 <li><p>We end the chapter by revisiting the effect of class size and test scores</p></li>
@@ -1422,15 +1463,15 @@ N                   15817          15817          15817          15817          
 <li><p>Example also uses hypothesis testing techniques learned earlier</p></li>
 </ul>
 </section>
-<section id="introduction-5" class="slide level2">
-<h2>Introduction</h2>
-
-<img data-src="table831.jpg" style="width:7in" class="r-stretch quarto-figure-center"></section>
 <section id="introduction-6" class="slide level2">
 <h2>Introduction</h2>
 
-<img data-src="table832.jpg" style="width:7in" class="r-stretch quarto-figure-center"></section>
+<img data-src="table831.jpg" style="width:7in" class="r-stretch quarto-figure-center"></section>
 <section id="introduction-7" class="slide level2">
+<h2>Introduction</h2>
+
+<img data-src="table832.jpg" style="width:7in" class="r-stretch quarto-figure-center"></section>
+<section id="introduction-8" class="slide level2">
 <h2>Introduction</h2>
 
 <img data-src="table833.jpg" style="width:7in" class="r-stretch quarto-figure-center"></section>

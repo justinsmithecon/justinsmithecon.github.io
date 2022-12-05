@@ -19,29 +19,23 @@ title-slide-attributes:
   data-background-color: "#43464B"
 ---
 
-
-#Introduction
-
+# Introduction
 
 ## Introduction
 
 -   In all models we have studied, the regression slope is constant
 
-    -   When $X$ changes by 1, $Y$ changes by same amount regardless of
-        value of $X$
+    -   When $X$ changes by 1, $Y$ changes by same amount regardless of value of $X$
 
-    -   Effect of changing $X$ on $Y$ also does not depend on other
-        variables
+    -   Effect of changing $X$ on $Y$ also does not depend on other variables
 
 -   This is not always the case
 
-    -   Ex: Effect of experience on wages may depend on level of
-        experience
+    -   Ex: Effect of experience on wages may depend on level of experience
 
         -   Additional experience matters less for the very experienced
 
-    -   Ex: Effect of extra bedroom on house price may depend on square
-        footage
+    -   Ex: Effect of extra bedroom on house price may depend on square footage
 
         -   Might be bigger for larger houses
 
@@ -63,8 +57,7 @@ title-slide-attributes:
 
         -   Data takes more of a curved relationship
 
-        -   Extra income has bigger effect on test scores when income is
-            low
+        -   Extra income has bigger effect on test scores when income is low
 
         -   Slope is steep at low income, flatter at high income
 
@@ -92,99 +85,69 @@ title-slide-attributes:
 
 -   The easiest way to allow curvature is a quadratic function
 
--   A quadratic relationship between test scores and income is
-    $$TestScore_{i} = \beta_{0} + \beta_{1}Income_{i} + \beta_{2}Income_{i}^2 + u_{i}$$
-
+-   A quadratic relationship between test scores and income is $$TestScore_{i} = \beta_{0} + \beta_{1}Income_{i} + \beta_{2}Income_{i}^2 + u_{i}$$
 
 ## Quadratic Functions
 
+-   The population regression function in this model is $$E[TestScore_{i}|Income_{i}] = \beta_{0} + \beta_{1}Income_{i} + \beta_{2}Income_{i}^2$$
 
--   The population regression function in this model is
-    $$E[TestScore_{i}|Income_{i}] = \beta_{0} + \beta_{1}Income_{i} + \beta_{2}Income_{i}^2$$
+-   This specification allows effect of income on test scores to depend on income
 
--   This specification allows effect of income on test scores to depend
-    on income
+-   To see this, compute total change in the population regression $$\Delta E[TestScore_{i}|Income_{i}] = \beta_{1}\Delta Income_{i} + \beta_{2}\Delta Income_{i}^2$$
 
--   To see this, compute total change in the population regression
-    $$\Delta E[TestScore_{i}|Income_{i}] = \beta_{1}\Delta Income_{i} + \beta_{2}\Delta Income_{i}^2$$
-
--   Divide both sides by $\Delta Income_{i}$
-    $$\frac{ \Delta E[TestScore_{i}|Income_{i}]}{\Delta Income_{i}} = \beta_{1}+ \beta_{2}\frac{\Delta Income_{i}^2}{\Delta Income_{i}}$$
-
+-   Divide both sides by $\Delta Income_{i}$ $$\frac{ \Delta E[TestScore_{i}|Income_{i}]}{\Delta Income_{i}} = \beta_{1}+ \beta_{2}\frac{\Delta Income_{i}^2}{\Delta Income_{i}}$$
 
 ## Quadratic Functions
 
+-   When $\Delta Income_{i}$ is small, we can approximate $\frac{\Delta Income_{i}^2}{\Delta Income_{i}}$ $$\frac{\Delta Income_{i}^2}{\Delta Income_{i}} \approx 2Income_{i}$$
 
--   When $\Delta Income_{i}$ is small, we can approximate
-    $\frac{\Delta Income_{i}^2}{\Delta Income_{i}}$
-    $$\frac{\Delta Income_{i}^2}{\Delta Income_{i}} \approx 2Income_{i}$$
-
--   Plugging into the main equation
-    $$\frac{E[TestScore_{i}|Income_{i}]}{\Delta Income_{i}} = \beta_{1}+ 2\beta_{2}Income_{i}$$
+-   Plugging into the main equation $$\frac{E[TestScore_{i}|Income_{i}]}{\Delta Income_{i}} = \beta_{1}+ 2\beta_{2}Income_{i}$$
 
 -   The effect of income on test scores has two components
 
-    -   $\beta_{1}$, the effect of income on test scores when
-        $Income_{i} = 0$
+    -   $\beta_{1}$, the effect of income on test scores when $Income_{i} = 0$
 
     -   $2\beta_{2}Income_{i}$, how the effect depends on income
 
-
 ## Quadratic Functions
-
 
 -   The signs of $\beta_{1}$ and $\beta_{2}$ determine shape of function
 
     -   If $\beta_{1} >0$ and $\beta_{2} <0$ it has inverted u shape
 
-        -   Effect of income on test scores is positive when income is
-            low, and decreases as income gets larger
+        -   Effect of income on test scores is positive when income is low, and decreases as income gets larger
 
         -   After certain point, effect becomes negative
 
     -   If $\beta_{1} <0$ and $\beta_{2} >0$ it has u shape
 
-        -   Effect of income on test scores is negative when income is
-            low, and increases as income gets larger
+        -   Effect of income on test scores is negative when income is low, and increases as income gets larger
 
         -   After certain point, effect becomes positive
 
 -   Estimate this equation by OLS the same way as before
 
--   Estimated effect of income on test scores is
-    $$\frac{\Delta \hat{TestScore}_{i}}{\Delta Income_{i}} = \hat{\beta}_{1}+ 2\hat{\beta}_{2}Income_{i}$$
-
+-   Estimated effect of income on test scores is $$\frac{\Delta \hat{TestScore}_{i}}{\Delta Income_{i}} = \hat{\beta}_{1}+ 2\hat{\beta}_{2}Income_{i}$$
 
 ## Quadratic Functions
 
+-   Ex: estimated quadratic regression function $$\hat{TestScore}_{i} = 607.3 + 3.85 Income - 0.0423 Income^2$$
 
--   Ex: estimated quadratic regression function
-    $$\hat{TestScore}_{i} = 607.3 + 3.85 Income - 0.0423 Income^2$$
-
--   Estimated effect of income on test scores is
-    $$\frac{\Delta\hat{TestScore}_{i}}{\Delta Income_{i}} = 3.85- 2(0.0423)Income_{i}$$
-
+-   Estimated effect of income on test scores is $$\frac{\Delta\hat{TestScore}_{i}}{\Delta Income_{i}} = 3.85- 2(0.0423)Income_{i}$$
 
 ## Quadratic Functions
-
 
 -   Note how effect depends on level of income
 
-    -   If income = 20,000
-        $$\frac{\Delta \hat{TestScore}_{i}}{\Delta Income_{i}} = 3.85- 2(0.0423)(20) = 2.158$$
+    -   If income = 20,000 $$\frac{\Delta \hat{TestScore}_{i}}{\Delta Income_{i}} = 3.85- 2(0.0423)(20) = 2.158$$
 
-    -   If income = 40,000
-        $$\frac{\Delta \hat{TestScore}_{i}}{\Delta Income_{i}} = 3.85- 2(0.0423)(40) = 0.466$$
+    -   If income = 40,000 $$\frac{\Delta \hat{TestScore}_{i}}{\Delta Income_{i}} = 3.85- 2(0.0423)(40) = 0.466$$
 
-    -   If income = 60,000
-        $$\frac{\Delta \hat{TestScore}_{i}}{\Delta Income_{i}} = 3.85- 2(0.0423)(60) = -1.226$$
-
+    -   If income = 60,000 $$\frac{\Delta \hat{TestScore}_{i}}{\Delta Income_{i}} = 3.85- 2(0.0423)(60) = -1.226$$
 
 ## Quadratic Functions
 
-
--   Slope is high at low values of income, then falls as income grows
-    larger
+-   Slope is high at low values of income, then falls as income grows larger
 
     -   At very high income, effect is negative
 
@@ -192,8 +155,7 @@ title-slide-attributes:
 
 -   Several notable features
 
-    -   Since $\hat{\beta}_{1} >0$ and $\hat{\beta}_{2} <0$ it has
-        inverted u shape
+    -   Since $\hat{\beta}_{1} >0$ and $\hat{\beta}_{2} <0$ it has inverted u shape
 
         -   Effect initially steep and positive
 
@@ -207,24 +169,19 @@ title-slide-attributes:
 
         -   Likely $R^2$ would be higher in this regression
 
-
 ## Quadratic Functions
-
 
 ![](quad2.jpg){fig-align="center" width="7in"}
 
-
 ## Polynomial Functions
 
--   We can allow for more flexibility in function with higher powers of
-    $X$
+-   We can allow for more flexibility in function with higher powers of $X$
 
     -   Ex: cubic, quartic, etc\...
 
     -   Call these functions polynomials
 
--   A polynomial relationship between $Y$ and $X$ of degree r is
-    $$Y_{i} = \beta_{0} + \beta_{1}X_{i} + \beta_{2}X_{i}^2 + ... + \beta_{r}X_{i}^r +u_{i}$$
+-   A polynomial relationship between $Y$ and $X$ of degree r is $$Y_{i} = \beta_{0} + \beta_{1}X_{i} + \beta_{2}X_{i}^2 + ... + \beta_{r}X_{i}^r +u_{i}$$
 
     -   The "r" determines highest power in function
 
@@ -238,37 +195,27 @@ title-slide-attributes:
 
 -   Effect of $X$ on $Y$ is more complicated with higher polynomials
 
-
 ## Polynomial Functions
-
 
 -   Computing effect can be more difficult with higher powers
 
--   Ex: estimated quadratic function
-    $$\hat{Y}_{i} = \hat{\beta}_{0} + \hat{\beta}_{1}X_{i} + \hat{\beta}_{2}X_{i}^2$$
-    $$\frac{\Delta \hat{Y}_{i}}{\Delta X_{i}} = \hat{\beta}_{1}+ 2\hat{\beta}_{2}X_{i}$$
+-   Ex: estimated quadratic function $$\hat{Y}_{i} = \hat{\beta}_{0} + \hat{\beta}_{1}X_{i} + \hat{\beta}_{2}X_{i}^2$$ $$\frac{\Delta \hat{Y}_{i}}{\Delta X_{i}} = \hat{\beta}_{1}+ 2\hat{\beta}_{2}X_{i}$$
 
--   Ex: estimated cubic function
-    $$\hat{Y}_{i} = \hat{\beta}_{0} + \hat{\beta}_{1}X_{i} + \hat{\beta}_{2}X_{i}^2 + \hat{\beta}_{3}X_{i}^3$$
-    $$\frac{\Delta \hat{Y}_{i}}{\Delta X_{i}} = \hat{\beta}_{1}+ 2\hat{\beta}_{2}X_{i} + 3\hat{\beta}_{3}X_{i}^2$$
+-   Ex: estimated cubic function $$\hat{Y}_{i} = \hat{\beta}_{0} + \hat{\beta}_{1}X_{i} + \hat{\beta}_{2}X_{i}^2 + \hat{\beta}_{3}X_{i}^3$$ $$\frac{\Delta \hat{Y}_{i}}{\Delta X_{i}} = \hat{\beta}_{1}+ 2\hat{\beta}_{2}X_{i} + 3\hat{\beta}_{3}X_{i}^2$$
 
 -   and so on
 
 ## Polynomial Functions
 
-
 ![](poly.jpg){fig-align="center" width="7in"}
 
-
 ## Testing Null that the Regression is Linear
-
 
 -   We can test between polynomial and linear functions
 
 -   Procedure is to use an $F$-test as discussed last chapter
 
--   First, estimate polynomial
-    $$Y_{i} = \beta_{0} + \beta_{1}X_{i} + \beta_{2}X_{i}^2 + ... + \beta_{r}X_{i}^r +u_{i}$$
+-   First, estimate polynomial $$Y_{i} = \beta_{0} + \beta_{1}X_{i} + \beta_{2}X_{i}^2 + ... + \beta_{r}X_{i}^r +u_{i}$$
 
 -   Then test between these hypotheses
 
@@ -279,7 +226,6 @@ title-slide-attributes:
 -   Accepting null means function is linear
 
 -   Rejecting means it is nonlinear in some way
-
 
 ## Choosing the Degree of Polynomial
 
@@ -295,8 +241,7 @@ title-slide-attributes:
 
     1.  Pick maximum value for $r$ and estimate regression
 
-    2.  Test null that $\beta_{r}$ equals zero. If reject, keep in
-        regression
+    2.  Test null that $\beta_{r}$ equals zero. If reject, keep in regression
 
     3.  If accept null in 2, reestimate with polynomial of degree $r-1$
 
@@ -304,36 +249,30 @@ title-slide-attributes:
 
 -   This is sequentially pruning model to get right specification
 
-
 ## Logarithms
 
 -   Common way to include nonlinearities is with logarithms
 
 -   What is a logarithm?
 
-    -   Logarithm of $x$ to base $b$ is the $y$ that solves $b^{y} = x$
-        $$log_{b}(x) = y$$
+    -   Logarithm of $x$ to base $b$ is the $y$ that solves $b^{y} = x$ $$log_{b}(x) = y$$
 
-    -   Ex: If $x$ is 1000, and the base $b$ is 10, the logarithm of $x$
-        is the exponent that turns 10 into 1000 $$log_{10}(1000) = 3$$
+    -   Ex: If $x$ is 1000, and the base $b$ is 10, the logarithm of $x$ is the exponent that turns 10 into 1000 $$log_{10}(1000) = 3$$
 
-    -   Increasing $log_{10}(x)$ by one unit is like multiplying $x$ by
-        10
+    -   Increasing $log_{10}(x)$ by one unit is like multiplying $x$ by 10
 
     -   10 is a common base, but it can be any number
 
     -   Ex: Richter scale (for earthquakes) is a base-10 log scale
 
-
 ## Logarithms
 
+|               |     |     |     |      |       |        |
+|:--------------|:---:|:---:|:---:|:----:|:-----:|:------:|
+| x             |  1  | 10  | 100 | 1000 | 10000 | 100000 |
+| $log_{10}(x)$ |  0  |  1  |  2  |  3   |   4   |   5    |
 
-  --------------- --- ---- ----- ------ ------- --------
-  x                1   10   100   1000   10000   100000
-  $log_{10}(x)$    0   1     2     3       4       5
-  --------------- --- ---- ----- ------ ------- --------
-
-  : Base 10 Logarithm
+: Base 10 Logarithm
 
 -   Economists often use the *natural logarithm*
 
@@ -345,20 +284,15 @@ title-slide-attributes:
 
 -   Natural logarithms have one key useful property
 
-    -   Small changes in $ln(x)$ approximate a percentage change
-        $$100 \times (ln(x +\Delta x) - ln(x)) =100 \times \Delta ln(x)  \approx 100\times \left ( \frac{\Delta x}{x} \right )$$
-
+    -   Small changes in $ln(x)$ approximate a percentage change $$100 \times (ln(x +\Delta x) - ln(x)) =100 \times \Delta ln(x)  \approx 100\times \left ( \frac{\Delta x}{x} \right )$$
 
 ## Logarithms
 
-
 -   Ex: let $x = 100$ and $\Delta x = 1$
 
-    -   Actual percentage change is:
-        $100\times \left (\frac{101 - 100}{100} \right ) = 1$
+    -   Actual percentage change is: $100\times \left (\frac{101 - 100}{100} \right ) = 1$
 
-    -   Log approximation is
-        $100 \times (ln(101) - ln(100)) = 100 \times (4.615 -4.605) =1$
+    -   Log approximation is $100 \times (ln(101) - ln(100)) = 100 \times (4.615 -4.605) =1$
 
 -   Useful for expressing $X$, $Y$, or both in percentage terms
 
@@ -368,109 +302,77 @@ title-slide-attributes:
 
     -   If $X$ changes by 1%, what is percentage effect on $Y$?
 
--   The inverse of a natural logarithm is the exponential function
-    $$x = e^{ln(x)}$$
+-   The inverse of a natural logarithm is the exponential function $$x = e^{ln(x)}$$
 
     -   This will become useful in some situations
 
-
 ## Log-Linear Model
 
--   A **log-linear** model is when $Y$ is in logs, but $X$ is not
-    $$ln(Y_{i}) = \beta_{0}+\beta_{1}X_{i} + u_{i}$$
+-   A **log-linear** model is when $Y$ is in logs, but $X$ is not $$ln(Y_{i}) = \beta_{0}+\beta_{1}X_{i} + u_{i}$$
 
 -   Often used when measuring the return to education
 
--   A common population regression model in this context is
-    $$ln(wage) = \beta_{0} + \beta_{1}educ + u$$
+-   A common population regression model in this context is $$ln(wage) = \beta_{0} + \beta_{1}educ + u$$
 
--   The interpretation of $\beta_{1}$ is
-    $$\beta_{1} = \frac{\Delta ln(wage)}{\Delta educ}$$
+-   The interpretation of $\beta_{1}$ is $$\beta_{1} = \frac{\Delta ln(wage)}{\Delta educ}$$
 
--   Remember that $100\times \Delta ln(wage)$ is roughly equal to %
-    change in wage
-
+-   Remember that $100\times \Delta ln(wage)$ is roughly equal to % change in wage
 
 ## Log-Linear Model
 
+-   So if we multiply $\beta_{1}$ by 100 then $$100\times \beta_{1} \approx \frac{\% \Delta wage}{\Delta educ}$$
 
--   So if we multiply $\beta_{1}$ by 100 then
-    $$100\times \beta_{1} \approx \frac{\% \Delta wage}{\Delta educ}$$
+    -   $100\times \beta_{1}$ measures the % change in wage due to a 1-year increase in education
 
-    -   $100\times \beta_{1}$ measures the % change in wage due to a
-        1-year increase in education
-
--   Appropriate if each year of education has equal *proportional*
-    change in wage
+-   Appropriate if each year of education has equal *proportional* change in wage
 
     -   Increasing education raises wage by same percentage
 
--   In the general model
-    $$100\times \beta_{1} \approx \frac{\% \Delta Y_{i}}{\Delta X_{i}}$$
-
+-   In the general model $$100\times \beta_{1} \approx \frac{\% \Delta Y_{i}}{\Delta X_{i}}$$
 
 ## Linear-Log Model
 
--   A **linear-log** model is when $X$ is in logs, but $Y$ is not
-    $$Y_{i} = \beta_{0}+\beta_{1}ln(X_{i}) + u_{i}$$
+-   A **linear-log** model is when $X$ is in logs, but $Y$ is not $$Y_{i} = \beta_{0}+\beta_{1}ln(X_{i}) + u_{i}$$
 
--   One application is the effect of GDP on life expectancy
-    $$expectancy= \beta_{0} + \beta_{1}ln(GDP) + u$$
+-   One application is the effect of GDP on life expectancy $$expectancy= \beta_{0} + \beta_{1}ln(GDP) + u$$
 
-    -   Appropriate if proportional changes in GDP have same effect on
-        expectancy
+    -   Appropriate if proportional changes in GDP have same effect on expectancy
 
-    -   Larger increases in GDP are needed to get same effect on
-        expectancy as countries get richer
+    -   Larger increases in GDP are needed to get same effect on expectancy as countries get richer
 
     $$\beta_{1} = \frac{\Delta expectancy}{\Delta ln(GDP)}$$
 
-
 ## Linear-Log Model
 
+-   If we divide $\beta_{1}$ by 100 $$\frac{\beta_{1}}{100} = \frac{\Delta expectancy}{100 \times \Delta ln(GDP)} = \frac{\Delta expectancy}{\% \Delta GDP}$$
 
--   If we divide $\beta_{1}$ by 100
-    $$\frac{\beta_{1}}{100} = \frac{\Delta expectancy}{100 \times \Delta ln(GDP)} = \frac{\Delta expectancy}{\% \Delta GDP}$$
+-   $\frac{\beta_{1}}{100}$ measures effect of 1% change in GDP on expectancy
 
--   $\frac{\beta_{1}}{100}$ measures effect of 1% change in GDP on
-    expectancy
-
--   In the general model
-    $$\frac{\beta_{1}}{100} = \frac{\Delta Y_{i}}{\% \Delta X_{i}}$$
+-   In the general model $$\frac{\beta_{1}}{100} = \frac{\Delta Y_{i}}{\% \Delta X_{i}}$$
 
 -   It is relatively rare to see this model in practice
 
-
 ## Log-Log Model
 
--   A **log-log** model is when both $Y$ and $X$ are in logs
-    $$ln(Y_{i}) = \beta_{0}+\beta_{1}ln(X_{i}) + u_{i}$$
+-   A **log-log** model is when both $Y$ and $X$ are in logs $$ln(Y_{i}) = \beta_{0}+\beta_{1}ln(X_{i}) + u_{i}$$
 
 -   This is used to estimate the *elasticity* between $X$ and $Y$
 
--   Suppose you want to know price elasticity of demand for ticket sales
-    $$ln(sales)= \beta_{0} + \beta_{1}ln(price) + u$$
+-   Suppose you want to know price elasticity of demand for ticket sales $$ln(sales)= \beta_{0} + \beta_{1}ln(price) + u$$
 
--   In this case
-    $$\beta_{1} = \frac{\Delta ln(sales)}{\Delta ln(price)}$$
-
+-   In this case $$\beta_{1} = \frac{\Delta ln(sales)}{\Delta ln(price)}$$
 
 ## Log-Log Model
 
+-   If we multiply and divide $\beta_{1}$ by 100 $$\beta_{1} = \frac{100\times \Delta ln(sales)}{100 \times \Delta ln(price)} =  \frac{\% \Delta sales}{\% \Delta price}$$
 
--   If we multiply and divide $\beta_{1}$ by 100
-    $$\beta_{1} = \frac{100\times \Delta ln(sales)}{100 \times \Delta ln(price)} =  \frac{\% \Delta sales}{\% \Delta price}$$
-
--   $\beta_{1}$ measures percent effect on ticket sales from a 1%
-    increase in price
+-   $\beta_{1}$ measures percent effect on ticket sales from a 1% increase in price
 
     -   This is the price elasticity of demand for ticket sales
 
--   In the general model
-    $$\beta_{1} =  \frac{\% \Delta Y_{i}}{\% \Delta X_{i}}$$
+-   In the general model $$\beta_{1} =  \frac{\% \Delta Y_{i}}{\% \Delta X_{i}}$$
 
 -   Note that you do not need to alter $\beta_{1}$ before interpreting
-
 
 ## Visualizing Nonlinear Models
 
@@ -478,98 +380,82 @@ title-slide-attributes:
 
 ## Visualizing Nonlinear Models
 
-
 ![](loglinear.jpg){fig-align="center" width="7in"}
 
 ## Visualizing Nonlinear Models
-
 
 ![](linearlog.jpg){fig-align="center" width="7in"}
 
 ## Visualizing Nonlinear Models
 
-
 ![](linearlog2.jpg){fig-align="center" width="7in"}
 
 ## Visualizing Nonlinear Models
-
 
 ![](loglog.jpg){fig-align="center" width="7in"}
 
 ## Visualizing Nonlinear Models
 
-
 ![](comparelog.jpg){fig-align="center" width="7in"}
-
 
 ## Example with Stata {background-color="#d9edc2"}
 
--   We continue above with the relationship between test scores and
-    district income
+-   We continue above with the relationship between test scores and district income
 
 -   Below we estimate various nonlinear functions of income
 
     -   Linear: $TestScore_{i}= \beta_{0} + \beta_{1}Income_{i} + u_{i}$
 
-    -   Quadratic:
-        $TestScore_{i}= \beta_{0} + \beta_{1}Income_{i} + \beta_{2}Income_{i}^2+ u_{i}$
+    -   Quadratic: $TestScore_{i}= \beta_{0} + \beta_{1}Income_{i} + \beta_{2}Income_{i}^2+ u_{i}$
 
-    -   Log Linear:
-        $ln(TestScore_{i})= \beta_{0} + \beta_{1}Income_{i} + u_{i}$
+    -   Log Linear: $ln(TestScore_{i})= \beta_{0} + \beta_{1}Income_{i} + u_{i}$
 
-    -   Linear Log:
-        $TestScore_{i}= \beta_{0} + \beta_{1}ln(Income_{i}) +  u_{i}$
+    -   Linear Log: $TestScore_{i}= \beta_{0} + \beta_{1}ln(Income_{i}) + u_{i}$
 
-    -   Log Log:
-        $ln(TestScore_{i})= \beta_{0} + \beta_{1}ln(Income_{i}) +  u_{i}$
+    -   Log Log: $ln(TestScore_{i})= \beta_{0} + \beta_{1}ln(Income_{i}) + u_{i}$
 
 -   We will interpret coefficients in each
 
-
-## Example with Stata {background-color="#d9edc2" .r-fit-text}
-
+## Example with Stata {.r-fit-text background-color="#d9edc2"}
 
 -   First, create necessary variables
 
 -   Then estimate regressions
 
-```{=html}
 <!-- -->
-```
+
     **Create variables we need for the regression;
 
-    	gen avginc2 = avginc^2;
+        gen avginc2 = avginc^2;
 
-    	gen lntestscr = ln(testscr);
-    	gen lnavginc = ln(avginc);
+        gen lntestscr = ln(testscr);
+        gen lnavginc = ln(avginc);
 
     **Estimate regressions;
-    	
-    	regress testscr avginc;
-    		estimates store linear;
-    		
-    	regress testscr avginc avginc2;
-    		estimates store quadratic;
-    		
-    	regress lntestscr avginc;
-    		estimates store loglinear;
-    		
-    	regress testscr lnavginc;
-    		estimates store linearlog;
-    		
-    	regress lntestscr lnavginc;
-    		estimates store loglog;
+        
+        regress testscr avginc;
+            estimates store linear;
+            
+        regress testscr avginc avginc2;
+            estimates store quadratic;
+            
+        regress lntestscr avginc;
+            estimates store loglinear;
+            
+        regress testscr lnavginc;
+            estimates store linearlog;
+            
+        regress lntestscr lnavginc;
+            estimates store loglog;
 
-
-## Example with Stata {background-color="#d9edc2" .r-fit-text}
+## Example with Stata {.r-fit-text background-color="#d9edc2"}
 
 -   Export results in easy to read table
 
-```{=html}
 <!-- -->
-```
+
     .  estout linear quadratic linearlog loglinear loglog, cells(b(star fmt(3)) 
-    	se(par fmt(3))) starlevels(* 0.05 ** 0.01 ) stats(r2 r2_a rmse N,fmt(3 3 3 0 ));
+        se(par fmt(3))) starlevels(* 0.05 ** 0.01 ) stats(r2 r2_a rmse N,fmt(3 3 3 0 ));
 
     ---------------------------------------------------------------------------------------
                        linear      quadratic      linearlog      loglinear         loglog  
@@ -590,9 +476,7 @@ title-slide-attributes:
     N                     420            420            420            420            420  
     ---------------------------------------------------------------------------------------
 
-
 ## Example with Stata {background-color="#d9edc2"}
-
 
 -   Linear model
 
@@ -602,14 +486,11 @@ title-slide-attributes:
 
     -   $\frac{\Delta TestScore}{\Delta Income} = 3.851-2(0.042)Income$
 
-    -   When Income = 0, if income increases by \$1000, test scores
-        increase by 3.851 points
+    -   When Income = 0, if income increases by \$1000, test scores increase by 3.851 points
 
-    -   $\frac{\Delta TestScore}{\Delta Income}$ is smaller by 2(0.042)
-        with each \$1000 in income
+    -   $\frac{\Delta TestScore}{\Delta Income}$ is smaller by 2(0.042) with each \$1000 in income
 
-    -   When Income = 50000, if income increases by \$1000, test scores
-        fall by 3.851-2(0.042)50 = -0.349 points
+    -   When Income = 50000, if income increases by \$1000, test scores fall by 3.851-2(0.042)50 = -0.349 points
 
 -   Linear Log model
 
@@ -620,7 +501,6 @@ title-slide-attributes:
     -   Income increases by 1%, test scores rise by 0.364 points
 
 ## Example with Stata {background-color="#d9edc2"}
-
 
 -   Log Linear model
 
@@ -640,7 +520,6 @@ title-slide-attributes:
 
     -   This is the elasticity of test scores with respect to income
 
-
 # Interactions Between Variables
 
 ## Introduction
@@ -649,8 +528,7 @@ title-slide-attributes:
 
     -   Ex: Effect of experience on wages depends on current experience
 
--   We can also allow effect of $X$ on $Y$ to depend on third variable
-    $Z$
+-   We can also allow effect of $X$ on $Y$ to depend on third variable $Z$
 
     -   Ex: Effect of experience on wages may depend on education
 
@@ -666,15 +544,11 @@ title-slide-attributes:
 
     -   Also between continuous variables
 
-
 ## Model with Multiple Dummy Variables
 
--   First, we examine a model with two dummy variables but no
-    interaction
+-   First, we examine a model with two dummy variables but no interaction
 
--   Suppose we are interested in the effect of gender and marriage on
-    wages
-    $$wage_{i} = \beta_{0} + \beta_{1}fem_{i} + \beta_{2}marr_{i} + u_{i}$$
+-   Suppose we are interested in the effect of gender and marriage on wages $$wage_{i} = \beta_{0} + \beta_{1}fem_{i} + \beta_{2}marr_{i} + u_{i}$$
 
 -   In this model,
 
@@ -684,47 +558,29 @@ title-slide-attributes:
 
 -   How do we interpret the parameters of this model?
 
-
 ## Model with Multiple Dummy Variables
-
 
 -   As before, look at population regression function
 
-    -   When $fem_{i} =1$ and $marr_{i} = 1$
-        $$E[wage_{i}|fem_{i}=1,marr_{i}=1] =  \beta_{0} + \beta_{1}+ \beta_{2}$$
+    -   When $fem_{i} =1$ and $marr_{i} = 1$ $$E[wage_{i}|fem_{i}=1,marr_{i}=1] =  \beta_{0} + \beta_{1}+ \beta_{2}$$
 
-    -   When $fem_{i} =1$ and $marr_{i} = 0$
-        $$E[wage_{i}|fem_{i}=1,marr_{i}=0] =  \beta_{0} + \beta_{1}$$
+    -   When $fem_{i} =1$ and $marr_{i} = 0$ $$E[wage_{i}|fem_{i}=1,marr_{i}=0] =  \beta_{0} + \beta_{1}$$
 
-    -   When $fem_{i} =0$ and $marr_{i} = 1$
-        $$E[wage_{i}|fem_{i}=0,marr_{i}=1] =  \beta_{0} + \beta_{2}$$
+    -   When $fem_{i} =0$ and $marr_{i} = 1$ $$E[wage_{i}|fem_{i}=0,marr_{i}=1] =  \beta_{0} + \beta_{2}$$
 
-    -   When $fem_{i} =0$ and $marr_{i} = 0$
-        $$E[wage_{i}|fem_{i}=0,marr_{i}=0] =  \beta_{0}$$
-
+    -   When $fem_{i} =0$ and $marr_{i} = 0$ $$E[wage_{i}|fem_{i}=0,marr_{i}=0] =  \beta_{0}$$
 
 ## Model with Multiple Dummy Variables
 
+-   $\beta_{0}$ is average wage when male, unmarried $$E[wage_{i}|fem_{i}=0,marr_{i}=0] =  \beta_{0}$$
 
--   $\beta_{0}$ is average wage when male, unmarried
-    $$E[wage_{i}|fem_{i}=0,marr_{i}=0] =  \beta_{0}$$
+-   $\beta_{1}$ is difference between unmarried woman and unmarried man $$E[wage_{i}|fem_{i}=1,marr_{i}=0]  - E[wage_{i}|fem_{i}=0,marr_{i}=0]$$ $$= \beta_{0} + \beta_{1} -  \beta_{0}$$ $$= \beta_{1}$$
 
--   $\beta_{1}$ is difference between unmarried woman and unmarried man
-    $$E[wage_{i}|fem_{i}=1,marr_{i}=0]  - E[wage_{i}|fem_{i}=0,marr_{i}=0]$$
-    $$= \beta_{0} + \beta_{1} -  \beta_{0}$$ $$= \beta_{1}$$
-
--   $\beta_{1}$ [also]{.underline} difference between married woman and
-    married man
-    $$E[wage_{i}|fem_{i}=1,marr_{i}=1]  - E[wage_{i}|fem_{i}=0,marr_{i}=1]$$
-    $$=  \beta_{0} + \beta_{1}+ \beta_{2} - (\beta_{0} + \beta_{2})$$
-    $$= \beta_{1}$$
-
+-   $\beta_{1}$ [also]{.underline} difference between married woman and married man $$E[wage_{i}|fem_{i}=1,marr_{i}=1]  - E[wage_{i}|fem_{i}=0,marr_{i}=1]$$ $$=  \beta_{0} + \beta_{1}+ \beta_{2} - (\beta_{0} + \beta_{2})$$ $$= \beta_{1}$$
 
 ## Model with Multiple Dummy Variables
 
-
--   Model imposes that female-male difference does not depend on
-    marriage
+-   Model imposes that female-male difference does not depend on marriage
 
     -   It is equal to $\beta_{1}$ regardless of marital status
 
@@ -732,12 +588,7 @@ title-slide-attributes:
 
     -   Like before, difference does not depend on gender
 
-    $$E[wage_{i}|fem_{i}=0,marr_{i}=1] - E[wage_{i}|fem_{i}=0,marr_{i}=0]$$
-    $$=  \beta_{0} + \beta_{2} -  \beta_{0}$$ $$=  \beta_{2}$$
-    $$E[wage_{i}|fem_{i}=1,marr_{i}=1] - E[wage_{i}|fem_{i}=1,marr_{i}=0]$$
-    $$=  \beta_{0} + \beta_{1}+ \beta_{2} - (\beta_{0} + \beta_{1})$$
-    $$=  \beta_{2}$$
-
+    $$E[wage_{i}|fem_{i}=0,marr_{i}=1] - E[wage_{i}|fem_{i}=0,marr_{i}=0]$$ $$=  \beta_{0} + \beta_{2} -  \beta_{0}$$ $$=  \beta_{2}$$ $$E[wage_{i}|fem_{i}=1,marr_{i}=1] - E[wage_{i}|fem_{i}=1,marr_{i}=0]$$ $$=  \beta_{0} + \beta_{1}+ \beta_{2} - (\beta_{0} + \beta_{1})$$ $$=  \beta_{2}$$
 
 ## Model with Multiple Dummy Variables
 
@@ -759,9 +610,7 @@ title-slide-attributes:
 
     -   We can relax them with interaction terms
 
-
 ## Example with Stata {background-color="#d9edc2"}
-
 
 -   As an example, we study the determinants of wages
 
@@ -787,19 +636,11 @@ title-slide-attributes:
 
     -   Dofile: **EC295 nonlinear regression part 2.do**
 
-
 ## Example with Stata {background-color="#d9edc2"}
 
+-   Suppose we regress wages on a female and married dummy $$wage_{i} = \beta_{0} + \beta_{1}fem_{i}+ \beta_{2}marr_{i} + u_{i}$$
 
--   Suppose we regress wages on a female and married dummy
-    $$wage_{i} = \beta_{0} + \beta_{1}fem_{i}+ \beta_{2}marr_{i} + u_{i}$$
-
-```{=html}
 <!-- -->
-```
-
-
-
 
     Linear regression                               Number of obs     =     15,817
                                                     F(2, 15814)       =     466.21
@@ -816,9 +657,7 @@ title-slide-attributes:
            _cons |   25.74684   .1798452   143.16   0.000     25.39432    26.09935
     ------------------------------------------------------------------------------
 
-
 ## Example with Stata {background-color="#d9edc2"}
-
 
 -   Based on these estimates
 
@@ -830,25 +669,19 @@ title-slide-attributes:
 
         -   Unmarried men: $\hat{\beta}_{0} = 25.75$
 
-        -   Unmarried women:
-            $\hat{\beta}_{0} + \hat{\beta}_{1} =  25.75-4.25 = 21.50$
+        -   Unmarried women: $\hat{\beta}_{0} + \hat{\beta}_{1} = 25.75-4.25 = 21.50$
 
-        -   Married men:
-            $\hat{\beta}_{0} + \hat{\beta}_{2} = 25.75+5.09 = 30.84$
+        -   Married men: $\hat{\beta}_{0} + \hat{\beta}_{2} = 25.75+5.09 = 30.84$
 
-        -   Married women:
-            $\hat{\beta}_{0}+ \hat{\beta}_{1} +\hat{\beta}_{2}= 25.75-  4.25+5.09 = 26.59$
+        -   Married women: $\hat{\beta}_{0}+ \hat{\beta}_{1} +\hat{\beta}_{2}= 25.75- 4.25+5.09 = 26.59$
 
-    -   Notice female/male difference is $-4.25$ regardless of marital
-        status
+    -   Notice female/male difference is $-4.25$ regardless of marital status
 
     -   Also married/unmarried difference is $5.09$ regardless of gender
 
-
 ## Interactions Among Dummy Variables
 
--   Recall the model
-    $$wage_{i} = \beta_{0} + \beta_{1}fem_{i} +\beta_{2}marr_{i} + u_{i}$$
+-   Recall the model $$wage_{i} = \beta_{0} + \beta_{1}fem_{i} +\beta_{2}marr_{i} + u_{i}$$
 
     -   The female-male difference is measured by $\beta_{1}$
 
@@ -862,57 +695,35 @@ title-slide-attributes:
 
 -   Interacting the two variables changes that interpretation
 
-
 ## Interactions Among Dummy Variables
 
-
--   Suppose we add an interaction between $fem_{i}$ and $marr_{i}$
-    $$wage_{i} = \beta_{0} + \beta_{1}fem_{i} +\beta_{2}marr_{i} +\beta_{3}(fem_{i}\times marr_{i}) + u_{i}$$
+-   Suppose we add an interaction between $fem_{i}$ and $marr_{i}$ $$wage_{i} = \beta_{0} + \beta_{1}fem_{i} +\beta_{2}marr_{i} +\beta_{3}(fem_{i}\times marr_{i}) + u_{i}$$
 
 -   Now suppose we measure the female-male difference
 
-    $$E[wage_{i}|marr_{i} , fem_{i} = 1]  - E[wage_{i}|marr_{i} , fem_{i} =0]$$
-    $$= ( \beta_{0} + \beta_{1} + \beta_{2}marr_{i} +\beta_{3}marr_{i} )$$
-    $$-  (\beta_{0}  + \beta_{2}marr_{i} )$$
-    $$= \beta_{1} + \beta_{3}marr_{i}$$
+    $$E[wage_{i}|marr_{i} , fem_{i} = 1]  - E[wage_{i}|marr_{i} , fem_{i} =0]$$ $$= ( \beta_{0} + \beta_{1} + \beta_{2}marr_{i} +\beta_{3}marr_{i} )$$ $$-  (\beta_{0}  + \beta_{2}marr_{i} )$$ $$= \beta_{1} + \beta_{3}marr_{i}$$
 
 -   Now, the female-male gap *depends* on the marital status
 
     -   The gap is different depending on value of $marr_{i}$
 
-
 ## Interactions Among Dummy Variables
-
 
 -   To see this, compute the female-male gap for unmarried and married
 
-    -   For unmarried people
-        $$E[wage_{i}|fem_{i}=1,marr_{i}=0]  - E[wage_{i}|fem_{i}=0,marr_{i}=0]$$
-        $$= \beta_{0} + \beta_{1} -  \beta_{0}$$ $$= \beta_{1}$$
+    -   For unmarried people $$E[wage_{i}|fem_{i}=1,marr_{i}=0]  - E[wage_{i}|fem_{i}=0,marr_{i}=0]$$ $$= \beta_{0} + \beta_{1} -  \beta_{0}$$ $$= \beta_{1}$$
 
-    -   For married people
-        $$E[wage_{i}|fem_{i}=1,marr_{i}=1]  - E[wage_{i}|fem_{i}=0,marr_{i}=1]$$
-        $$=  \beta_{0} + \beta_{1}+ \beta_{2} + \beta_{3} - (\beta_{0} + \beta_{2})$$
-        $$= \beta_{1} + \beta_{3}$$
-
+    -   For married people $$E[wage_{i}|fem_{i}=1,marr_{i}=1]  - E[wage_{i}|fem_{i}=0,marr_{i}=1]$$ $$=  \beta_{0} + \beta_{1}+ \beta_{2} + \beta_{3} - (\beta_{0} + \beta_{2})$$ $$= \beta_{1} + \beta_{3}$$
 
 ## Interactions Among Dummy Variables {.r-fit-text}
 
+-   Likewise, married unmarried gap depends on gender $$E[wage_{i}|marr_{i} = 1 , fem_{i} ]  - E[wage_{i}|marr_{i}=0 , fem_{i}]$$ $$=( \beta_{0} + \beta_{1}fem_{i} + \beta_{2} +\beta_{3}fem_{i} )  -  (\beta_{0}  + \beta_{1}fem_{i}  )$$
 
--   Likewise, married unmarried gap depends on gender
-    $$E[wage_{i}|marr_{i} = 1 , fem_{i} ]  - E[wage_{i}|marr_{i}=0 , fem_{i}]$$
-    $$=( \beta_{0} + \beta_{1}fem_{i} + \beta_{2} +\beta_{3}fem_{i} )  -  (\beta_{0}  + \beta_{1}fem_{i}  )$$
-   
     $$=  \beta_{2}+\beta_{3}fem_{i}$$
 
-    -   marriage gap for men is
-        $$E[wage_{i}|marr_{i} = 1 , fem_{i} = 0 ]  - E[wage_{i}|marr_{i}=0 , fem_{i} = 0]$$
-        $$=  \beta_{2}$$
+    -   marriage gap for men is $$E[wage_{i}|marr_{i} = 1 , fem_{i} = 0 ]  - E[wage_{i}|marr_{i}=0 , fem_{i} = 0]$$ $$=  \beta_{2}$$
 
-    -   Marriage gap for women is
-        $$E[wage_{i}|marr_{i} = 1 , fem_{i} = 1 ]  - E[wage_{i}|marr_{i}=0 , fem_{i} = 1]$$
-        $$=  \beta_{2} + \beta_{3}$$
-
+    -   Marriage gap for women is $$E[wage_{i}|marr_{i} = 1 , fem_{i} = 1 ]  - E[wage_{i}|marr_{i}=0 , fem_{i} = 1]$$ $$=  \beta_{2} + \beta_{3}$$
 
 ## Interactions Among Dummy Variables
 
@@ -926,45 +737,36 @@ title-slide-attributes:
 
     -   Unmarried men: $\beta_{0}$
 
-    -   Unmarried women: $\beta_{0} +  \beta_{1}$
+    -   Unmarried women: $\beta_{0} + \beta_{1}$
 
     -   Married men: $\beta_{0} + \beta_{2}$
 
     -   Married women: $\beta_{0} + \beta_{1} + \beta_{2}+ \beta_{3}$
 
-
 ## Interactions Among Dummy Variables
-
 
 -   The interpretations for each are as follows
 
-    -   $\beta_{1}$: difference between unmarried women and unmarried
-        men
+    -   $\beta_{1}$: difference between unmarried women and unmarried men
 
     -   $\beta_{2}$: difference between married men and unmarried men
 
     -   $\beta_{3}$: more complicated
 
-        -   Gender gap for married people minus gender gap for unmarried
-            people
+        -   Gender gap for married people minus gender gap for unmarried people
 
         -   Marriage gap for women minus marriage gap for men
 
-        -   Measures how gender gap depends on marriage, and how
-            marriage gap depends on gender
+        -   Measures how gender gap depends on marriage, and how marriage gap depends on gender
 
         -   It is sometimes called the **difference in differences**
 
-
 ## Example with Stata {background-color="#d9edc2"}
 
+-   Suppose we interact female and married $$wage_{i} = \beta_{0} + \beta_{1}fem_{i} +\beta_{2}marr_{i} +\beta_{3}(fem_{i}\times marr_{i}) + u_{i}$$
 
--   Suppose we interact female and married
-    $$wage_{i} = \beta_{0} + \beta_{1}fem_{i} +\beta_{2}marr_{i} +\beta_{3}(fem_{i}\times marr_{i}) + u_{i}$$
-
-```{=html}
 <!-- -->
-```
+
     .  gen female_married = female*married;
     .  regress cmphrw28 female married female_married, robust  ;
 
@@ -985,7 +787,6 @@ title-slide-attributes:
              _cons |   24.57583   .2062195   119.17   0.000     24.17162    24.98005
     --------------------------------------------------------------------------------
 
-
 ## Example with Stata {background-color="#d9edc2"}
 
 -   In this model,
@@ -996,8 +797,7 @@ title-slide-attributes:
 
 -   Based on these results
 
-    -   $\beta_{1} = -1.92$ wage gap between female and male unmarried
-        people
+    -   $\beta_{1} = -1.92$ wage gap between female and male unmarried people
 
     -   $\beta_{2} = 7.09$: wage gap between married and unmarried men
 
@@ -1005,12 +805,9 @@ title-slide-attributes:
 
         -   *difference* in gender gap between married and unmarried
 
-        -   It is also *difference* in marriage gap between women and
-            men
+        -   It is also *difference* in marriage gap between women and men
 
--   Note how $\beta_{3}$ measures change in gender gap for married, and
-    also change in marriage gap for women
-
+-   Note how $\beta_{3}$ measures change in gender gap for married, and also change in marriage gap for women
 
 ## Models with Dummy and Continuous Variables
 
@@ -1026,60 +823,43 @@ title-slide-attributes:
 
 -   The model contains one dummy, one continuous independent variable
 
--   To understand interpretation of $\beta_{1}$, take expected value
-    $$E[wage_{i}|fem_{i},educ_{i}] = \beta_{0} + \beta_{1}fem_{i} + \beta_{2}educ_{i}$$
-
+-   To understand interpretation of $\beta_{1}$, take expected value $$E[wage_{i}|fem_{i},educ_{i}] = \beta_{0} + \beta_{1}fem_{i} + \beta_{2}educ_{i}$$
 
 ## Models with Dummy and Continuous Variables
 
+-   When $fem_{i}$ = 1 $$E[wage_{i}|fem_{i} = 1,educ_{i}] = \beta_{0} + \beta_{1}+ \beta_{2}educ_{i}$$
 
--   When $fem_{i}$ = 1
-    $$E[wage_{i}|fem_{i} = 1,educ_{i}] = \beta_{0} + \beta_{1}+ \beta_{2}educ_{i}$$
+-   When $fem_{i}$= 0 $$E[wage_{i}|fem_{i} = 0,educ_{i}] = \beta_{0}  + \beta_{2}educ_{i}$$
 
--   When $fem_{i}$= 0
-    $$E[wage_{i}|fem_{i} = 0,educ_{i}] = \beta_{0}  + \beta_{2}educ_{i}$$
+-   Taking the difference $$E[wage_{i}|fem_{i} = 1,educ_{i}]  - E[wage_{i}|fem_{i} = 0,educ_{i}] =$$ $$(\beta_{0} + \beta_{1}+ \beta_{2}educ_{i}) -  (\beta_{0}  + \beta_{2}educ_{i} ) =\beta_{1}$$
 
--   Taking the difference
-    $$E[wage_{i}|fem_{i} = 1,educ_{i}]  - E[wage_{i}|fem_{i} = 0,educ_{i}] =$$
-    $$(\beta_{0} + \beta_{1}+ \beta_{2}educ_{i}) -  (\beta_{0}  + \beta_{2}educ_{i} ) =\beta_{1}$$
-
--   $\beta_{1}$ is difference in average wage between women and men
-    $$\beta_{1} = E[wage_{i}|fem_{i} = 1,educ_{i}]  - E[wage_{i}|fem_{i} = 0,educ_{i}]$$
-
+-   $\beta_{1}$ is difference in average wage between women and men $$\beta_{1} = E[wage_{i}|fem_{i} = 1,educ_{i}]  - E[wage_{i}|fem_{i} = 0,educ_{i}]$$
 
 ## Models with Dummy and Continuous Variables
-
 
 -   Notice that in expectation, we are holding education constant
 
     -   Level of education is same in both expectations
 
-    -   $\beta_{1}$ measures gender difference *at each level of
-        education*
+    -   $\beta_{1}$ measures gender difference *at each level of education*
 
 -   Can view $\beta_{1}$ as an **intercept shift**
 
-    -   Intercept $\beta_{0}$ is $wage$ when independent variables are
-        zero
+    -   Intercept $\beta_{0}$ is $wage$ when independent variables are zero
 
         $$E[wage_{i}|fem_{i} = 0,educ_{i}=0] = \beta_{0}$$
 
     -   In this model, it is average wages of male with zero education
 
-    -   Average wage of woman with no education is
-        $$E[wage_{i}|fem_{i} = 1,educ_{i}=0] = \beta_{0} + \beta_{1}$$
+    -   Average wage of woman with no education is $$E[wage_{i}|fem_{i} = 1,educ_{i}=0] = \beta_{0} + \beta_{1}$$
 
-    -   So, $\beta_{1}$ measures how average wage with no education
-        changes between women and men
+    -   So, $\beta_{1}$ measures how average wage with no education changes between women and men
 
         -   This allows different intercepts between men and women
 
-
 ## Models with Dummy and Continuous Variables
 
-
 ![](interceptshift.jpg){fig-align="center" width="7in"}
-
 
 ## Interactions Between Continuous and Dummy Variables
 
@@ -1089,54 +869,41 @@ title-slide-attributes:
 
 -   We can also allow for the *slopes* to depend on groups
 
--   Suppose we interact *female* with *educ*
-    $$wage_{i} = \beta_{0} + \beta_{1}fem_{i} + \beta_{2}educ_{i} +\beta_{3}(fem_{i} \times educ_{i})+ u_{i}$$
+-   Suppose we interact *female* with *educ* $$wage_{i} = \beta_{0} + \beta_{1}fem_{i} + \beta_{2}educ_{i} +\beta_{3}(fem_{i} \times educ_{i})+ u_{i}$$
 
--   The effect of $educ_{i}$ on $E[wage_{i}|fem_{i},educ_{i}]$ is
-    measured by
+-   The effect of $educ_{i}$ on $E[wage_{i}|fem_{i},educ_{i}]$ is measured by
 
     $$\frac{\Delta E[wage_{i}|fem_{i},educ_{i}] }{\Delta educ_{i}} =  \beta_{2} + \beta_{3}fem_{i}$$
 
-
 ## Interactions Between Continuous and Dummy Variables
-
 
 -   In this setup
 
-    -   $\beta_{2}$ measures effect of $educ_{i}$ on $wage_{i}$ when
-        $fem_{i} = 0$
+    -   $\beta_{2}$ measures effect of $educ_{i}$ on $wage_{i}$ when $fem_{i} = 0$
 
         -   Slope between educ and wage for men
 
-    -   $\beta_{2}+\beta_{3}$ measures effect of $educ_{i}$ on
-        $wage_{i}$ when $fem_{i} = 1$
+    -   $\beta_{2}+\beta_{3}$ measures effect of $educ_{i}$ on $wage_{i}$ when $fem_{i} = 1$
 
         -   Slope between educ and wage for women
 
     -   $\beta_{3}$ is *difference* in slope between women and men
 
--   Interacting a dummy with continuous variable allows for different
-    slopes between groups
+-   Interacting a dummy with continuous variable allows for different slopes between groups
 
--   With a dummy variable on its own, and interacted with continuous
-    variable, we allow different intercept *and* slope
+-   With a dummy variable on its own, and interacted with continuous variable, we allow different intercept *and* slope
 
     -   Dummy allows for different intercept
 
     -   Interaction with dummy allows for different slope
 
-
 ## Interactions Between Continuous and Dummy Variables
-
 
 ![](slopeinterceptshift.jpg){fig-align="center" width="7in"}
 
-
 ## Interactions Between Continuous and Dummy Variables
 
--   In rare cases, you can also estimate a model with the same
-    intercept, but different slopes
-    $$wage_{i} = \beta_{0}  + \beta_{2}educ_{i} +\beta_{3}(fem_{i} \times educ_{i})+ u_{i}$$
+-   In rare cases, you can also estimate a model with the same intercept, but different slopes $$wage_{i} = \beta_{0}  + \beta_{2}educ_{i} +\beta_{3}(fem_{i} \times educ_{i})+ u_{i}$$
 
     -   Excludes the dummy variable on its own
 
@@ -1152,22 +919,16 @@ title-slide-attributes:
 
     -   $\beta_{3}$ is *difference* in slope between women and men
 
-
 ## Interactions Between Continuous and Dummy Variables
-
 
 ![](slopeshift.jpg){fig-align="center" width="7in"}
 
-
 ## Example with Stata {background-color="#d9edc2"}
 
+-   A model with intercept shift but same slopes would be $$wage_{i} = \beta_{0} + \beta_{1}fem_{i} + \beta_{2}educ_{i} + u_{i}$$
 
--   A model with intercept shift but same slopes would be
-    $$wage_{i} = \beta_{0} + \beta_{1}fem_{i} + \beta_{2}educ_{i} + u_{i}$$
-
-```{=html}
 <!-- -->
-```
+
     .  regress cmphrw28 female yrschl18, robust  ;
 
     Linear regression                               Number of obs     =     15,817
@@ -1185,16 +946,12 @@ title-slide-attributes:
            _cons |   .3170835   .5522942     0.57   0.566    -.7654761    1.399643
     ------------------------------------------------------------------------------
 
-
 ## Example with Stata {background-color="#d9edc2"}
 
+-   A model with intercept shift and different slopes is $$wage_{i} = \beta_{0} + \beta_{1}fem_{i} + \beta_{2}educ_{i} +\beta_{3}(fem_{i} \times educ_{i})+ u_{i}$$
 
--   A model with intercept shift and different slopes is
-    $$wage_{i} = \beta_{0} + \beta_{1}fem_{i} + \beta_{2}educ_{i} +\beta_{3}(fem_{i} \times educ_{i})+ u_{i}$$
-
-```{=html}
 <!-- -->
-```
+
     . gen female_yrschl18 = female*yrschl18;
     .  regress cmphrw28 female yrschl18 female_yrschl18, robust  ;
 
@@ -1214,16 +971,12 @@ title-slide-attributes:
               _cons |   .3703632    .813796     0.46   0.649     -1.22477    1.965496
     ---------------------------------------------------------------------------------
 
-
 ## Example with Stata {background-color="#d9edc2"}
 
+-   A model with same intercepts but different slopes is $$wage_{i} = \beta_{0} + \beta_{1}fem_{i} + \beta_{2}educ_{i} +\beta_{3}(fem_{i} \times educ_{i})+ u_{i}$$
 
--   A model with same intercepts but different slopes is
-    $$wage_{i} = \beta_{0} + \beta_{1}fem_{i} + \beta_{2}educ_{i} +\beta_{3}(fem_{i} \times educ_{i})+ u_{i}$$
-
-```{=html}
 <!-- -->
-```
+
     . regress cmphrw28 yrschl18 female_yrschl18, robust  ;
 
     Linear regression                               Number of obs     =     15,817
@@ -1241,14 +994,11 @@ title-slide-attributes:
               _cons |  -1.966818   .5616236    -3.50   0.000    -3.067664   -.8659719
     ---------------------------------------------------------------------------------
 
-
-
 ## Interactions Between Continuous Variables
 
 -   The final type of interaction is between two continuous variables
 
--   Suppose we are interested in
-    $$wage_{i} = \beta_{0} + \beta_{1}exper_{i} + \beta_{2}educ_{i}+  \beta_{3}(exper_{i} \times educ_{i}) + u_{i}$$
+-   Suppose we are interested in $$wage_{i} = \beta_{0} + \beta_{1}exper_{i} + \beta_{2}educ_{i}+  \beta_{3}(exper_{i} \times educ_{i}) + u_{i}$$
 
     -   $wage_{i}$ is an individual's wage in dollars
 
@@ -1260,40 +1010,28 @@ title-slide-attributes:
 
     -   Also effect of education to depend on experience
 
-
 ## Interactions Between Continuous Variables
 
-
--   To see this, compute change in wage with experience
-    $$\frac{\Delta E[wage_{i}|exper_{i},educ_{i}] }{\Delta exper_{i}} =  \beta_{1} + \beta_{3}educ_{i}$$
+-   To see this, compute change in wage with experience $$\frac{\Delta E[wage_{i}|exper_{i},educ_{i}] }{\Delta exper_{i}} =  \beta_{1} + \beta_{3}educ_{i}$$
 
 -   There are two components to the effect
 
-    -   $\beta_{1}$: effect of experience on wages when education is
-        zero
+    -   $\beta_{1}$: effect of experience on wages when education is zero
 
-    -   $\beta_{3}$: change in the effect with each additional year of
-        education
+    -   $\beta_{3}$: change in the effect with each additional year of education
 
--   The effect of education on wages is
-    $$\frac{\Delta E[wage_{i}|exper_{i},educ_{i}] }{\Delta educ_{i}} =  \beta_{2} + \beta_{3}exper_{i}$$
+-   The effect of education on wages is $$\frac{\Delta E[wage_{i}|exper_{i},educ_{i}] }{\Delta educ_{i}} =  \beta_{2} + \beta_{3}exper_{i}$$
 
-    -   $\beta_{2}$: effect of education on wages when experience is
-        zero
+    -   $\beta_{2}$: effect of education on wages when experience is zero
 
-    -   $\beta_{3}$: change in the effect with each additional year of
-        experience
-
+    -   $\beta_{3}$: change in the effect with each additional year of experience
 
 ## Example with Stata {background-color="#d9edc2"}
 
+-   A model with interactions between experience and earnings is $$wage_{i} = \beta_{0} + \beta_{1}exper_{i} + \beta_{2}educ_{i}+  \beta_{3}(exper_{i} \times educ_{i}) + u_{i}$$
 
--   A model with interactions between experience and earnings is
-    $$wage_{i} = \beta_{0} + \beta_{1}exper_{i} + \beta_{2}educ_{i}+  \beta_{3}(exper_{i} \times educ_{i}) + u_{i}$$
-
-```{=html}
 <!-- -->
-```
+
     .  gen yrxfte11_yrschl18 = yrxfte11*yrschl18;
     .  regress cmphrw28 yrxfte11 yrschl18 yrxfte11_yrschl18, robust  ;
 
@@ -1313,15 +1051,12 @@ title-slide-attributes:
                 _cons |  -.5684791   .9001661    -0.63   0.528    -2.332907    1.195949
     -----------------------------------------------------------------------------------
 
-
 ## Example with Stata {background-color="#d9edc2"}
-
 
 -   Here are all the results from the regressions together
 
-```{=html}
 <!-- -->
-```
+
      estout dummy dummyinteract intershift interslopeshift slopeshift continteract, 
      cells(b(star fmt(3)) se(par fmt(3))) starlevels(* 0.05 ** 0.01 ) stats(r2 r2_a rmse N,fmt(3 3 3 0 ));
 
@@ -1353,18 +1088,55 @@ title-slide-attributes:
     ------------------------------------------------------------------------------------------------------
 
 
-# Nonlinear Effects of Student Teacher Ratio on Test Scores
+## Example with Stata {background-color="#d9edc2"}
 
+- **Model 1** allows for different intercepts for women and married people
+
+    - Gender gap does not depend on marriage; marriage premium does not depend on gender
+    
+    - Women earn $4.25 less than men, married people earn $5.09 more than non-married people
+    
+- **Model 2** allows gender gap to depend on marriage; marriage gap to depend on gender
+
+    - Gender gap for unmarried is -$1.91
+    
+    - Gender gap for married people is wider, equal to $-1.91 - $4.14
+
+- **Model 3** estimates returns to schooling, allows intercept shift for women
+
+    - Wages for women are $5.43 lower regardless of schooling
+    
+    - Return to schooling is $2.08 for women and men
+    
+- **Model 4** allows intercept and slope to differ for women
+
+    - Wages for women are $5.31 lower regardless of schooling
+
+    - Return to schooling is $2.08 for men, $2.09 for women
+    
+## Example with Stata {background-color="#d9edc2"}
+
+- **Model 5** allows only slope to differ for women
+
+    - Intercept is the same for men and women
+    
+    - Return to schooling is $2.24 for men, $1.87 for women
+    
+- **Model 6** allows interaction in effects of experience and education
+
+    - Return to experience is increasing in education
+    
+    - Return to education is increasing in experience
+
+# Nonlinear Effects of Student Teacher Ratio on Test Scores
 
 ## Introduction
 
--   We end the chapter by revisiting the effect of class size and test
-    scores
+-   We end the chapter by revisiting the effect of class size and test scores
 
 -   Our models until now have been linear
 
-    -   One extra student has same effect on test scores regardless of
-        class size
+    -   One extra student has same effect on test scores regardless of class size
 
 -   This section generalizes that linear model in two ways
 
@@ -1372,31 +1144,25 @@ title-slide-attributes:
 
     -   Lets class size effect depend on values of other variables
 
-    ```{=html}
     <!-- -->
-    ```
+
     -   Allows for nonlinearities in the class size effect
 
         -   Lets class size effect depend on class size
 
 -   Example also uses hypothesis testing techniques learned earlier
 
-
 ## Introduction
-
 
 ![](table831.jpg){fig-align="center" width="7in"}
 
 ## Introduction
 
-
 ![](table832.jpg){fig-align="center" width="7in"}
 
 ## Introduction
 
-
 ![](table833.jpg){fig-align="center" width="7in"}
-
 
 ## Base Specification
 
@@ -1414,7 +1180,6 @@ title-slide-attributes:
 
     -   Significant at the 1% level
 
-
 ## Alternative Specification with Income Control
 
 -   Column 2 adds log district income to the base specification
@@ -1429,13 +1194,11 @@ title-slide-attributes:
 
     -   Measured in logarithms
 
-    -   Effect of 1% increase in income on test scores is
-        $\frac{\hat{\beta}_{inc} }{100} = \frac{11.57}{100} = 0.1157$
+    -   Effect of 1% increase in income on test scores is $\frac{\hat{\beta}_{inc} }{100} = \frac{11.57}{100} = 0.1157$
 
     -   Statistically significant at 1% level
 
     -   It is a relatively small coefficient
-
 
 ## Interaction with High Fraction ESL
 
@@ -1447,29 +1210,21 @@ title-slide-attributes:
 
     -   Allows intercept shift for districts with high % ESL
 
-    -   Also allows different slopes on $STR_{i}$ for high and low % ESL
-        districts
+    -   Also allows different slopes on $STR_{i}$ for high and low % ESL districts
 
--   Using column 3, interpretation on $STR_{i}$ slope in first row
-    changes
+-   Using column 3, interpretation on $STR_{i}$ slope in first row changes
 
-    -   Adding one more student reduces scores by 0.97 *for districts
-        with low fraction ESL*
+    -   Adding one more student reduces scores by 0.97 *for districts with low fraction ESL*
 
-        -   This is slope on $STR_{i}$ for districts where
-            $HiEL_{i} = 0$
-
+        -   This is slope on $STR_{i}$ for districts where $HiEL_{i} = 0$
 
 ## Interaction with High Fraction ESL
 
-
--   Coefficient on $HiEL_{i} \times STR_{i}$ is *difference* in slope
-    for high ESL districts
+-   Coefficient on $HiEL_{i} \times STR_{i}$ is *difference* in slope for high ESL districts
 
     -   Slope on $STR_{i}$ is -1.28 lower for $HiEL_{i} = 1$
 
-    -   Total slope on $STR_{i}$ when $HiEL_{i} = 1$ is
-        $-0.97 - 1.28 = -2.25$
+    -   Total slope on $STR_{i}$ when $HiEL_{i} = 1$ is $-0.97 - 1.28 = -2.25$
 
     -   Effect of additional student is stronger when high % ESL
 
@@ -1477,8 +1232,7 @@ title-slide-attributes:
 
 -   Coefficient on $HiEL_{i}$ measures intercept shift
 
-    -   Difference in predicted test scores when other variables are
-        zero
+    -   Difference in predicted test scores when other variables are zero
 
     -   $HiEL_{i} = 1$ has higher intercept by about 5.64 points
 
@@ -1490,7 +1244,6 @@ title-slide-attributes:
 
     -   Upward intercept shift when $HiEL_{i} = 1$ is about the same
 
-
 ## Nonlinearities in Test Score Effect
 
 -   Columns 5-7 explore nonlinearities in the class size effect
@@ -1499,26 +1252,21 @@ title-slide-attributes:
 
 -   Column 5 adds a cubic polynomial in $STR_{i}$
 
-    -   Coefficients on all polynomial terms are statistically
-        significant
+    -   Coefficients on all polynomial terms are statistically significant
 
         -   So we would want to keep nonlinear terms in the regression
 
     -   Interpretation is tricky
 
-        -   With a cubic, effect of $STR_{i}$ on test scores is
-            $\frac{\Delta \hat{TestScore}_{i}}{\Delta STR_{i}} = \beta_{str} + 2\beta_{str^2}STR_{i} +  3\beta_{str^3}STR_{i}^2$
+        -   With a cubic, effect of $STR_{i}$ on test scores is $\frac{\Delta \hat{TestScore}_{i}}{\Delta STR_{i}} = \beta_{str} + 2\beta_{str^2}STR_{i} + 3\beta_{str^3}STR_{i}^2$
 
         -   Need to know $STR_{i}$ to compute this effect
 
-        -   With 20 students, slope is
-            $\frac{\Delta \hat{TestScore}_{i}}{\Delta STR_{i}} = 64.33 + 2(-3.42)(20) +  3(0.059)(20)^2 = -1.67$
+        -   With 20 students, slope is $\frac{\Delta \hat{TestScore}_{i}}{\Delta STR_{i}} = 64.33 + 2(-3.42)(20) + 3(0.059)(20)^2 = -1.67$
 
     -   Also note intecept shift downward for high ESL districts
 
-
 ## Nonlinearities in Test Score Effect
-
 
 -   Column 7 reports very similar specification
 
@@ -1528,30 +1276,21 @@ title-slide-attributes:
 
 -   Column 6 interacts nonlinear function in $STR_{i}$ with $HiEL$
 
-    -   Allows nonlinear function in $STR_{i}$ to differ between high
-        and low ESL districts
+    -   Allows nonlinear function in $STR_{i}$ to differ between high and low ESL districts
 
-    -   Interaction terms are *difference* in polynomial terms when
-        $HiEL_{i} = 1$
+    -   Interaction terms are *difference* in polynomial terms when $HiEL_{i} = 1$
 
-        -   These are significant at 5% level, suggesting different
-            relationship in high vs low ESL districts
+        -   These are significant at 5% level, suggesting different relationship in high vs low ESL districts
 
-        -   Also, reject null that interaction terms are jointly zero at
-            5% level
-
+        -   Also, reject null that interaction terms are jointly zero at 5% level
 
 ## Nonlinearities in Test Score Effect
-
 
 ![](nonlineartestscore.jpg){fig-align="center" width="7in"}
 
-
 ## Nonlinearities in Test Score Effect
 
-
 ![](interacttestscore.jpg){fig-align="center" width="7in"}
-
 
 ## Summary
 
@@ -1563,20 +1302,14 @@ title-slide-attributes:
 
         -   Controlling for economic background is important
 
-    -   There are nonlinearities in the effect of class size on test
-        scores
+    -   There are nonlinearities in the effect of class size on test scores
 
-        -   All of the polynomial terms in regressions are statistically
-            significant
+        -   All of the polynomial terms in regressions are statistically significant
 
         -   Means effect of class size depends on size of class
 
-    -   Relationship between class size and test scores is different in
-        districts with high %ESL
+    -   Relationship between class size and test scores is different in districts with high %ESL
 
-        -   In columns 3 and 4, accept null that difference in slope is
-            zero
+        -   In columns 3 and 4, accept null that difference in slope is zero
 
-        -   However, in column 6, differences in slope are significant
-            when we allow nonlinearities
-
+        -   However, in column 6, differences in slope are significant when we allow nonlinearities
