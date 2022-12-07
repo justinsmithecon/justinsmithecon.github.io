@@ -1,0 +1,568 @@
+---
+title: "Prediction"
+subtitle: "EC295"
+author: "Justin Smith"
+institute: "Wilfrid Laurier University"
+date: "Fall 2022"
+format: 
+  revealjs:
+    theme: [default, hygge.scss]
+    smaller: true
+    slide-number: true    
+    width: 1280
+    height: 720
+    chalkboard:
+      theme: whiteboard
+      src: drawings.json
+editor: visual
+title-slide-attributes:
+  data-background-color: "#43464B"
+---
+
+# Introduction
+
+
+```{r , echo=FALSE, include=FALSE}
+
+library(sf)
+library(scales)
+library(ggplot2)
+library(ggpubr)
+library(tidyverse)
+library(hrbrthemes)
+library(kableExtra)
+library(viridis)
+library(DT)
+library(plotly)
+library(readxl)
+library(rgeos)
+library(maptools)
+library(directlabels)
+library(ggrepel)
+library(ggthemes)
+library(cancensus)
+library(bookdown)
+library(geomtextpath)
+library(egg)
+library(ggtext)
+library(ragg)
+library(scico)
+library(haven)
+library(here)
+library(knitr)
+library(jpeg)
+library(imager)
+library(Statamarkdown)
+library(ggdag)
+library(dagitty)
+library(geomtextpath)
+library(gganimate)
+library(gifski)
+
+knitr::opts_chunk$set(
+ echo=FALSE, 
+ message = FALSE,
+ warning = FALSE,
+ fig.retina = 3, 
+ fig.align = "center"
+ )
+
+set.seed(9810078)
+```
+
+## Introduction
+
+-   Our focus in this class has been on estimating the causal effect of $X$ on $Y$
+
+-   You can also use regressions to **predict** unknown outcomes
+
+-   Examples
+
+    -   The performance of a school that has not yet been built
+    
+    -   A stock price in the future
+    
+    -  Consumer spending under various levels of the interest rate 
+    
+-  We can use our model with values of independent variables to estimate outcomes
+
+-  Predictions are estimates that are subject to error
+
+-  It is important to account for this error
+
+    -  Do this through **prediction intervals**
+
+## Introduction
+
+-  Like before, we want our predictions from OLS to be unbiased
+
+    -  Accurate on average
+
+-  Assumptions for this are different than before
+
+    -   Key difference: causal effects are not necessary for prediction
+
+-  Finally, we will examine how to compare different predictions
+
+    -  Based on the average error in prediction
+
+# Model and Estimation
+
+## Model
+
+
+- Imagine you are interested in an unknown school test score $TestScore$
+
+    - You are attending a new school being built
+    
+- Also pretend you know how big the class size will be
+
+- An intuitive (and mathematically optimal) way to predict $TestScore$ is the conditional average
+
+$$E[TestScore| STR]$$
+
+- The actual test score will not exactly equal this average
+
+    - Because schools differ in many ways (e.g. student body, location, etc)
+    
+    
+- The difference between the real test score and the average is
+
+$$ u = TestScore - E[TestScore| STR]$$
+
+## Model
+
+- You can rearrange this to put $Y$ on the left side
+
+$$TestScore =  E[TestScore| STR] + u$$
+
+- For our purposes, suppose $E[TestScore| STR]$ is a straight line
+
+$$E[TestScore| STR] = \beta_{0} + \beta_{1}STR$$
+
+- Says average scores change linearly with extra students
+    
+    - The true relationship is probably not linear, but pretend it is
+
+
+- If we knew $\beta_{0}$ and $\beta_{1}$, you could get average test scores for any $STR$
+
+- You could use this as your prediction, and you would be done
+
+## Estimation
+
+- Problem: you do not know $\beta_{0}$ and $\beta_{1}$
+
+- But we can **estimate** them using data
+
+- An estimation technique we already know is OLS
+
+- OLS estimates of the slope and intercept are
+
+$$\hat{\beta}_{0} = \overline{Y} - \hat{\beta}_{1}\overline{X}$$
+$$\hat{\beta}_{1} = \frac{\sum_{i=1}^{n}(X_{i} - \overline{X})(Y_{i} - \overline{Y})}{\sum_{i=1}^{n}(X_{i} - \overline{X})^2}$$
+
+## Estimation
+
+-  You can then predict $TestScore$ using an estimate of the conditional mean
+
+$$\widehat{TestScore} = \hat{\beta}_{0} + \hat{\beta}_{1}STR$$
+
+- Plug in any value of $STR$ and this function will produce an estimated $TestScore$
+
+- Notice that this is a two-step process
+
+    1. Use $E[TestScore| STR]$ to predict $TestScore$
+    
+    2. Use $\widehat{TestScore}$ to estimate $E[TestScore| STR]$
+
+
+## Example with Stata {background-color="#d9edc2"}
+
+- Pretend a dad has hired you to predict his child's test score
+
+- The only thing you know is that there will be 25 students in the class
+
+- Your strategy is to provide an estimate of the mean test score with 25 students
+
+- You assume average test scores and class size are linearly related
+
+- First step is to estimate the slope and intercept of the mean test score
+
+- The generate the prediction using these estimates
+
+
+## Example with Stata {background-color="#d9edc2"}
+
+- Below we simulate 420 observations on test scores and student/teacher ratio
+
+```{stata, echo=TRUE, results=FALSE,  collectcode=TRUE}
+clear  
+set obs 420  
+set seed 12345  
+      
+gen str = rnormal(20,2)  
+gen u = rnormal(0,20)  
+      
+gen testscr = 700 -2 * str + u 
+```
+
+
+## Example with Stata {background-color="#d9edc2"}
+
+- Estimate the slope and intercept
+
+```{stata, echo=TRUE, collectcode=TRUE}
+regress testscr str
+```
+
+
+- Compute predicted test score with 25 students
+
+```{stata, echo=TRUE, collectcode=TRUE}
+display _b[_cons] + _b[str]*25
+```
+
+
+## Example with Stata {background-color="#d9edc2"}
+
+-  Visualize predictions for **any** class size
+
+```{stata, echo=1, collectcode=TRUE}
+twoway (function y = _b[_cons] + _b[str]*x, range(5 25)), title(Predicted Test Scores and Student Teacher Ratio) 
+quietly graph export predols.svg, replace
+```
+
+![](predols.svg){fig-align="center"}
+
+## Assumptions
+
+- Predictions are subject to two kinds of errors
+
+    - Error in using the mean to predict the value of $TestScore$
+    
+    - Sampling error from estimating the mean of $TestScore$
+
+- We would like our predictions to be good **on average**
+
+- In addition to $E[TestScore| STR]$ being linear, the following needs to be true
+
+1. Out of sample observations are drawn from the same population as the data
+
+2. Sample data are iid
+
+3. Large outliers are unlikely
+
+
+## Assumptions
+
+- First assumption is key
+
+    - Intuition: if our data used to estimate model come from a specific population, they apply best to predicting out of sample in the same population
+    
+    - Means estimates from Canadian data might not be good for predicting USA test scores
+
+    - Also implies that $E[TestScore| STR]$ is the best way to predict both in and out of sample
+
+- Second and third assumptions ensure estimates of intercept and slope parameters are consistent
+
+    - They are close to the real values in big samples
+
+
+
+# Errors in Prediction
+
+## Introduction
+
+- No prediction is perfect
+
+- In addition to a prediction, we need to estimate its accuracy
+
+    - We would prefer predictions that are more accurate
+    
+- In this section we review methods for assessing accuracy
+
+- Depends on the objective of your prediction
+
+- There are two possible objectives
+
+    - Predicting the unknown mean $E[TestScore| STR]$
+    
+    - Predicting some unknown specific value of $TestScore$
+    
+- The way you assess accuracy is different    
+
+
+
+## Errors Predicting the Population Mean
+
+- For some applications, you only want to predict the mean $E[TestScore| STR]$
+
+    - You are not interested in a school outcome, but the average school
+    
+- To assess accuracy, you can calculate
+
+    - The standard error of your prediction
+    
+    - A confidence interval based on that standard error and the prediction
+    
+- The prediction of the mean is the predicted value from the regression at a value $STR = STR^{oos}$
+
+$$\widehat{TestScore} = \hat{\beta}_{0} + \hat{\beta}_{1}STR$$
+
+- The value $STR^{oos}$ is some value of $STR$ out of sample (oos)
+
+- The standard error of this prediction is the estimated square root of the variance of $\widehat{TestScore}$
+
+$$se(\widehat{TestScore}) = \sqrt{\hat{Var}(\hat{\beta}_{0} + \hat{\beta}_{1}STR^{oos} )} $$
+
+## Errors Predicting the Population Mean
+
+- This is a complicated function of the variances and covariances of $\hat{\beta}_{0}$ and $\hat{\beta}_{1}$
+
+    - So we will not write it down explicitly
+    
+-  But we know that it depends on:
+
+    1. The number of observations
+    
+        - The standard error is smaller with more observations
+        
+    2. The variation of the error
+    
+        - The higher the variation, the higher the standard error
+        
+    3. The distance between $STR^{oos}$ and the sample mean of $STR$
+    
+        - The closer $STR^{oos}$ is to the sample mean, the smaller the standard error
+
+
+
+## Errors Predicting the Population Mean
+
+- You can use this to construct a **confidence interval** for the prediction of $E[TestScore| STR]$
+
+- Use same method as before
+
+$$CI = estimate \pm \text{margin of error}$$
+- In this context, a 95% confidence interval is is
+
+$$CI = \widehat{TestScore} \pm t^c \times se(\widehat{TestScore}) $$
+
+- As before $t^c$ is the critical value from a two-sided t-test
+
+
+
+## Example with Stata {background-color="#d9edc2"}
+
+- Let us reestimate the regression of test scores on class size
+
+```{stata, echo=TRUE, results=FALSE,  collectcode=TRUE}
+regress testscr str
+```
+
+- Find the predicted values of test score for each observation
+
+```{stata, echo=TRUE, results=FALSE,  collectcode=TRUE}
+predict pred_testscr, xb
+```
+
+- Generate the standard error of the prediction of the population mean
+
+    - Note that this computes a separate value for each observation in the sample
+
+```{stata, echo=TRUE, results=FALSE,  collectcode=TRUE}
+predict se_ymean, stdp
+```
+
+- Compute the upper and lower bounds of the confidence interval
+
+```{stata, echo=TRUE, results=FALSE,  collectcode=TRUE}
+gen ci_upper = pred_testscr + 1.96*se_ymean
+gen ci_lower = pred_testscr - 1.96*se_ymean
+```
+
+
+## Example with Stata {background-color="#d9edc2"}
+
+-  Visualize predictions and confidence intervals
+
+```{stata, echo=1, collectcode=TRUE}
+twoway (line pred_testscr str) (line ci_upper str, lpattern(dash) sort) (line ci_lower str,lpattern(dash) sort), title(Predicted Test Scores and Confidence Intervals) 
+quietly graph export pred_ci.svg, replace
+```
+
+![](pred_ci.svg){fig-align="center"}
+
+## Errors Predicting Specific Test Scores
+
+- You might also be interested in predicting a specific test score
+
+    - Example: you want to predict the scores of one school 
+    
+    - Perhaps because it did not report data on its scores
+    
+- To predict a specific test score, you also use $\widehat{TestScore}$
+
+    - The prediction of the mean and the prediction of one test score is the same value
+
+
+- Difference is that there is an additional source of error
+
+    - Error from predicting $TestScore$ using $E[TestScore| STR]$
+    
+    - And from estimating $E[TestScore| STR]$ using data
+    
+- Thus the prediction is the same, but the standard error of the prediction is different    
+
+
+## Errors Predicting Specific Test Scores
+
+
+- Suppose the specific test score you are trying to predict is $Y^{oos}$
+
+- Given our assumptions it is defined as
+
+$$TestScore^{oos} = \beta_{0} + \beta_{1}STR^{oos} + u^{oos}$$
+
+-  The **prediction error** is
+
+$$\hat{e}^{oos} = TestScore^{oos} - \widehat{TestScore^{oos}} $$
+
+
+
+
+
+## Errors Predicting Specific Test Scores
+
+- To emphasize the source of the errors, you can reexpress this as
+
+$$\hat{e}^{oos} = E[TestScore| STR = STR^{oos}] + u^{oos} - \widehat{TestScore^{oos}})$$
+$$\hat{e}^{oos} =  u^{oos} + (E[TestScore| STR = STR^{oos}] - \widehat{TestScore^{oos}})$$
+
+- The first part is the error from using the mean to predict $TestScore$
+
+- The second part is the error in predicting the mean using $\widehat{TestScore^{oos}}$
+
+- The variance of this prediction error is
+
+$$var(\hat{e}^{oos}) = var(u^{oos}) + var(\widehat{TestScore^{oos}})$$
+
+- The prediction is less accurate when
+
+    - Test scores are spread more widely we around their mean in the population
+    
+    - There is lots of sampling variation in the prediction of test scores
+
+
+## Errors Predicting Specific Test Scores
+
+- You can construct an interval around the prediction for $TestScore^{oos}$
+
+- This is called a **prediction interval**
+
+    - Different from a confidence interval
+    
+    - Prediction intervals are for predictions of a specific value of the outcome
+    
+    - Interpretation is also slightly different (we will not get into it)
+
+
+- The prediction interval is
+
+$$PI = \widehat{TestScore^{oos}} \pm t^c \times se(\widehat{TestScore^{oos}})$$
+
+- The value $t^{c}$ is chosen depending on the confidence level
+
+- Note that this is wider than the confidence interval from earlier because of two sources of error
+
+## Example with Stata {background-color="#d9edc2"}
+
+- We again reestimate the regression
+
+```{stata, echo=TRUE, results=FALSE,  collectcode=TRUE}
+regress testscr str
+```
+
+- We already have the predicted values from previous slides
+
+- Generate the standard error of the prediction for test score
+
+```{stata, echo=TRUE, results=FALSE,  collectcode=TRUE}
+predict se_y, stdf
+```
+
+- Compute the upper and lower bounds of the confidence interval
+
+```{stata, echo=TRUE, results=FALSE,  collectcode=TRUE}
+gen pi_upper = pred_testscr + 1.96*se_y
+gen pi_lower = pred_testscr - 1.96*se_y
+```
+
+## Example with Stata {background-color="#d9edc2"}
+
+
+-  Visualize prediction interval
+
+```{stata, echo=1, collectcode=TRUE}
+twoway (line pred_testscr str) (line ci_upper str, lpattern(dash) sort) (line ci_lower str,lpattern(dash) sort) (line pi_upper str, lpattern(dash_dot) sort) (line pi_lower str,lpattern(dash_dot) sort), title(Predicted Test Scores and Prediction Intervals) 
+quietly graph export pred_pi.svg, replace
+```
+
+![](pred_pi.svg){fig-align="center"}
+
+
+# Evaluating Predictions
+
+## Mean Squared Prediction Error
+
+-  Suppose you want to evaluate how good your model is at prediction
+
+    -  You can use to compare against other models
+    
+- Normally you would predict several values at the same time
+
+- One way to evaluate a group of predictions is with the **Mean Squared Prediction Error (MSPE)**
+
+- Typically you want to evaluate the predictions on data that has not been used to estimate the prediction
+
+    - Models are always better at predicting values in the sample used for estimation
+    
+- One way people do this is to split the sample randomly
+
+    - Estimate model on half the sample, called the **training data**
+    
+    - Evaluate model using the other half, called the **test data**
+    
+- The MSPE in the test data is
+
+$$MSPE = \frac{1}{n_{test}} \sum(TestScore_i - \widehat{TestScore}_{i})^2$$
+
+## Example with Stata {background-color="#d9edc2"}
+
+- Split the sample randomly in half
+
+```{stata, echo=TRUE, results=FALSE,  collectcode=TRUE}
+gen half = runiform() >=0.5
+```
+
+
+- Estimate regression on half the sample
+
+```{stata, echo=TRUE, results=FALSE,  collectcode=TRUE}
+regress testscr str if half == 1
+```
+
+- Predict values of $TestScore$ on other half
+
+```{stata, echo=TRUE, results=FALSE,  collectcode=TRUE}
+predict pred_test if half == 0, xb
+```
+
+- Compute the prediction error, square it, and find the mean
+
+```{stata, echo=TRUE, results=TRUE,  collectcode=TRUE}
+gen pred_error2 = (testscr - pred_test)^2
+summarize pred_error2
+```
+
