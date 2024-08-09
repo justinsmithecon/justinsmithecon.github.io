@@ -22,10 +22,10 @@ content:
   filter_button:
     - name: All
       tag: '*'
-    - name: Fall 2022
-      tag: Fall 2022
-    - name: Winter 2023
-      tag: Winter 2023
+    - name: Fall 2023
+      tag: Fall 2023
+    - name: Winter 2024
+      tag: Winter 2024
   filter_default: 0    
   
 design:

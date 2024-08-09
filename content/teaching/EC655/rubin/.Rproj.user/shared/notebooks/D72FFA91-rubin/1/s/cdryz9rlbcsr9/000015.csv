@@ -1,5 +1,0 @@
-"0","data %<>% mutate(w = if_else(runif(100000) > .5,1,0), "
-"0","                 y = y0 + (y1-y0)*w) %>% "
-"0","  group_by(w)"
-"0",""
-"0","head(data)"
