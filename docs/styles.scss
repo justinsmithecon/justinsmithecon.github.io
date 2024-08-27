@@ -1,5 +1,14 @@
 /*-- scss:rules --*/
 
+$headings-font-family: "Jost";
+
+$web-font-path: "https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Libre+Franklin:ital,wght@0,100..900;1,100..900&display=swap" !default;
+
+@if $web-font-path {
+  @import url($web-font-path);
+}
+
+
 body {
   font-size: 20px; /* Adjust the value as needed */
 }
