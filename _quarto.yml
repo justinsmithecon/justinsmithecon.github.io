@@ -20,7 +20,9 @@ website:
 
 format:
   html:
-    theme: cosmo
+    theme: 
+      - cosmo
+      - styles.scss
     css: styles.scss
     toc: true
     page-layout: full
