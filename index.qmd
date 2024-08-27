@@ -1,6 +1,6 @@
 ---
 title: "Justin Smith"
-subtitle: 'Associate Professor<br><a href="https://www.wlu.ca">Wilfrid Laurier University</a>'
+subtitle: 'Associate Professor<br>Department of Economics<br><a href="https://www.wlu.ca">Wilfrid Laurier University</a>'
 image: profile.jpg
 about:
   id: hero-heading
