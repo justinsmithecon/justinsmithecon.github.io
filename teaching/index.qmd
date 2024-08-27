@@ -5,7 +5,6 @@ listing:
     contents: "listing.yml"
     sort: "date desc"
     template: ../html/teaching/listing.ejs
-
 page-layout: full
 include-back-link: false
 toc-location: right
