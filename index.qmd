@@ -8,12 +8,15 @@ about:
   image-shape: round
   image-width: 50%
   links:
+    - icon: envelope-at
+      href: mailto:jusmith@wlu.ca  
     - icon: twitter
       href: https://x.com/justinsmithecon?lang=en
     - icon: linkedin
       href: https://ca.linkedin.com/in/justin-smith-0a20a8237
     - icon: github
       href: https://github.com/justinsmithecon
+
 ---
 
 ::: {#hero-heading}
