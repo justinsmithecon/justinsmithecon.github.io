@@ -1,0 +1,28 @@
+---
+title: "Research"
+listing:
+  - id: articles
+    contents: "articles/listing.yml"
+    sort: "date desc"
+    template: ../html/research/listing.ejs
+  - id: working-papers
+    contents: "working-papers/listing.yml"
+    sort: "date desc"
+    template: ../html/research/listing.ejs
+page-layout: full
+include-back-link: false
+toc-location: right
+---
+
+## Journal articles
+
+:::{#articles}
+:::
+
+
+## Working papers and Works in Progress
+
+:::{#working-papers}
+:::
+
+

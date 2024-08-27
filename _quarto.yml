@@ -1,0 +1,29 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  page-navigation: true
+  title: "Justin Smith"
+
+  page-footer:
+    left: "&copy; Copyright 2024, Justin Smith"
+
+  navbar:
+    search: false
+    left:
+
+      - text: "Research"
+        file: research/index.qmd
+      - text: "Teaching"
+        href: teaching/index.qmd
+
+
+
+format:
+  html:
+    theme: cosmo
+    css: styles.scss
+    toc: true
+    page-layout: full
+

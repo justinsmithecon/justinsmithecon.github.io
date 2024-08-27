@@ -1,0 +1,27 @@
+---
+title: "Teaching"
+listing:
+  - id: EC655
+    contents: "listing.yml"
+    sort: "date desc"
+    template: ../html/teaching/listing.ejs
+
+page-layout: full
+include-back-link: false
+toc-location: right
+---
+
+## 2023-2024
+
+:::{#EC655}
+:::
+
+
+
+
+
+
+
+
+
+

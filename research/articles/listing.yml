@@ -1,0 +1,60 @@
+- name: Gift of Time
+  href: https://doi.org/10.1162/EDFP_a_00001
+  date: 2010
+  custom-field: Justin Smith (2010). <a href ="https://doi.org/10.1162/EDFP_a_00001">How Valuable is the Gift of Time? The Factors that Drive the Birth Date Effect in Education</a>. <em>Education Finance and Policy</em>, 5 (3)
+  
+- name: Diversity
+  href: https://doi.org/10.1016/j.jebo.2016.05.010
+  date: 2016
+  custom-field: 'James Andreoni, A. Abigail Payne, Justin Smith, David Karp (2016). <a href="https://doi.org/10.1016/j.jebo.2016.05.010"> Diversity and donations: The Effect of Religious and Ethnic Diversity on Charitable Giving.</a> <em>Journal of Economic Behavior & Organization</em>, 128'  
+ 
+- name: bigfish
+  href: https://doi.org/10.1002/soej.12420
+  date: 2020 
+  custom-field: 'A. Abigail Payne, Justin Smith (2020). <a href ="https://doi.org/10.1002/soej.12420">Big Fish, Small Pond: The Effect of Rank at Entry on Postsecondary Outcomes</a>. <em>Southern Economic Journal</em>, 86(4)'
+  
+- name: ncprin
+  href: https://doi.org/10.1007/s00181-017-1259-9
+  date: 2018 
+  custom-field: 'Elizabeth Dhuey, Justin Smith (2018). <a href="https://doi.org/10.1007/s00181-017-1259-9">How School Principals Influence Student Learning</a>. <em>Empirical Economics</em>, 54.' 
+  
+- name: chargiv
+  href: https://www.jstor.org/stable/43818231
+  date: 2015 
+  custom-field: 'A. Abigail Payne, Justin Smith (2015). <a href="https://www.jstor.org/stable/43818231">Does Income Inequality Increase Charitable Giving</a>. <em>Canadian Journal of Economics</em>, 48 (2).' 
+  
+- name: canprin
+  href: https://doi.org/10.1111/caje.12086
+  date: 2014
+  custom-field: 'Elizabeth Dhuey, Justin Smith (2014). <a href="https://doi.org/10.1111/caje.12086">How Important are School Principals in the Production of Student Achievement?</a>. <em>Canadian Journal of Economics</em>, 47 (2).'   
+  
+- name: longrun
+  href: https://doi.org/10.1016/j.econedurev.2013.05.003
+  date: 2013
+  custom-field: 'Philip DeCicca, Justin Smith (2013). <a href="https://doi.org/10.1016/j.econedurev.2013.05.003">The long-run impacts of early childhood education: Evidence from a failed policy experiment?</a>. <em>Economics of Education Review</em>, 36.'   
+
+- name: reportcard
+  href: https://doi.org/10.1111/j.1540-5982.2012.01709.x
+  date: 2012
+  custom-field: 'Jane Friesen, Mohsen Javdani, Justin Smith, Simon Woodcock (2012). <a href="https://doi.org/10.1111/j.1540-5982.2012.01709.x">How do school ‘report cards’ affect school choice decisions?</a>. <em>Canadian Journal of Economics</em>, 45 (2).'   
+  
+- name: ageeffect
+  href: https://doi.org/10.2202/1935-1682.2221
+  date: 2009
+  custom-field: 'Justin Smith (2009). <a href="https://doi.org/10.2202/1935-1682.2221">Can Regression Discontinuity Help Answer an Age-Old Question in Education? The Effect of Age on Elementary and Secondary School Achievement</a>. <em>The B.E. Journal of Economic Analysis & Policy</em>, 9 (1).'   
+
+- name: taxprice
+  href: https://doi.org/10.1086/724588
+  date: 2023
+  custom-field: 'Ross Hickey, Brad Minaker, A. Abigail Payne, Joanne Roberts, Justin Smith (2023). <a href="https://doi.org/10.1086/724588">The effect of tax price on donations: evidence from Canada</a>. <em>National Tax Journal</em>, 76 (2).'   
+
+- name: bunching
+  href: https://doi.org/10.32721/ctj.2024.72.2.pf.hickey
+  date: 2024
+  custom-field: 'Ross Hickey, A. Abigail Payne, Justin Smith (2024). <a href="https://doi.org/10.32721/ctj.2024.72.2.pf.hickey">Policy Forum: Understanding the Efficacy of Tax Credits for Charitable Donations in Canada</a>. <em>Canadian Tax Journal</em>, 72 (2).'   
+   
+- name: charcredit
+  href: https://doi.org/10.32721/ctj.2023.71.4.pf.hickey
+  date: 2023
+  custom-field: 'Ross Hickey, Justin Smith (2023). <a href="https://doi.org/10.32721/ctj.2023.71.4.pf.hickey">Policy Forum: Bunching in the Political Contribution Tax Credit Schedule—Theory, Evidence, and Policy</a>. <em>National Tax Journal</em>, 71 (4).'   
+                   

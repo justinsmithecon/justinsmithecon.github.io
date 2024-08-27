@@ -1,0 +1,36 @@
+---
+title: "Justin Smith"
+subtitle: 'Associate Professor<br><a href="https://www.wlu.ca">Wilfrid Laurier University</a>'
+image: profile.jpg
+about:
+  id: hero-heading
+  template: trestles
+  image-shape: round
+  image-width: 50%
+  links:
+    - icon: twitter
+      href: https://x.com/justinsmithecon?lang=en
+    - icon: linkedin
+      href: https://ca.linkedin.com/in/justin-smith-0a20a8237
+    - icon: github
+      href: https://github.com/justinsmithecon
+---
+
+::: {#hero-heading}
+## Biography
+
+Justin Smith is an Associate Professor of economics at Wilfrid Laurier University. His research interests include the economics of education and the economics of charitable giving.
+
+## Interests
+
+- Economics of education
+- Economics of charitable giving
+- Diet Pepsi
+
+## Education
+
+{{< fa graduation-cap >}} PhD in Economics | McMaster University | 2008<br>
+{{< fa graduation-cap >}} MA in Economics | Simon Fraser University | 2004<br>
+{{< fa graduation-cap >}} BA in Economics and French Literature | McMaster University | 2003
+
+:::
